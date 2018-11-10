@@ -1,0 +1,32 @@
+{
+  "name": "react-test",
+  "version": "1.0.0",
+  "description": "Test of React-Bootstrap",
+  "main": "index.html",
+  "dependencies": {
+    "react": "^16.6.1",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.1"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.7"
+  },
+  "scripts": {
+    "start": "parcel serve index.html --open",
+    "build": "parcel build index.html --out-dir build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/brian32768/react-bootstrap-test.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Brian H Wilson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brian32768/react-bootstrap-test/issues"
+  },
+  "homepage": "https://github.com/brian32768/react-bootstrap-test#readme"
+}

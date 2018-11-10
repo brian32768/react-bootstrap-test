@@ -1,0 +1,37 @@
+h1 {
+    background-color: pink;
+    color: darkred;
+    font-family: sans-serif;
+}
+
+#logo {
+    content: url("/assets/Proud.jpg");
+    width: 200px;
+    height: 220px;
+    margin: 10px;
+}
+
+button {
+    color: darkred;
+    background-color: pink;
+}
+
+map {
+    color: blue;
+    height: 400px;
+}
+scalebar {
+    color: green;
+}
+
+desc {
+    color: violet;
+    font-style: italic;
+    font-size: 18pt;
+}
+
+footer {
+    background-color: pink;
+    color: #C04040;
+    margin-top: 20px;
+}
