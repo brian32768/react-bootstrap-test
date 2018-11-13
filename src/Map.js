@@ -6,26 +6,11 @@ import React from 'react';
 // all its various controls such as zoom buttons and scalebars
 // and wrap it inside the Map component.
 
-class ScaleBar extends React.Component {
-    render() {
-
-        // There is a 'scalebar' class defined in App.css
-        // that controls the style for a scale bar.
-        return (
-            <scalebar>
-              <p>
-                {this.props.children}
-              </p>
-            </scalebar>
-        );
-    }
-}
-
 class Map extends React.Component {
     render() {
 
         // There is a 'map' class defined in App.css
-        // that controls the style for map contents.
+        // that defines the style for map contents.
         return (
             <map>
               <h2>Here's a map component</h2>
@@ -34,6 +19,21 @@ class Map extends React.Component {
               </p>
               <ScaleBar>Scale: 100 miles</ScaleBar>
             </map>
+        );
+    }
+}
+
+class ScaleBar extends React.Component {
+    render() {
+
+        // There is a 'scalebar' class defined in App.css
+        // that defines the style for a scale bar.
+        return (
+            <scalebar>
+              <p>
+                {this.props.children}
+              </p>
+            </scalebar>
         );
     }
 }
