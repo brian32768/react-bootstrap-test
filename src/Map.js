@@ -1,4 +1,4 @@
-// Map.js
+// Map.js react-bootstrap-test
 //
 import React from 'react';
 
@@ -8,17 +8,16 @@ import React from 'react';
 
 class Map extends React.Component {
     render() {
-
         // There is a 'map' class defined in App.css
         // that defines the style for map contents.
         return (
-            <map>
+            <div id="map">
               <h2>Here's a map component</h2>
               <p>
                 {this.props.children}
               </p>
               <ScaleBar>Scale: 100 miles</ScaleBar>
-            </map>
+            </div>
         );
     }
 }
@@ -29,11 +28,11 @@ class ScaleBar extends React.Component {
         // There is a 'scalebar' class defined in App.css
         // that defines the style for a scale bar.
         return (
-            <scalebar>
+            <div id="scalebar">
               <p>
                 {this.props.children}
               </p>
-            </scalebar>
+            </div>
         );
     }
 }
