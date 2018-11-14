@@ -8,9 +8,6 @@ import ReactDOM from "react-dom";
 import './App.css';
 import Map from "./Map.js";
 
-let clickHandler = function(evt) {
-    console.log("Click!");
-}
 
 // Since this is not exported, it's not visible outside this module.
 function getDatestamp() {
@@ -52,7 +49,19 @@ class BootstrapComponent extends React.Component {
     constructor() {
         super();
         this.logo = 'pigeon';
+        this.first = true;
     }
+    change_logo() {
+        
+    }
+    clickHandler(evt) {
+        if (this.first) {
+            change_logo();
+            this.first = false;
+        }
+        console.log(this.first)
+    }
+
     render() {
         let words = <span> {this.props.footer} says "<SpecialDay item={new Date().getDay()}/>"</span>
         return (
@@ -61,14 +70,13 @@ class BootstrapComponent extends React.Component {
                 <header>
                     <h1>react-bootstrap-test</h1>
                     <div id="logo">{this.logo}</div>
-                    <div>Proud.jpg</div>
                 </header>
 
                 <main>
                     <Map>A map will go here.</Map>
                     <DescriptionBlock>This is a descriptive block.</DescriptionBlock>
                     <br />
-                    <button>Click here now.</button>
+                    <button onClick={() => this.clickHandler()}>Click here now.</button>
                 </main>
 
                 <footer>
