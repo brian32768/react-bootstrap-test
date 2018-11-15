@@ -8,7 +8,6 @@ import ReactDOM from "react-dom";
 import './App.css';
 import Map from "./Map.js";
 
-
 // Since this is not exported, it's not visible outside this module.
 function getDatestamp() {
     // Return a string containing the timestamp for "now".
@@ -45,38 +44,59 @@ class SpecialDay extends React.Component {
     }
 }
 
-class BootstrapComponent extends React.Component {
+class AppLogo extends React.Component {
     constructor() {
         super();
-        this.logo = 'pigeon';
-        this.first = true;
     }
-    change_logo() {
-        
+    render() {
+        return <div> logo </div>
     }
-    clickHandler(evt) {
-        if (this.first) {
-            change_logo();
-            this.first = false;
-        }
-        console.log(this.first)
+}
+
+class ButtonComponent extends React.Component {
+    render() {
+        return <button onClick={this.props.clickHandler}>{this.props.text}</button>
+    }
+}
+
+//({text,clickHandler} => <button onClick={clickHandler}>{text}</button>);
+
+class AppComponent extends React.Component {
+    constructor() {
+        super();
+        this.state = { 'showLogo' : false };
+    }
+
+    clickHandler() {
+        this.state.showLogo = !this.state.showLogo;
+        console.log("click!", this.state.showLogo);
+    }
+
+    logoSwitcher() {
+        console.log('switch logo', this.state.showLogo);
+        return <p>some text goes here</p>
+    }
+
+    componentWillUpdate() {
+        console.log('indeed')
     }
 
     render() {
         let words = <span> {this.props.footer} says "<SpecialDay item={new Date().getDay()}/>"</span>
+        //let mylogo = ReactDOM.render(<AppLogo />, document.getElementById("logo"));
         return (
         <div>
             <section>
                 <header>
                     <h1>react-bootstrap-test</h1>
-                    <div id="logo">{this.logo}</div>
+                    <div id="logo"><AppLogo /></div>
                 </header>
 
                 <main>
-                    <Map>A map will go here.</Map>
+                    <Map><h1>Eventually, a map will go here.</h1></Map>
                     <DescriptionBlock>This is a descriptive block.</DescriptionBlock>
                     <br />
-                    <button onClick={() => this.clickHandler()}>Click here now.</button>
+                    <ButtonComponent clickHandler={()=>this.clickHandler()} text="Click here."/>
                 </main>
 
                 <footer>
@@ -90,6 +110,6 @@ class BootstrapComponent extends React.Component {
 
 // Mount the component onto the DOM in the div known as "app".
 let mountNode = document.getElementById("app");
-ReactDOM.render(<BootstrapComponent footer="This pigeon" />, mountNode);
+ReactDOM.render(<AppComponent footer="This pigeon" />, mountNode);
 
 // That's all!

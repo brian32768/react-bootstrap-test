@@ -1,7 +1,10 @@
-This little React project was created after reading some blog postings,
-it uses Parcel and that's not in my React books so I needed a sample for testing ideas.
+This React project was created while reading Beginning React (packtpubs.com)
+it uses Parcel and that's not in the book so I needed a sample for testing ideas.
 
-In this version, I'm adding some glitzy Bootstrap components.
+In this version,
+I added more React code,
+I added code to do a fetch from a remote server,
+and I'm adding some glitzy Bootstrap components.
 
 ## Available Scripts
 
@@ -27,8 +30,9 @@ Your app is ready to be deployed; copy everything in `build` to your server.
 The first time you do `npm run build` the cssnano package will be installed, it does the minification.
 
 ## Learn More
-
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+See "Beginning React".
 
 See also the book "React and React Native", Chapter 11: Mobile-First React Components.
 They use react-bootstrap (but not Parcel).
