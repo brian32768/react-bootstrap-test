@@ -18,34 +18,31 @@ class DescriptionBlock extends React.Component {
     }
 }
 
-
 class AppLogo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            logo: (<div id="bird_logo"></div>)
-        }
+    constructor() {
+        super();
     }
     render() {
-        return <div> {this.state.logo} </div>
+        return <div id={this.props.logoclass}></div>
     }
 }
 
 class ToggleButton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {isToggleOn:false};
+        this.state = {isToggleOn:true};
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
         this.setState(state => ({
             isToggleOn: !state.isToggleOn
         }));
+        this.props.switchlogo(this.state.isToggleOn);
     }
     render() {
         return (
             <button onClick={this.handleClick}>
-            {this.state.isToggleOn? 'ON' : 'OFF'}
+            {this.state.isToggleOn? 'HIDE' : 'SHOW'}
             </button>
         );
     }
@@ -54,34 +51,40 @@ class ToggleButton extends React.Component {
 export default class AppComponent extends React.Component {
     constructor() {
         super();
+        this.state = {
+            logoname:  "pigeon",
+            logoclass: "bird_logo"
+        }
+        // Force the logoSwitcher to stay in the context of this object.
+        this.logoSwitcher = this.logoSwitcher.bind(this);
     }
 
-    logoSwitcher() {
-        console.log('switch logo', this.state.showLogo);
-        return <p>some text goes here</p>
+    logoSwitcher(use_beaver) {
+        // Called from the button component to switch the logo and footer text
+        this.setState({
+            logoname:  use_beaver?"beaver" :"proud pigeon",
+            logoclass: use_beaver?"beaver_logo":"bird_logo"
+        });
     }
 
     render() {
-        let words = <span> {this.props.footer} says "<SpecialDay/>"</span>
-        //let mylogo = ReactDOM.render(<AppLogo />, document.getElementById("logo"));
+        let footer = <footer> This {this.state.logoname} says "<SpecialDay/>" </footer>
         return (
         <div>
             <section>
                 <header>
                     <h1>react-bootstrap-test</h1>
-                    <div id="logo"><AppLogo /></div>
+                    <AppLogo logoclass={this.state.logoclass}/>
                 </header>
 
                 <main>
                     <Map><h1>Eventually, a map will go here.</h1></Map>
                     <DescriptionBlock>This is a descriptive block.</DescriptionBlock>
                     <br />
-                    <ToggleButton/>
+                    <ToggleButton switchlogo={this.logoSwitcher} />
                 </main>
 
-                <footer>
-                    { words }
-                </footer>
+                {footer}
             </section>
         </div>
         );

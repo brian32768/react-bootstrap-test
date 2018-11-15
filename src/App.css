@@ -10,6 +10,12 @@ h1 {
     height: 220px;
     margin: 10px;
 }
+#beaver_logo {
+    content: url("/assets/beaver.jpg");
+    width: 200px;
+    height: 220px;
+    margin: 10px;
+}
 
 button {
     color: white;
