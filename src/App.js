@@ -61,7 +61,7 @@ class ButtonComponent extends React.Component {
 
 //({text,clickHandler} => <button onClick={clickHandler}>{text}</button>);
 
-class AppComponent extends React.Component {
+export default class AppComponent extends React.Component {
     constructor() {
         super();
         this.state = { 'showLogo' : false };
@@ -107,9 +107,5 @@ class AppComponent extends React.Component {
         );
     }
 }
-
-// Mount the component onto the DOM in the div known as "app".
-let mountNode = document.getElementById("app");
-ReactDOM.render(<AppComponent footer="This pigeon" />, mountNode);
 
 // That's all!
