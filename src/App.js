@@ -6,19 +6,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './App.css';
+import SpecialDay from './specialday';
 import Map from "./Map.js";
-
-// Since this is not exported, it's not visible outside this module.
-function getDatestamp() {
-    // Return a string containing the timestamp for "now".
-    let d = new Date();
-    return d.toLocaleString();
-}
-
-//function intervalHandler(evt) {
-//    document.getElementById('').innerHTML = getDatestamp();
-//}
-//let timed = setInterval(intervalHandler, 1000);
 
 class DescriptionBlock extends React.Component {
     render() {
@@ -29,27 +18,16 @@ class DescriptionBlock extends React.Component {
     }
 }
 
-const days = ["Sunday","Monday","Tuesday","Wednesday","Thurdsay","Friday","Saturday"];
-
-class SpecialDay extends React.Component {
-    render() {
-        let item = this.props.item;
-        let day = days[item];
-        if (item == 5) {
-            item = <b>Happy {day}!!!</b>
-        } else {
-            item = <span>It's {day}.</span>
-        }
-        return <span>{item}</span>
-    }
-}
 
 class AppLogo extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            logo: (<div id="bird_logo"></div>)
+        }
     }
     render() {
-        return <div> logo </div>
+        return <div> {this.state.logo} </div>
     }
 }
 
@@ -84,7 +62,7 @@ export default class AppComponent extends React.Component {
     }
 
     render() {
-        let words = <span> {this.props.footer} says "<SpecialDay item={new Date().getDay()}/>"</span>
+        let words = <span> {this.props.footer} says "<SpecialDay/>"</span>
         //let mylogo = ReactDOM.render(<AppLogo />, document.getElementById("logo"));
         return (
         <div>
