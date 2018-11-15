@@ -5,7 +5,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const days = ["Sunday","Monday","Tuesday","Wednesday","Thurdsay","Friday","Saturday"];
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 export default () => {
     let nday = new Date().getDay(); // day as integer 0-6

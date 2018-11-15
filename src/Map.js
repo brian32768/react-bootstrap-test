@@ -48,7 +48,7 @@ class Map extends React.Component {
         return (
             <div id="map">
               {this.props.children}
-              <FetchJSON/>
+              
               <ScaleBar>Scale: 100 miles</ScaleBar>
             </div>
         );

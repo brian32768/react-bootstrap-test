@@ -7,6 +7,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import './App.css';
 import SpecialDay from './specialday';
+import Logo from './logo';
 import Map from "./Map.js";
 
 class DescriptionBlock extends React.Component {
@@ -15,15 +16,6 @@ class DescriptionBlock extends React.Component {
             This is an example of a <em>React</em> app written to test Parcel and React and Bootstrap
             (using the react-bootstrap node package).
         </div>
-    }
-}
-
-class AppLogo extends React.Component {
-    constructor() {
-        super();
-    }
-    render() {
-        return <div id={this.props.logoclass}></div>
     }
 }
 
@@ -41,9 +33,7 @@ class ToggleButton extends React.Component {
     }
     render() {
         return (
-            <button onClick={this.handleClick}>
-            {this.state.isToggleOn? 'HIDE' : 'SHOW'}
-            </button>
+            <button onClick={this.handleClick}>Toggle</button>
         );
     }
 }
@@ -52,29 +42,48 @@ export default class AppComponent extends React.Component {
     constructor() {
         super();
         this.state = {
-            logoname:  "pigeon",
-            logoclass: "bird_logo"
+            logo:  false,
+            logoid: 'normal_logoname',
+            logoname: 'pigeon'
         }
         // Force the logoSwitcher to stay in the context of this object.
         this.logoSwitcher = this.logoSwitcher.bind(this);
+        this.gotFocus     = this.gotFocus.bind(this);
+        this.lostFocus    = this.lostFocus.bind(this);
     }
 
-    logoSwitcher(use_beaver) {
+    logoSwitcher(alt) {
         // Called from the button component to switch the logo and footer text
         this.setState({
-            logoname:  use_beaver?"beaver" :"proud pigeon",
-            logoclass: use_beaver?"beaver_logo":"bird_logo"
+            logo: alt,
+            logoname: alt? 'beaver':'pigeon'
+        });
+    }
+
+    gotFocus() {
+        this.setState({
+            logoid:  "em_logoname",
+        });
+    }
+
+    lostFocus() {
+        this.setState({
+            logoid:  "normal_logoname",
         });
     }
 
     render() {
-        let footer = <footer> This {this.state.logoname} says "<SpecialDay/>" </footer>
+        let footer = (<a
+            onMouseOver={this.gotFocus} onMouseOut={this.lostFocus}>
+            <span id={this.state.logoid}>{this.state.logoname}</span>
+            </a>);
+
         return (
         <div>
             <section>
                 <header>
                     <h1>react-bootstrap-test</h1>
-                    <AppLogo logoclass={this.state.logoclass}/>
+                    <Logo mylogo={this.state.logo}/>
                 </header>
 
                 <main>
@@ -84,7 +93,7 @@ export default class AppComponent extends React.Component {
                     <ToggleButton switchlogo={this.logoSwitcher} />
                 </main>
 
-                {footer}
+                <footer> This {footer} says "<SpecialDay/>" </footer>
             </section>
         </div>
         );
