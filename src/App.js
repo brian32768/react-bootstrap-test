@@ -53,32 +53,34 @@ class AppLogo extends React.Component {
     }
 }
 
-class ButtonComponent extends React.Component {
+class ToggleButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {isToggleOn:false};
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick() {
+        this.setState(state => ({
+            isToggleOn: !state.isToggleOn
+        }));
+    }
     render() {
-        return <button onClick={this.props.clickHandler}>{this.props.text}</button>
+        return (
+            <button onClick={this.handleClick}>
+            {this.state.isToggleOn? 'ON' : 'OFF'}
+            </button>
+        );
     }
 }
-
-//({text,clickHandler} => <button onClick={clickHandler}>{text}</button>);
 
 export default class AppComponent extends React.Component {
     constructor() {
         super();
-        this.state = { 'showLogo' : false };
-    }
-
-    clickHandler() {
-        this.state.showLogo = !this.state.showLogo;
-        console.log("click!", this.state.showLogo);
     }
 
     logoSwitcher() {
         console.log('switch logo', this.state.showLogo);
         return <p>some text goes here</p>
-    }
-
-    componentWillUpdate() {
-        console.log('indeed')
     }
 
     render() {
@@ -96,7 +98,7 @@ export default class AppComponent extends React.Component {
                     <Map><h1>Eventually, a map will go here.</h1></Map>
                     <DescriptionBlock>This is a descriptive block.</DescriptionBlock>
                     <br />
-                    <ButtonComponent clickHandler={()=>this.clickHandler()} text="Click here."/>
+                    <ToggleButton/>
                 </main>
 
                 <footer>
