@@ -84,9 +84,9 @@ export default class App extends React.Component {
                 <header>
                     <h1>react-bootstrap-test</h1>
 
-                    <button><Link to='/about'>About</Link></button>
-                    <button><Link to='/'>Pictures</Link></button>
-                    <button><Link to='/map'>Map</Link></button>
+                    <Link to='/about'>About</Link>
+                     | <Link to='/'>Pictures</Link>
+                     | <Link to='/map'>Map</Link>
                 </header>
 
                 <Switch>
