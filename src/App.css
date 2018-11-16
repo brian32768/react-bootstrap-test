@@ -4,28 +4,28 @@ h1 {
     font-family: sans-serif;
 }
 
-#normal_logoname {
+#normal_picturename {
     font-size: 12pt;
 }
-#em_logoname {
+#em_picturename {
     font-size: 22pt;
     font-weight: bold;
 }
 
-.bird_logo {
+.bird_picture {
     content: url("/assets/Proud.jpg");
     width: 200px;
     height: 220px;
     margin: 10px;
 }
-.animated_logo {
+.animated_picture {
     content: url("/assets/walking_pigeons.gif");
     width: 200px;
     height: 220px;
     margin: 10px;
     background-color: rgb(103, 130, 170);
 }
-.beaver_logo {
+.beaver_picture {
     content: url("/assets/beaver.jpg");
     width: 200px;
     height: 220px;

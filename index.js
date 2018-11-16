@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppComponent from './src/App.js';
+import {BrowserRouter} from "react-router-dom";
+import App from './src/App.js';
 
 // Mount the component onto the DOM in the div known as "app".
 let mountNode = document.getElementById("app");
-ReactDOM.render(<AppComponent/>, mountNode);
+ReactDOM.render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+    , mountNode);
