@@ -4,13 +4,41 @@ h1 {
     font-family: sans-serif;
 }
 
-#normal_picturename {
-    font-size: 12pt;
+button {
+    color: white;
+    background-color: rgb(170, 31, 115);
 }
-#em_picturename {
-    font-size: 22pt;
-    font-weight: bold;
+
+footer {
+    background-color: pink;
+    color: #C04040;
+    margin-top: 20px;
 }
+
+.navbar-top {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    display: block;
+    position: fixed;
+    top: 60px;
+  }
+}
+
+.content {
+  top: 60px;
+}
+
+
 
 .bird_picture {
     content: url("/assets/Proud.jpg");
@@ -32,9 +60,13 @@ h1 {
     margin: 10px;
 }
 
-button {
-    color: white;
-    background-color: rgb(170, 31, 115);
+#normal_picturename {
+    font-size: 12pt;
+}
+
+#em_picturename {
+    font-size: 22pt;
+    font-weight: bold;
 }
 
 #map {
@@ -46,16 +78,4 @@ button {
 
 #scalebar {
     color: rgb(62, 162, 60);
-}
-
-#desc {
-    color: violet;
-    font-style: italic;
-    font-size: 15pt;
-}
-
-footer {
-    background-color: pink;
-    color: #C04040;
-    margin-top: 20px;
 }
