@@ -1,5 +1,5 @@
 {
-  "name": "react-bootstrap",
+  "name": "chapter11-react-bootstrap",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,5 +11,11 @@
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.3"
+  },
+  "dependencies": {
+    "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1"
   }
 }
