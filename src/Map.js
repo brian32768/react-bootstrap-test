@@ -48,15 +48,15 @@ const ScaleBar = (props) => (
     </div>
 );
 
-// Put the ScaleBar into the Map namespace.
-//Map.ScaleBar = ScaleBar;
-
 const Map = (props) => (
     <div id="map">
       {props.children}
       <ScaleBar>Scale: 100 miles</ScaleBar>
     </div>
 );
+
+// Put the ScaleBar into the Map namespace.
+Map.ScaleBar = ScaleBar;
 
 export default Map;
 
