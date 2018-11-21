@@ -30,7 +30,7 @@ footer {
   .sidebar {
     display: block;
     position: fixed;
-    top: 60px;
+    top: 50px;
   }
 }
 
@@ -45,33 +45,16 @@ footer {
     display: block;
 }
 
-.bird_picture {
+#sitelogo {
     content: url("/assets/Proud.jpg");
-    width: 200px;
-    height: 220px;
-    margin: 10px;
-}
-.animated_picture {
-    content: url("/assets/walking_pigeons.gif");
-    width: 200px;
-    height: 220px;
-    margin: 10px;
-    background-color: rgb(103, 130, 170);
-}
-.beaver_picture {
-    content: url("/assets/beaver.jpg");
-    width: 200px;
-    height: 220px;
-    margin: 10px;
+    width: 60px;
+    height: 70px;
+    margin: 1px;
 }
 
-#normal_picturename {
-    font-size: 12pt;
-}
-
-#em_picturename {
-    font-size: 22pt;
-    font-weight: bold;
+#sitename:before {
+    content: "Pigeon Messenger Service";
+    margin: 28px;
 }
 
 /* MAP STUFF ============================================================= */
