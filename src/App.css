@@ -1,6 +1,6 @@
 h1 {
     background-color: pink;
-    color: darkred;
+    color: rgb(21, 164, 31);
     font-family: sans-serif;
 }
 
@@ -34,11 +34,16 @@ footer {
   }
 }
 
-.content {
-  top: 60px;
+
+.card {
 }
 
-
+.card_image {
+    max-width: 25vw;
+    width: 100%;
+    height: auto;
+    display: block;
+}
 
 .bird_picture {
     content: url("/assets/Proud.jpg");
@@ -69,9 +74,10 @@ footer {
     font-weight: bold;
 }
 
+/* MAP STUFF ============================================================= */
 #map {
     color: blue;
-    height: 200px;
+    height: 75vh;
     background-color: rgb(182, 172, 171);
     margin: 10px;
 }

@@ -3,51 +3,84 @@
 // The real work is done in components included here.
 
 // React
-import React, { PropTypes } from 'react';
-import {Link} from 'react-router';
+import React, { Component } from 'react';
+import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom';
 
-// React + Bootstrap
-import {LinkContainer, IndexLinkContainer} from 'react-router-bootstrap';
-import {Navbar, Nav, NavItem, MenuItem, Grid, Row, Col} from 'react-bootstrap';
+// Bootstrap (reactstrap in this case)
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  Button
+} from 'reactstrap';
 
-import 'bootstrap/dist/css/bootstrap.css';
+// My own React components
+import SpecialDay from './specialday';
+import Pictures from './pictures';
+import Home from './home';
+import About from './about';
+import Contact from './contact';
+import NotFound from './notfound';
+
 import './App.css';
 
-const App = ({children}) => (
-    <main>
-        <Navbar className="navbar-top" fluid>
-            <Navbar.Collapse>
-                <Nav pullRight>
-                    <IndexLinkContainer to='/about'>
-                        <MenuItem>About</MenuItem>
-                    </IndexLinkContainer>
-                    <IndexLinkContainer to='/'>
-                        <MenuItem>Pictures</MenuItem>
-                    </IndexLinkContainer>
-                    <IndexLinkContainer to='/map'>
-                        <MenuItem>Map</MenuItem>
-                    </IndexLinkContainer>
-                </Nav>
-            </Navbar.Collapse>
+class PrimaryLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+  render() {
+    return (
+      <div>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand href="/">Home</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink href="/pictures">Pictures</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/about">About</NavLink>
+            </NavItem>
+            <NavItem>
+                <NavLink href="/contact">Contact us</NavLink>
+            </NavItem>
+            </Nav>
+          </Collapse>
         </Navbar>
 
-        <Grid fluid>
-            <Row>
-                <Col sm={3} md={2} className="sidebar">
-                    <Nav stacked>
-                    </Nav>
-                </Col>
+        <Switch>
+            <Route exact path="/"         component={Home} />
+            <Route       path="/pictures" component={Pictures} />
+            <Route       path="/about"    component={About} />
+            <Route       path="/contact"  component={Contact} />
+            <Route       path="/404"      component={NotFound} />
+            <Redirect to="/404" />
+        </Switch>
 
-                <Col sm={9} smOffset={3} md={10} mdOffset={2} className="content">
-                    {children}
-                </Col>
-            </Row>
-        </Grid>
-    </main>
-);
+      </div>
+    );
+  }
+}
 
-App.propTypes = {
-    children: PropTypes.node
-};
-
+const App = () => (
+    <BrowserRouter>
+    <PrimaryLayout />
+    </BrowserRouter>
+)
 export default App;
+
+console.log('App loaded.')

@@ -4,7 +4,14 @@ it uses Parcel and that's not in the book so I needed a sample for testing ideas
 In this version,
 I added more React code,
 I added code to do a fetch from a remote server,
-and I'm adding some glitzy Bootstrap components.
+and I'm adding some glitzy Bootstrap 4 components.
+
+To get Bootstrap 4 working I needed
+```
+npm install reactstrap bootstrap
+```
+Note the bootstrap package provides stylesheets only.
+Refer to http://reactstrap.github.io/ for more information.
 
 ## Available Scripts
 

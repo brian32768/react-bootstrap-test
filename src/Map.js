@@ -1,10 +1,11 @@
 // Map.js react-bootstrap-test
 //
-import React from 'react';
-
 // I can compose a map here with
 // all its various controls such as zoom buttons and scalebars
 // and wrap it inside the Map component.
+//
+import React from 'react';
+//import { more components } from 'reactstrap';
 
 class LoadJSON extends React.Component {
     render() {
@@ -23,8 +24,8 @@ class LoadJSON extends React.Component {
 
 class FetchJSON extends React.Component {
     // Fetch the contents of a remote JSON file and show it.
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {'map': {'error':'could not read remote url, check console'}};
 
         const url = "https://map46.com/assets/web_map_simple.json";
@@ -41,37 +42,21 @@ class FetchJSON extends React.Component {
     }
 }
 
-class Map extends React.Component {
-    render() {
-        // There is a 'map' class defined in App.css
-        // that defines the style for map contents.
-        return (
-            <div id="map">
-              {this.props.children}
-              
-              <ScaleBar>Scale: 100 miles</ScaleBar>
-            </div>
-        );
-    }
-}
-
-class ScaleBar extends React.Component {
-    render() {
-
-        // There is a 'scalebar' class defined in App.css
-        // that defines the style for a scale bar.
-        return (
-            <div id="scalebar">
-              <p>
-                {this.props.children}
-              </p>
-            </div>
-        );
-    }
-}
+const ScaleBar = (props) => (
+    <div id="scalebar">
+        {props.children}
+    </div>
+);
 
 // Put the ScaleBar into the Map namespace.
-Map.ScaleBar = ScaleBar;
+//Map.ScaleBar = ScaleBar;
+
+const Map = (props) => (
+    <div id="map">
+      {props.children}
+      <ScaleBar>Scale: 100 miles</ScaleBar>
+    </div>
+);
 
 export default Map;
 

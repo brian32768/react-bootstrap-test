@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import routes from './src/routes';
+import App from './src/App.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 render(
-    routes, document.getElementById("app")
+    <App />, document.getElementById("app")
 );
