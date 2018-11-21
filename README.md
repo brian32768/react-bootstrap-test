@@ -1,17 +1,27 @@
-This React project was created while reading Beginning React (packtpubs.com)
+# React Bootstrap test
+This React project was started while reading "Beginning React" (packtpubs.com)
 it uses Parcel and that's not in the book so I needed a sample for testing ideas.
 
-In this version,
+Then I moved on to chapter 11 of "React and React Native".
+
+In this project,
 I added more React code,
 I added code to do a fetch from a remote server,
 and I'm adding some glitzy Bootstrap 4 components.
 
+## Bootstrap 4 via reactstrap
+
 To get Bootstrap 4 working I needed
-```
-npm install reactstrap bootstrap
-```
-Note the bootstrap package provides stylesheets only.
-Refer to http://reactstrap.github.io/ for more information.
+```npm install reactstrap bootstrap```
+
+The bootstrap package is only needed for styles.
+
+Refer to http://reactstrap.github.io/ for more information on reactstrap.
+
+Bootstrap React Component tests
+* about.js and contact.js test the Card container.
+* home.js tests the Navbar
+* pictures.js tests the Carousel container.
 
 ## Available Scripts
 
@@ -39,7 +49,7 @@ The first time you do `npm run build` the cssnano package will be installed, it 
 ## Learn More
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-See "Beginning React".
+As mentioned above, see the books "Beginning React".
+and "React and React Native", Chapter 11: Mobile-First React Components; it uses react-bootstrap not reactstrap but it's close.
 
-See also the book "React and React Native", Chapter 11: Mobile-First React Components.
-They use react-bootstrap (but not Parcel).
+Neither book uses Parcel.
