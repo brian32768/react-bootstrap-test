@@ -45,7 +45,10 @@ class PrimaryLayout extends Component {
     return (
       <div>
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Home</NavbarBrand>
+          <NavbarBrand href="/">
+            <span id="sitelogo"></span>
+            <span id="sitename"></span>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
