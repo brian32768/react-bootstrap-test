@@ -20,6 +20,7 @@ import {
 
 // My own React components
 import SpecialDay from './specialday';
+import Table from './table'
 import Pictures from './pictures';
 import Home from './home';
 import About from './about';
@@ -53,6 +54,9 @@ class PrimaryLayout extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
             <NavItem>
+              <NavLink href="/table">Table</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href="/pictures">Pictures</NavLink>
             </NavItem>
             <NavItem>
@@ -67,6 +71,7 @@ class PrimaryLayout extends Component {
 
         <Switch>
             <Route exact path="/"         component={Home} />
+            <Route       path="/table"    component={Table} />
             <Route       path="/pictures" component={Pictures} />
             <Route       path="/about"    component={About} />
             <Route       path="/contact"  component={Contact} />
