@@ -20,6 +20,7 @@ Refer to http://reactstrap.github.io/ for more information on reactstrap.
 
 Bootstrap React Component tests
 * about.js and contact.js test the Card container.
+* about.js and App.js demonstrate use of context (see ThemeContext)
 * home.js tests the Navbar
 * pictures.js tests the Carousel container.
 
