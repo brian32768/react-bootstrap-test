@@ -3,10 +3,9 @@
 // The real work is done in components included here.
 
 // React
-import React, { Component } from 'react';
-import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom';
-import {ThemeContext, themes} from './theme-context';
-import {MapContext} from './map-context';
+import React, { Component } from 'react'
+import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
+import {ThemeContext, themes} from './theme-context'
 
 // Bootstrap (reactstrap in this case)
 import {
@@ -18,18 +17,18 @@ import {
     NavItem,
     NavLink,
     Button
-} from 'reactstrap';
+} from 'reactstrap'
 
 // My own React components
-import SpecialDay from './specialday';
-import Table from './table';
-import Pictures from './pictures';
-import Home from './home';
-import About from './about';
-import Contact from './contact';
-import NotFound from './notfound';
+import SpecialDay from './specialday'
+import Table from './table'
+import Pictures from './pictures'
+import Home from './home'
+import About from './about'
+import Contact from './contact'
+import NotFound from './notfound'
 
-import './App.css';
+import './App.css'
 
 class PrimaryLayout extends Component {
     constructor() {
@@ -38,8 +37,7 @@ class PrimaryLayout extends Component {
         this.toggleTheme = this.toggleTheme.bind(this);
         this.state = {
             isOpen: false,
-            theme: themes.light,
-            map: ''
+            theme: themes.light
         };
     }
 
@@ -60,7 +58,6 @@ class PrimaryLayout extends Component {
         return (
           <div>
           <ThemeContext.Provider value={this.state.theme}>
-          <MapContext.Provider value={this.state.map}>
 
             <Navbar color="light" light expand="md">
               <NavbarBrand href="/">
@@ -99,7 +96,6 @@ class PrimaryLayout extends Component {
                 <Redirect to="/404" />
             </Switch>
 
-        </MapContext.Provider>
         </ThemeContext.Provider>
         </div>
         );

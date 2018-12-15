@@ -1,95 +1,88 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {MapContext} from './map-context'
-import {Container, Row, Col, Button, Tooltip} from 'reactstrap';
+import {LayerContext} from './layer-context'
+import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
+import Map from './map.js'
 
-// I am trying to test composition here
-// (see https://reactjs.org/docs/context.html "Before You Use Context")
-//
-// A layer can have only one source
-
-class Map extends Component {
-    componentWillReceiveProps() {
-        console.log("Map.componentWillReceiveProps()");
-    }
-
-    render() {
-        console.log("Map.render(), props=", this.props)
-        return (
-            <div ref="target">
-                <h3>map of {this.props.name}</h3>
-                {this.props.children}
-            </div>
-        );
-    }
-}
-Map.propTypes = {
-    name: PropTypes.string.isRequired
-}
+// I need to know about both the upstream MapContext
+// so that I can add my new layer to the map
+// and I need to create my own LayerContext
+// so that I can tell my child Source component how to find my callback.
 
 class Layer extends Component {
     constructor(props) {
         super(props);
-        let mySource = props.children;
-        console.log('Layer.new source=', mySource.props)
-        this.state = {
-            source: mySource.props
-        };
+        this.setSource = this.setSource.bind(this);
+        console.log('Layer.new props=', props)
     }
 
-    setSource(s) {
-        console.log("Layer.setSource(", s, ")");
-        return 0;
+    setSource(olsource) {
+        // callback from our child Source component
+        console.log("Layer.setSource(",this.props.name,") olsource=", olsource);
+        // IRL, we'd call OL here, something like this:
+        // layer.setSource(olsource)
     }
 
     componentDidMount() {
-        console.log("Layer.componentDidMount(). Setting layer source to",
-            this.state.source.url)
-        this.setSource(this.state.source)
+        console.log("Layer.componentDidMount().");
     }
 
     componentWillReceiveProps() {
-        console.log("Layer.componentWillReceiveProps() Setting layer source to",
-            this.state.source.url)
-        this.setSource(this.state.source)
+        console.log("Layer.componentWillReceiveProps()");
     }
 
     render() {
-        console.log("Layer.render() source=", this.state.source)
+        console.log("Layer.render props=", this.props.children);
+
+        {/* In a more perfect world I'd be able to pass the callback as a property
+            instead of inside a context but I cannot figure out how
+            This gives an error that props is not extensible
+
+            Oh well, context works for now. */}
+        //this.props.children.props.callback = this.setSource;
+
         return (
             <div>
-                Layer {this.props.name} says "My map is of <b>{this.context} </b>
-                and my source is {this.props.children}." <br />
+                <LayerContext.Provider value={{onSetSource:this.setSource}}>
+                {this.props.children}
+                </LayerContext.Provider>
             </div>
         );
     }
 }
 Layer.contextType = MapContext;
+
 Layer.propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string.isRequired
 }
 
 class Source extends Component {
     constructor(props) {
-        console.log("Source.new props=", props);
         super(props);
+        let d = Math.round(Math.random() * 10000).toString();
+        console.log("Source.new() magic number =", d);
+        this.state = {
+            source: d
+        }
     }
-
     componentDidMount() {
-        console.log("Source.componentDidMount()")
+        console.log("Source.componentDidMount().");
+        // I can't use this.context in the constructor because
+        // it has not been defined yet there.
+        this.context.onSetSource(this.state.source);
     }
-
-    componentWillReceiveProps() {
-        console.log("Source.componentWillReceiveProps()");
-    }
-
     render() {
-        console.log("Source.render() props=", this.props)
+        console.log("Source.render props=", this.props)
         return (
-            <em>{this.props.url}</em>
+            <div>
+            {this.state.source} {this.props.url}
+            </div>
         );
     }
 }
+Source.contextType = LayerContext;
+
 Source.propTypes = {
     url: PropTypes.string.isRequired
 }
@@ -134,30 +127,40 @@ class Home extends Component {
     render(props) {
         return (
             <div>
-            <MapContext.Provider value={this.state.map}>
+
+            {/* A Map will have its own internal MapContext, the ThemeContext wrapping around
+            everything lets me test using multiple contexts in the
+            same application.
+
+            Since there can only be a map on this "home" page it makes sense
+            to declare the Map here.
+
+            Any component between our Map tags should be able to
+            access the current OpenLayers map. (Should we actually be using OL.) */}
+
+            <Map name="starting point">
+
             <Container>
                 <Row>
                     <Col>
-                    Outside the map view but still wants the current map:
-                    {this.state.map}
+                    This row is outside the map view but still
+                    uses the current map of <b>{this.state.map}</b>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <Map name={this.state.map}>
+                    <div id="fakemap">
+                        Pretend this box contains a map. Here are my layers:
+
                         <Layer name="1">
-                            <Source
-                                url="https://map46.com"
-                                attributions="©2018 Wildsong"
-                            />
+                          <Source url="https://map46.com" attributions="©2018 Wildsong"/>
                         </Layer>
+
                         <Layer name="2">
-                            <Source
-                                url="https://openstreetmap.org"
-                                attributions="©2018 OpenStreetMap"
-                            />
+                          <Source url="https://openstreetmap.org" attributions="©2018 OpenStreetMap"/>
                         </Layer>
-                        </Map>
+
+                    </div>
                     </Col>
                 </Row>
                 <Row>
@@ -168,7 +171,9 @@ class Home extends Component {
                   </Col>
                 </Row>
             </Container>
-            </MapContext.Provider>
+
+            </Map>
+
             </div>
         );
     }

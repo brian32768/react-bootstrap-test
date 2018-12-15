@@ -58,9 +58,9 @@ footer {
 }
 
 /* MAP STUFF ============================================================= */
-#map {
+#fakemap {
     color: blue;
-    height: 75vh;
+    height: 25vh;
     background-color: rgb(182, 172, 171);
     margin: 10px;
 }
