@@ -4,10 +4,19 @@ it uses Parcel and that's not in the book so I needed a sample for testing ideas
 
 Then I moved on to chapter 11 of "React and React Native".
 
+The app is for a fictitious company called the Pigeon Messenger Service.
+
 In this project,
 I added more React code,
 I added code to do a fetch from a remote server,
 and I'm adding some glitzy Bootstrap 4 components.
+
+## Map components
+
+I added some mocked components to test passing values
+between parent and child components.
+
+An OpenLayers "Map" has a bunch of things nested inside it, including Layers and Controls. A Layer (parent) has one Source (child) but the Layer has to call setSource with the source as a parameter. So I wrote some code here to simulate this.
 
 ## Bootstrap 4 via reactstrap
 
