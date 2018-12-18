@@ -22,4 +22,4 @@ OLMap.propTypes = {
     name: PropTypes.string.isRequired
 }
 
-export default OLMap;
+export default OLMap

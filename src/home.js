@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import {MapContext} from './map-context'
 import {LayerContext} from './layer-context'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
-import Map from './map.js'
+
+import Map from './map'
+import Source from './source'
 
 // I need to know about both the upstream MapContext
 // so that I can add my new layer to the map
@@ -21,7 +23,7 @@ class Layer extends Component {
         // callback from our child Source component
         console.log("Layer.setSource(",this.props.name,") olsource=", olsource);
         // IRL, we'd call OL here, something like this:
-        // layer.setSource(olsource)
+        //layer.setSource(olsource)
     }
 
     componentDidMount() {
@@ -44,9 +46,9 @@ class Layer extends Component {
 
         return (
             <div>
-                <LayerContext.Provider value={{onSetSource:this.setSource}}>
+            <LayerContext.Provider value={{onSetSource:this.setSource}}>
                 {this.props.children}
-                </LayerContext.Provider>
+            </LayerContext.Provider>
             </div>
         );
     }
@@ -55,36 +57,6 @@ Layer.contextType = MapContext;
 
 Layer.propTypes = {
     name: PropTypes.string.isRequired
-}
-
-class Source extends Component {
-    constructor(props) {
-        super(props);
-        let d = Math.round(Math.random() * 10000).toString();
-        console.log("Source.new() magic number =", d);
-        this.state = {
-            source: d
-        }
-    }
-    componentDidMount() {
-        console.log("Source.componentDidMount().");
-        // I can't use this.context in the constructor because
-        // it has not been defined yet there.
-        this.context.onSetSource(this.state.source);
-    }
-    render() {
-        console.log("Source.render props=", this.props)
-        return (
-            <div>
-            {this.state.source} {this.props.url}
-            </div>
-        );
-    }
-}
-Source.contextType = LayerContext;
-
-Source.propTypes = {
-    url: PropTypes.string.isRequired
 }
 
 class Home extends Component {
