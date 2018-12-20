@@ -57,6 +57,11 @@ footer {
 }
 
 /* MAP STUFF ============================================================= */
+.sliders {
+    width: 600px;
+    margin: 10px;
+}
+
 #mymap {
     background-image: url("/assets/pigeon_forge.gif");
     color: blue;
@@ -68,8 +73,4 @@ footer {
 
 #scalebar {
     color: rgb(62, 162, 60);
-}
-
-#ex1Slider .slider-selection {
-	background: #BABABA;
 }

@@ -1,9 +1,11 @@
-// table.js
+// table.js react-bootstrap-test
 //
 import React from "react"
 import ReactTable from 'react-table'
+import Select, {Option, OptGroup} from 'rc-select'
 import {ThemeContext} from './theme-context'
-import "react-table/react-table.css"
+import 'react-table/react-table.css'
+import 'rc-select/assets/index.css'
 
 const items = [
     {
@@ -30,6 +32,7 @@ const columns = [{
 
 export default class Table extends React.Component {
     render() {
+        let onChange = () => {};
         let theme = this.context;
         console.log("Table.render() theme=", theme)
         const columns = [{
@@ -43,10 +46,27 @@ export default class Table extends React.Component {
                 accessor: 'text'
         }]
         return (
-          <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
-            data={items}
-            columns={columns}
-          />
+            <div>
+                <h3>single select</h3>
+                <div style={{ width: 300}}>
+                  <Select
+                  allowClear
+                  placeholder="enter name"
+                  defaultValue="lucy"
+                  style={{ width: 200 }}
+                  animation="slide-up"
+                  showSearch={false}
+                  onChange={onChange}>
+                    <Option value="jack">jack</Option>
+                    <Option value="lucy">lucy</Option>
+                    <Option value="yiminghe">yiminghe</Option>
+                  </Select>
+                </div>
+              <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
+                data={items}
+                columns={columns}
+              />
+          </div>
         );
     }
 }

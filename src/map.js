@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import {MapContext} from './map-context'
 
 class OLMap extends Component {
-    componentWillReceiveProps() {
-        console.log("Map.componentWillReceiveProps()");
+    constructor(props) {
+        super(props);
+        this.state = {
+            opacity: 100,
+        }
     }
 
     render() {

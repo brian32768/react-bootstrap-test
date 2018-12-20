@@ -40,7 +40,7 @@ export default class Layer extends Component {
     render() {
         const callChildren = (theme) => {
             return (
-                <div>
+                <div style={{opacity:this.props.opacity}}>
                 {this.props.children}
                 </div>
             );
@@ -49,7 +49,9 @@ export default class Layer extends Component {
         return (
             <ThemeContext.Consumer>
             {theme => (
-                <LayerContext.Provider value={{onSetSource:this.setSource}}>
+                <LayerContext.Provider value={{
+                    onSetSource:this.setSource
+                }}>
                     {callChildren(theme)}
                 </LayerContext.Provider>
             )}
@@ -60,5 +62,6 @@ export default class Layer extends Component {
 Layer.contextType = MapContext;
 
 Layer.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    opacity: PropTypes.number
 }

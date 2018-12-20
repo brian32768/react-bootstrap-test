@@ -8,6 +8,16 @@ import Map from './map'
 import Source from './source'
 import Layer from './layer'
 
+const cities = [
+    "Rivendell",
+    "Springfield",
+    "Smallville",
+    "Gotham City",
+    "Metropolis",
+    "Alphaville",
+    "Acropolis",
+]
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +26,8 @@ class Home extends Component {
         this.state  = {
             tooltipOpen: false,
             map: "wondercity",
-            index: 0
+            cityIndex: 0,
+            mapOpacity: 100
         };
     }
 
@@ -27,29 +38,28 @@ class Home extends Component {
     }
 
     changeMap() {
-        const cities = [
-            "Rivendell",
-            "Springfield",
-            "Smallville",
-            "Gotham City",
-            "Metropolis",
-            "Alphaville",
-            "Acropolis"
-        ]
-
-        this.setState({map: cities[this.state.index]});
-        this.state.index += 1;
-        if (this.state.index >= cities.length) {
-            this.state.index = 0;
+        this.setState({map: cities[this.state.cityIndex]});
+        this.state.cityIndex += 1;
+        if (this.state.cityIndex >= cities.length) {
+            this.state.cityIndex = 0;
         }
         console.log("changeMap", this.state)
     }
 
     render(props) {
-        console.log("Slider is a",Slider)
+        let startChangeCity = () => { console.log("start") }
+        let stopChangeCity = () =>  { console.log("stop") }
+        let updateCity = (value) => {
+            console.log("New city", value)
+            this.state.cityIndex = value
+            this.setState({map: cities[this.state.cityIndex]});
+        }
+        let changeOpacity = (value) => {
+            this.setState({mapOpacity : value});
+        }
+
         return (
             <div>
-<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
             {/* A Map will have its own internal MapContext, the ThemeContext wrapping around
             everything lets me test using multiple contexts in the
             same application.
@@ -67,8 +77,18 @@ class Home extends Component {
                     <Col>
                     This row is outside the map view but still
                     uses the current map of <b>{this.state.map}</b>
-                    <Slider />
-                    <Range />
+                    <div className="sliders">
+                        Map
+                        <Slider max={cities.length-1} value={this.state.cityIndex}
+                            onBeforeChange={startChangeCity} onAfterChange={stopChangeCity} onChange={updateCity}/>
+
+                        Layer 1 opacity {this.state.mapOpacity}%
+                        <Slider onChange={changeOpacity}
+                            value={this.state.mapOpacity}/>
+
+                        <Range />
+                    </div>
+
                     </Col>
                 </Row>
                 <Row>
@@ -76,7 +96,7 @@ class Home extends Component {
                     <div id="mymap">
                         Here are my layers:
 
-                        <Layer name="1">
+                        <Layer name="1" opacity={this.state.mapOpacity/100}>
                           <Source url="https://map46.com" attributions="©2018 Wildsong"/>
                         </Layer>
 
@@ -97,7 +117,6 @@ class Home extends Component {
             </Container>
 
             </Map>
-
             </div>
         );
     }

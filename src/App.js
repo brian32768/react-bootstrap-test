@@ -6,7 +6,6 @@
 import React, { Component } from 'react'
 import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
 import {ThemeContext, themes} from './theme-context'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 // Bootstrap (reactstrap in this case)
 import {
@@ -29,6 +28,7 @@ import About from './about'
 import Contact from './contact'
 import NotFound from './notfound'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 class PrimaryLayout extends Component {
