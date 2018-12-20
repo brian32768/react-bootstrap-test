@@ -1,3 +1,5 @@
+// about.js react-bootstrap-test
+//
 import React, {Component} from 'react';
 import {ThemeContext} from './theme-context';
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
@@ -9,7 +11,7 @@ class About extends Component {
         let inverse = (theme.name == "dark")
         console.log('About theme=', theme)
         return (
-            <div>
+            <div >
               <Card inverse={inverse} style={{backgroundColor: theme.background}}>
               <CardTitle>
                 About react-bootstrap-test

@@ -1,5 +1,5 @@
 // App.js react-bootstrap-test
-// All this functional component does is declare the user interface.
+// All this component does is declare the user interface.
 // The real work is done in components included here.
 
 // React
@@ -56,8 +56,7 @@ class PrimaryLayout extends Component {
     render() {
         console.log("App render", this.props, this.state);
         return (
-          <div>
-          <ThemeContext.Provider value={this.state.theme}>
+            <ThemeContext.Provider value={this.state.theme}>
 
             <Navbar color="light" light expand="md">
               <NavbarBrand href="/">
@@ -69,6 +68,9 @@ class PrimaryLayout extends Component {
                 <Nav className="ml-auto" navbar>
                 <NavItem>
                     <Button onClick={this.toggleTheme}>Toggle theme</Button>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/">Map</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href="/table">Table</NavLink>
@@ -96,8 +98,7 @@ class PrimaryLayout extends Component {
                 <Redirect to="/404" />
             </Switch>
 
-        </ThemeContext.Provider>
-        </div>
+            </ThemeContext.Provider>
         );
     }
 }

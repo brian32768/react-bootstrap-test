@@ -1,13 +1,13 @@
-// picture.js
+// picture.js react-bootstrap-test
 //
-import React from "react";
+import React from "react"
 import {
     Carousel,
     CarouselItem,
     CarouselControl,
     CarouselIndicators,
     CarouselCaption
-} from 'reactstrap';
+} from 'reactstrap'
 
 const items = [
     {
@@ -28,7 +28,7 @@ const items = [
     },
 ];
 
-class Pictures extends React.Component {
+export default class Pictures extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -58,7 +58,6 @@ class Pictures extends React.Component {
 
     render() {
         const { activeIndex } = this.state;
-
         const slides = items.map((item) => {
           return (
             <CarouselItem
@@ -87,5 +86,3 @@ class Pictures extends React.Component {
         );
     }
 }
-
-export default Pictures;

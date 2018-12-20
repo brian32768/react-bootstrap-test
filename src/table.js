@@ -1,8 +1,9 @@
-// picture.js
+// table.js
 //
-import React from "react";
-import ReactTable from 'react-table';
-import "react-table/react-table.css";
+import React from "react"
+import ReactTable from 'react-table'
+import {ThemeContext} from './theme-context'
+import "react-table/react-table.css"
 
 const items = [
     {
@@ -27,27 +28,26 @@ const columns = [{
     Header: 'src',
 }]
 
-class Table extends React.Component {
+export default class Table extends React.Component {
     render() {
-
-    const columns = [{
-        Header: 'src',
-        accessor: 'src'
-      }, {
-        Header: 'header',
-        accessor: 'header'
-      }, {
-        Header: 'text',
-        accessor: 'text'
-      }]
-      return (
-
-      <ReactTable
-        data={items}
-        columns={columns}
-      />
-  );
+        let theme = this.context;
+        console.log("Table.render() theme=", theme)
+        const columns = [{
+                Header: 'src',
+                accessor: 'src'
+            }, {
+                Header: 'header',
+                accessor: 'header'
+            }, {
+                Header: 'text',
+                accessor: 'text'
+        }]
+        return (
+          <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
+            data={items}
+            columns={columns}
+          />
+        );
+    }
 }
-}
-
-export default Table;
+Table.contextType = ThemeContext;

@@ -1,63 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {MapContext} from './map-context'
-import {LayerContext} from './layer-context'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
-
+import Slider, {Range} from 'rc-slider'
+import 'rc-slider/assets/index.css'
+import {ThemeContext} from './theme-context'
 import Map from './map'
 import Source from './source'
-
-// I need to know about both the upstream MapContext
-// so that I can add my new layer to the map
-// and I need to create my own LayerContext
-// so that I can tell my child Source component how to find my callback.
-
-class Layer extends Component {
-    constructor(props) {
-        super(props);
-        this.setSource = this.setSource.bind(this);
-        console.log('Layer.new props=', props)
-    }
-
-    setSource(olsource) {
-        // callback from our child Source component
-        console.log("Layer.setSource(",this.props.name,") olsource=", olsource);
-        // IRL, we'd call OL here, something like this:
-        //layer.setSource(olsource)
-    }
-
-    componentDidMount() {
-        console.log("Layer.componentDidMount().");
-    }
-
-    componentWillReceiveProps() {
-        console.log("Layer.componentWillReceiveProps()");
-    }
-
-    render() {
-        console.log("Layer.render props=", this.props.children);
-
-        {/* In a more perfect world I'd be able to pass the callback as a property
-            instead of inside a context but I cannot figure out how
-            This gives an error that props is not extensible
-
-            Oh well, context works for now. */}
-        //this.props.children.props.callback = this.setSource;
-
-        return (
-            <div>
-            <LayerContext.Provider value={{onSetSource:this.setSource}}>
-                {this.props.children}
-            </LayerContext.Provider>
-            </div>
-        );
-    }
-}
-Layer.contextType = MapContext;
-
-Layer.propTypes = {
-    name: PropTypes.string.isRequired
-}
+import Layer from './layer'
 
 class Home extends Component {
     constructor(props) {
@@ -97,9 +46,10 @@ class Home extends Component {
     }
 
     render(props) {
+        console.log("Slider is a",Slider)
         return (
             <div>
-
+<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
             {/* A Map will have its own internal MapContext, the ThemeContext wrapping around
             everything lets me test using multiple contexts in the
             same application.
@@ -117,12 +67,14 @@ class Home extends Component {
                     <Col>
                     This row is outside the map view but still
                     uses the current map of <b>{this.state.map}</b>
+                    <Slider />
+                    <Range />
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                    <div id="fakemap">
-                        Pretend this box contains a map. Here are my layers:
+                    <div id="mymap">
+                        Here are my layers:
 
                         <Layer name="1">
                           <Source url="https://map46.com" attributions="©2018 Wildsong"/>
