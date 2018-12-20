@@ -34,7 +34,6 @@ footer {
   }
 }
 
-
 .card {
 }
 
@@ -58,13 +57,19 @@ footer {
 }
 
 /* MAP STUFF ============================================================= */
-#fakemap {
+#mymap {
+    background-image: url("/assets/pigeon_forge.gif");
     color: blue;
-    height: 25vh;
+    width: 600px;
+    height: 371px;
     background-color: rgb(182, 172, 171);
     margin: 10px;
 }
 
 #scalebar {
     color: rgb(62, 162, 60);
+}
+
+#ex1Slider .slider-selection {
+	background: #BABABA;
 }
