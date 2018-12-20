@@ -2,6 +2,9 @@ dist/
 build/
 package-lock.json
 
+# Visual Studio files that get created all the time annoyingly
+.vs/
+
 # Logs
 logs
 *.log
