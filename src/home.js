@@ -4,9 +4,11 @@ import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import {ThemeContext} from './theme-context'
+
 import Map from './map'
 import Source from './source'
 import Layer from './layer'
+import Control from './control'
 
 const cities = [
     "Rivendell",
@@ -82,9 +84,11 @@ class Home extends Component {
                         <Slider max={cities.length-1} value={this.state.cityIndex}
                             onBeforeChange={startChangeCity} onAfterChange={stopChangeCity} onChange={updateCity}/>
 
-                        Layer 1 opacity {this.state.mapOpacity}%
-                        <Slider onChange={changeOpacity}
-                            value={this.state.mapOpacity}/>
+                        <Control
+                            onChange={changeOpacity}
+                            title="Layer 1"
+                            value={this.state.mapOpacity}
+                        />
 
                         <Range />
                     </div>

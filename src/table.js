@@ -7,7 +7,7 @@ import {ThemeContext} from './theme-context'
 import 'react-table/react-table.css'
 import 'rc-select/assets/index.css'
 
-const items = [
+let items = [
     {
         src: '/assets/Proud.jpg',
         header: 'Pigeon', text: ""
@@ -32,6 +32,10 @@ const columns = [{
 
 export default class Table extends React.Component {
     render() {
+
+        let i = items.pop();
+        items.push({src: '/assets/pigeon_reading_map.jpg', header: 'Pigeon reading map', text: 'Cartography, Avian'})
+
         let onChange = () => {};
         let theme = this.context;
         console.log("Table.render() theme=", theme)
@@ -47,7 +51,11 @@ export default class Table extends React.Component {
         }]
         return (
             <div>
-                <h3>single select</h3>
+            <h3>single select</h3>
+
+            There are lots of nice examples of using rc-select in the git repo
+            at https://github.com/react-component/select.git
+
                 <div style={{ width: 300}}>
                   <Select
                   allowClear
@@ -62,6 +70,8 @@ export default class Table extends React.Component {
                     <Option value="yiminghe">yiminghe</Option>
                   </Select>
                 </div>
+
+
               <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
                 data={items}
                 columns={columns}

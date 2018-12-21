@@ -30,7 +30,7 @@ export default class Layer extends Component {
     }
 
     componentDidMount() {
-        console.log("Layer.componentDidMount().");
+        console.log("Layer.componentDidMount(). context=", this.context);
     }
 
     componentWillReceiveProps() {
@@ -45,12 +45,14 @@ export default class Layer extends Component {
                 </div>
             );
         }
-        console.log("Layer.render props=", this.props.children);
+        console.log("Layer.render props=", this.props.children, this.context);
+
         return (
             <ThemeContext.Consumer>
             {theme => (
                 <LayerContext.Provider value={{
-                    onSetSource:this.setSource
+                    onSetSource: this.setSource,
+                    map:  this.context.map
                 }}>
                     {callChildren(theme)}
                 </LayerContext.Provider>

@@ -17,13 +17,15 @@ class Source extends Component {
         // I can't use this.context in the constructor because
         // it has not been defined yet there.
         this.context.onSetSource(this.state.source);
+        this.context.map.setControl({name:"Kali"});
     }
 
     render() {
         console.log("Source.render props=", this.props)
         return (
             <div>
-            {this.state.source} {this.props.url}
+                {this.state.source}
+                {this.props.url}
             </div>
         );
     }
