@@ -5,6 +5,7 @@ import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import {ThemeContext} from './theme-context'
 
+import SpecialDay from './specialday'
 import Map from './map'
 import Source from './source'
 import Layer from './layer'
@@ -77,22 +78,23 @@ class Home extends Component {
             <Container>
                 <Row>
                     <Col>
-                    This row is outside the map view but still
-                    uses the current map of <b>{this.state.map}</b>
-                    <div className="sliders">
-                        Map
-                        <Slider max={cities.length-1} value={this.state.cityIndex}
-                            onBeforeChange={startChangeCity} onAfterChange={stopChangeCity} onChange={updateCity}/>
+                        <SpecialDay /><br />
+                        These controls are outside the map view but still
+                        uses the current map of <b>{this.state.map}</b>
+                        <div className="sliders">
+                            Map selection slider
+                            <Slider max={cities.length-1} value={this.state.cityIndex}
+                                onBeforeChange={startChangeCity} onAfterChange={stopChangeCity} onChange={updateCity}/>
 
-                        <Control
-                            onChange={changeOpacity}
-                            title="Layer 1"
-                            value={this.state.mapOpacity}
-                        />
+                            <Control
+                                onChange={changeOpacity}
+                                title="Layer 1"
+                                value={this.state.mapOpacity}
+                            />
 
-                        <Range />
-                    </div>
-
+                            Range slider test
+                            <Range />
+                        </div>
                     </Col>
                 </Row>
                 <Row>

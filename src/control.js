@@ -14,10 +14,6 @@ import {ThemeContext} from './theme-context'
 */
 
 export default class Control extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="control">

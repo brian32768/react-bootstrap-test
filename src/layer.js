@@ -21,6 +21,8 @@ export default class Layer extends Component {
     constructor(props) {
         super(props);
         this.setSource = this.setSource.bind(this);
+
+        Object.assign({}, props)
         console.log('Layer.new props=', props)
     }
 

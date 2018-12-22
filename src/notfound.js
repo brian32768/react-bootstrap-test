@@ -6,7 +6,7 @@ import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap'
 const img = require('/assets/pigeon_reading_map.jpg');
 const alt = 'Pigeon reading map';
 
-const NotFound = (props) => (
+const NotFound = () => (
     <div>
       <Card className="card">
         <CardImg className="card_image" width="100%" src={img} alt={alt}></CardImg>

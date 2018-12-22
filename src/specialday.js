@@ -13,28 +13,19 @@ let nday = new Date().getDay(); // day as integer 0-6
 let day = days[nday];
 
 // Let's make the tooltip part of the component.
-class TooltipContent extends React.Component {
-    render() {
-        return (
-            <span>{day} is the {ndayth[nday]} day of the week.</span>
-        );
-    }
-}
+const TooltipContent = () => (
+    <span>{day} is the {ndayth[nday]} day of the week.</span>
+);
 
-class SpecialDay extends React.Component {
-    constructor() {
-        super();
-    }
-    render() {
-        if (nday == 5) {
-            return (
-                <b>Happy {day}!!!</b>
-            );
-        }
+const SpecialDay = () => {
+    if (nday == 5) {
         return (
-            <span>It's {day}.</span>
+            <b>Happy {day}!!!</b>
         );
     }
+    return (
+        <span>It's {day}.</span>
+    );
 }
 
 SpecialDay.TooltipContent = TooltipContent;

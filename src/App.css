@@ -56,7 +56,7 @@ footer {
     margin: 28px;
 }
 
-/* MAP STUFF ============================================================= */
+/* PRETEND MAP STUFF ============================================================= */
 .sliders {
     width: 600px;
     margin: 10px;
@@ -69,8 +69,4 @@ footer {
     height: 371px;
     background-color: rgb(182, 172, 171);
     margin: 10px;
-}
-
-#scalebar {
-    color: rgb(62, 162, 60);
 }

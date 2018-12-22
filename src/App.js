@@ -20,7 +20,6 @@ import {
 } from 'reactstrap'
 
 // My own React components
-import SpecialDay from './specialday'
 import Table from './table'
 import Pictures from './pictures'
 import Home from './home'
