@@ -32,7 +32,6 @@ class OLMap extends Component {
         );
     }
 }
-OLMap.contextType = MapContext;
 
 OLMap.propTypes = {
     name: PropTypes.string.isRequired
