@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
@@ -62,7 +62,7 @@ class Home extends Component {
         }
 
         return (
-            <div>
+            <Fragment>
             {/* A Map will have its own internal MapContext, the ThemeContext wrapping around
             everything lets me test using multiple contexts in the
             same application.
@@ -123,7 +123,7 @@ class Home extends Component {
             </Container>
 
             </Map>
-            </div>
+            </Fragment>
         );
     }
 }
