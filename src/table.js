@@ -1,41 +1,40 @@
 // table.js react-bootstrap-test
 //
-import React from "react"
+import React, { Component, Fragment } from "react"
 import ReactTable from 'react-table'
-import Select, {Option, OptGroup} from 'rc-select'
+import Select from 'react-select'
 import {ThemeContext} from './theme-context'
 import 'react-table/react-table.css'
-import 'rc-select/assets/index.css'
 
 let items = [
     {
         src: '/assets/Proud.jpg',
-        header: 'Pigeon', text: ""
+        label: 'Pigeon', text: ""
     },
     {
         src: '/assets/walking_pigeons.gif',
-        header: 'Pigeons, walking', text: ""
+        label: 'Pigeons, walking', text: ""
     },
     {
         src: '/assets/beaver.jpg',
-        header: 'Beaver', text: ""
+        label: 'Beaver', text: ""
     },
     {
         src: '/assets/lewis_and_clark.jpg',
-        header: 'Lewis and Clark', text: ""
+        label: 'Lewis and Clark', text: ""
     },
+    {
+        src: '/assets/pigeon_reading_map.jpg',
+        label: 'Pigeon reading map', text: 'Avian user of cartography'
+    }
 ];
 
 const columns = [{
     Header: 'src',
 }]
 
-export default class Table extends React.Component {
+export default class Table extends Component {
     render() {
-
-        let i = items.pop();
-        items.push({src: '/assets/pigeon_reading_map.jpg', header: 'Pigeon reading map', text: 'Cartography, Avian'})
-
         let onChange = () => {};
         let theme = this.context;
         console.log("Table.render() theme=", theme)
@@ -43,40 +42,25 @@ export default class Table extends React.Component {
                 Header: 'src',
                 accessor: 'src'
             }, {
-                Header: 'header',
-                accessor: 'header'
+                Header: 'label',
+                accessor: 'label'
             }, {
                 Header: 'text',
                 accessor: 'text'
         }]
         return (
-            <div>
+            <Fragment>
+            <h2>Table</h2>
             <h3>single select</h3>
-
-            There are lots of nice examples of using rc-select in the git repo
-            at https://github.com/react-component/select.git
-
                 <div style={{ width: 300}}>
-                  <Select
-                  allowClear
-                  placeholder="enter name"
-                  defaultValue="lucy"
-                  style={{ width: 200 }}
-                  animation="slide-up"
-                  showSearch={false}
-                  onChange={onChange}>
-                    <Option value="jack">jack</Option>
-                    <Option value="lucy">lucy</Option>
-                    <Option value="yiminghe">yiminghe</Option>
-                  </Select>
+                    <Select options={ items } />
                 </div>
-
 
               <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
                 data={items}
                 columns={columns}
               />
-          </div>
+          </Fragment>
         );
     }
 }
