@@ -56,6 +56,11 @@ footer {
     margin: 28px;
 }
 
+/* react-select */
+.basic-single {
+    width: 250px;
+}
+
 /* PRETEND MAP STUFF ============================================================= */
 .sliders {
     width: 600px;

@@ -2,9 +2,11 @@
 //
 import React, { Component, Fragment } from "react"
 import ReactTable from 'react-table'
-import Select from 'react-select'
 import {ThemeContext} from './theme-context'
 import 'react-table/react-table.css'
+
+// see https://react-select.com/
+import Select from 'react-select'
 
 let items = [
     {
@@ -52,14 +54,17 @@ export default class Table extends Component {
             <Fragment>
             <h2>Table</h2>
             <h3>single select</h3>
-                <div style={{ width: 300}}>
-                    <Select options={ items } />
-                </div>
+                <Select
+                    classNamePrefix="select"
+                    className="basic-single"
+                    defaultValue={items[0]}
+                    options={ items }
+                />
 
-              <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
+            <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
                 data={items}
                 columns={columns}
-              />
+            />
           </Fragment>
         );
     }

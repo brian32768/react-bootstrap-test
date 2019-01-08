@@ -1,6 +1,4 @@
-// picture.js react-bootstrap-test
-//
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import {
     Carousel,
     CarouselItem,
@@ -8,72 +6,41 @@ import {
     CarouselIndicators,
     CarouselCaption
 } from 'reactstrap'
+
+// see https://react-select.com/
 import Select, { components } from 'react-select'
-//import 'react-select/dist/default.css'
 
 const items = [
     {
         src: require('/assets/Proud.jpg'),
-        header: 'Pigeon',
-        text: ""
+        text: "Rock Dove",
+        value: 0, label: "Pigeon"
     },
     {
         src: require('/assets/walking_pigeons.gif'),
-        header: 'Pigeons, walking',
-        text: ""
+        text: "Out for a stroll",
+        value: 1, label: "Walking pigeons"
     },
     {
         src: require('/assets/beaver.jpg'),
-        header: 'Beaver',
-        text: ""
+        text: "Oregon State University",
+        value: 2, label: "Beaver"
     },
     {
         src: require('/assets/lewis_and_clark.jpg'),
-        header: 'Lewis and Clark',
-        text: ""
+        text: "In 1804 it was hard to get decent maps of Clatsop County.",
+        value: 3, label: "Lewis and Clark, lost again."
     },
 ];
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-];
-
-/*
-const SingleValue = ({ children, ...props }) => (
-    <components.SingleValue {...props}>
-      {children}
-    </components.SingleValue>
-);
-
-type State = {};
-
-class CustomControl extends Component<*, State> {
-  state = {};
-  render() {
-    return (
-      <Select
-        defaultValue={items[0]}
-        isClearable
-        components={{ SingleValue }}
-        isSearchable
-        name="header"
-        options={items}
-      />
-    );
-  }
-}
-*/
-
-export default class Pictures extends React.Component {
+export default class Pictures extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeIndex : 0,
-            animating: false,
-            selectedOption: null,
+            animating: false
         }
+        this.select   = this.select.bind(this);
         this.next     = this.next.bind(this);
         this.previous = this.previous.bind(this);
         this.onClick  = this.onClick.bind(this);
@@ -95,32 +62,39 @@ export default class Pictures extends React.Component {
          console.log("clicked");
     }
 
-    handleChange(selectedOption) {
-       this.setState({ selectedOption });
-       console.log(`Option selected:`, selectedOption);
+    select(options) {
+        console.log(`Option selected:`, options.value, this.state);
+        this.setState({ activeIndex: options.value });
     }
 
     render() {
-        const { selectedOption } = this.state;
-        const { activeIndex } = this.state;
+        let { activeIndex } = this.state;
+        console.log("render() activeIndex =", activeIndex);
         const slides = items.map((item) => {
           return (
             <CarouselItem
               key={item.src}
             >
-              <img src={item.src} alt={item.header} />
-              <CarouselCaption captionText={item.text} captionHeader={item.header} />
+              <img src={item.src} alt={item.label} />
+              <CarouselCaption captionText={item.text} captionHeader={item.label} />
             </CarouselItem>
           );
         });
 
         return (
-            <div>
+            <Fragment>
+            <h2>Pictures</h2>
             <Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={options}
-            />
+                allowClear
+                placeholder="picture name"
+                defaultValue="0"
+                style={{ width: 200 }}
+                animation="slide-up"
+                showSearch={ false }
+                onChange={ this.select }
+                options={ items }
+            >
+            </Select>
                 <Carousel
                     activeIndex={activeIndex}
                     next={this.next}
@@ -134,7 +108,7 @@ export default class Pictures extends React.Component {
                     <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
                     <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
                 </Carousel>
-            </div>
+            </Fragment>
         );
     }
 }
