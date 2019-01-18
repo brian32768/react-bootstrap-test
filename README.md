@@ -6,10 +6,10 @@ Then I moved on to chapter 11 of "React and React Native".
 
 The app is for a fictitious company called the Pigeon Messenger Service.
 
-In this project,
+In this project, I started with my 'react-test' project and then
 I added more React code,
-I added code to do a fetch from a remote server,
-and I'm adding some glitzy Bootstrap 4 components.
+I added code to do a fetch from a remote server (now using Axios!),
+and I added some glitzy Bootstrap 4 components using reactstrap.
 
 ## Map components
 
