@@ -109,5 +109,3 @@ const App = () => (
     </BrowserRouter>
 )
 export default App;
-
-console.log('App loaded.')

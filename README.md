@@ -1,6 +1,6 @@
 # React Bootstrap test
 This React project was started while reading "Beginning React" (packtpubs.com)
-it uses Parcel and that's not in the book so I needed a sample for testing ideas.
+It uses Parcel and that's not in the book so I needed a sample for testing ideas.
 
 Then I moved on to chapter 11 of "React and React Native".
 
@@ -38,23 +38,12 @@ Bootstrap React Component tests
 ### Development
 In the project directory, `npm start`
 will run the app in the development mode.
-The page will reload if you make edits.
+The page will reload as you make edits.
 It should open automatically in a browser; if not the URL is [http://localhost:1234](http://localhost:1234)
 
-When you edit the files, the browser copy should update automatically too as long as you leave the
-Parcel server running.
+When you edit the files, the browser copy should update automatically too as long as you leave the Parcel server running.
 
-You will also see any lint errors in the console; check for additional runtime errors in the browser debugger (usually opened with the F12 key).
-
-### Deployment
-To deploy, first run the build command: `npm run build`
-
-Output will be in the `build` folder. Parcel bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed; copy everything in `build` to your server.
-
-The first time you do `npm run build` the cssnano package will be installed, it does the minification.
+You will also see any lint errors in the console; check for additional runtime errors in the browser debugger (opened with the F12 key).
 
 ## Learn More
 To learn React, check out the [React documentation](https://reactjs.org/).

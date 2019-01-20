@@ -1,9 +1,9 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import {ThemeContext} from './theme-context'
+import { ThemeConsumer } from './theme-context'
 
 import SpecialDay from './specialday'
 import Map from './map'
@@ -22,25 +22,20 @@ const cities = [
 ]
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.toggle = this.toggle.bind(this);
-        this.changeMap = this.changeMap.bind(this);
-        this.state  = {
-            tooltipOpen: false,
-            map: "wondercity",
-            cityIndex: 0,
-            mapOpacity: 100
-        };
-    }
+    state = {
+        tooltipOpen: false,
+        map: "wondercity",
+        cityIndex: 0,
+        mapOpacity: 100
+    };
 
-    toggle() {
+    toggle = () => {
        this.setState({
          tooltipOpen: !this.state.tooltipOpen
        });
     }
 
-    changeMap() {
+    changeMap = () => {
         this.setState({map: cities[this.state.cityIndex]});
         this.state.cityIndex += 1;
         if (this.state.cityIndex >= cities.length) {
@@ -49,20 +44,21 @@ class Home extends Component {
         console.log("changeMap", this.state)
     }
 
-    render(props) {
-        let startChangeCity = () => { console.log("start") }
-        let stopChangeCity = () =>  { console.log("stop") }
-        let updateCity = (value) => {
-            console.log("New city", value)
-            this.state.cityIndex = value
-            this.setState({map: cities[this.state.cityIndex]});
-        }
-        let changeOpacity = (value) => {
-            this.setState({mapOpacity : value});
-        }
+    changeOpacity = (value) => {
+        this.setState({mapOpacity : value});
+    }
 
+    startChangeCity = () => { console.log("start") }
+    stopChangeCity = () =>  { console.log("stop") }
+    updateCity = (value) => {
+        console.log("New city", value)
+        this.state.cityIndex = value
+        this.setState({map: cities[this.state.cityIndex]});
+    }
+
+    render() {
         return (
-            <Fragment>
+            <>
             {/* A Map will have its own internal MapContext, the ThemeContext wrapping around
             everything lets me test using multiple contexts in the
             same application.
@@ -83,13 +79,16 @@ class Home extends Component {
                         uses the current map of <b>{this.state.map}</b>
                         <div className="sliders">
                             Map selection slider
-                            <Slider max={cities.length-1} value={this.state.cityIndex}
-                                onBeforeChange={startChangeCity} onAfterChange={stopChangeCity} onChange={updateCity}/>
+                            <Slider max={ cities.length-1 } value={ this.state.cityIndex }
+                                onBeforeChange={ this.startChangeCity }
+                                onAfterChange={ this.stopChangeCity }
+                                onChange={ this.updateCity }
+                            />
 
                             <Control
-                                onChange={changeOpacity}
+                                onChange={ this.changeOpacity }
                                 title="Layer 1"
-                                value={this.state.mapOpacity}
+                                value={ this.state.mapOpacity }
                             />
 
                             Range slider test
@@ -102,7 +101,7 @@ class Home extends Component {
                     <div id="mymap">
                         Here are my layers:
 
-                        <Layer name="1" opacity={this.state.mapOpacity/100}>
+                        <Layer name="1" opacity={ this.state.mapOpacity/100 }>
                           <Source url="https://map46.com" attributions="©2018 Wildsong"/>
                         </Layer>
 
@@ -115,7 +114,7 @@ class Home extends Component {
                 </Row>
                 <Row>
                     <Col>
-                    <Button onClick={this.changeMap}>Change map</Button>
+                    <Button onClick={ this.changeMap }>Change map</Button>
                     <Button tag="a" color="success" href="http://reactstrap.github.io" target="_blank">ReactStrap docs</Button>
                     <Button tag="a" href="/404test">Nowhere</Button>
                   </Col>
@@ -123,7 +122,7 @@ class Home extends Component {
             </Container>
 
             </Map>
-            </Fragment>
+            </>
         );
     }
 }

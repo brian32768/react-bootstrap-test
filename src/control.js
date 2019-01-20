@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
+import { Consumer as MapContextConsumer } from './map-context'
 import { ThemeContext } from './theme-context'
 
 /*
@@ -11,18 +12,20 @@ import { ThemeContext } from './theme-context'
 */
 
 export default class Control extends Component {
+    static propTypes = {
+        source: PropTypes.string,
+        title: PropTypes.string,
+        onChange: PropTypes.func
+    };
+    static defaultProps = {
+        title: "Default title"
+    }
     render() {
         return (
-            <Fragment>
-            {this.props.title} opacity {this.props.value}%
-            <Slider onChange={this.props.onChange} value={this.props.value}/>
-            </Fragment>
+            <div className="control">
+                {this.props.title} opacity {this.props.value}%
+                <Slider onChange={this.props.onChange} value={this.props.value}/>
+            </div>
         );
     }
 }
-
-Control.propTypes = {
-    source: PropTypes.string,
-    title: PropTypes.string,
-    onChange: PropTypes.func
-};
