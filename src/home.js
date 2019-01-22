@@ -69,7 +69,7 @@ class Home extends Component {
             Any component between our Map tags should be able to
             access the current OpenLayers map. (Should we actually be using OL.) */}
 
-            <Map name="starting point">
+            <Map name="starting point" mapnode={ this.mapnode } >
 
             <Container>
                 <Row>
@@ -98,7 +98,8 @@ class Home extends Component {
                 </Row>
                 <Row>
                     <Col>
-                    <div id="mymap">
+                    <div id="mymap" className="map"
+                        ref={ node => { this.mapnode = node }} >
                         Here are my layers:
 
                         <Layer name="1" opacity={ this.state.mapOpacity/100 }>
