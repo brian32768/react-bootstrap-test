@@ -5,7 +5,12 @@ export default class TaskList extends Component {
         console.log("TaskList", this.props);
         return (
             <>
-            a list of tasks
+            <h2>tasks</h2>
+            <ol>
+            { this.props.tasks.map(t =>
+                <li key={ t.id }>{ t.title } - { t.description }</li>
+            )}
+            </ol>
             </>
         );
     }
