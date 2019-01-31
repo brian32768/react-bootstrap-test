@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { createTask } from './actions'
 import TasksPage from './TasksPage'
 import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
 import {
@@ -99,16 +100,8 @@ class PrimaryLayout extends Component {
 }
 
 class App extends Component {
-    onCreateTask = ({
-        title,
-        description
-    }) => {
-        this.props.dispatch({
-            type: 'CREATE_TASK',
-            payload: {
-                title, description
-            }
-        });
+    onCreateTask = ({ title, description }) => {
+        this.props.dispatch(createTask({title, description}));
     }
 
     render() {
@@ -129,12 +122,11 @@ class App extends Component {
 
 // Map Redux state to component props
 let mapStateToProps = (state) => {
+    console.log("mapStateToProps", state);
     return {
         tasks: state.tasks
     }
 };
 
 // Connect the Redux datastore to the App.
-export default connect(
-    mapStateToProps
-)(App);
+export default connect(mapStateToProps)(App);

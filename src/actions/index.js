@@ -6,13 +6,14 @@ export function uniqueId() {
 // This is my action creator
 
 export function createTask({ title, description }) {
+    console.log("actions.createTask", title, description);
     return {
         type: 'CREATE_TASK',
         payload: {
             id: uniqueId(),
             title,
             description,
-            status: 'Unstarted',
+//            status: 'Unstarted',
         },
     };
 }
