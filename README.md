@@ -11,6 +11,8 @@ I added more React code,
 I added code to do a fetch from a remote server (now using Axios!),
 and I added some glitzy Bootstrap 4 components using reactstrap.
 
+Today I am adding Redux.
+
 ## Map components
 
 I added some mocked components to test passing values

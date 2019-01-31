@@ -1,13 +1,7 @@
-// App.js react-bootstrap-test
-// All this component does is declare the user interface.
-// The real work is done in components included here.
-
-// React
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import TasksPage from './TasksPage'
 import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
-import {ThemeContext, themes} from './theme-context'
-
-// Bootstrap (reactstrap in this case)
 import {
     Collapse,
     Navbar,
@@ -27,6 +21,7 @@ import About from './about'
 import Contact from './contact'
 import NotFound from './notfound'
 
+import {ThemeContext, themes} from './theme-context'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
@@ -103,9 +98,43 @@ class PrimaryLayout extends Component {
     }
 }
 
-const App = () => (
-    <BrowserRouter>
-    <PrimaryLayout/>
-    </BrowserRouter>
-)
-export default App;
+class App extends Component {
+    onCreateTask = ({
+        title,
+        description
+    }) => {
+        this.props.dispatch({
+            type: 'CREATE_TASK',
+            payload: {
+                title, description
+            }
+        });
+    }
+
+    render() {
+        console.log("App render() props=", this.props);
+        return (
+            <div className="main-content">
+            <TasksPage
+                tasks={ this.props.tasks }
+                onCreateTask={ this.onCreateTask }
+            />
+            <BrowserRouter>
+            <PrimaryLayout/>
+            </BrowserRouter>
+            </div>
+        )
+    }
+}
+
+// Map Redux state to component props
+let mapStateToProps = (state) => {
+    return {
+        tasks: state.tasks
+    }
+};
+
+// Connect the Redux datastore to the App.
+export default connect(
+    mapStateToProps
+)(App);

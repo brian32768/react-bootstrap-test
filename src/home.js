@@ -21,7 +21,7 @@ const cities = [
     "Acropolis",
 ]
 
-class Home extends Component {
+export default class Home extends Component {
     state = {
         tooltipOpen: false,
         map: "wondercity",
@@ -120,12 +120,10 @@ class Home extends Component {
                     <Button tag="a" href="/404test">Nowhere</Button>
                   </Col>
                 </Row>
-            </Container>
 
+            </Container>
             </Map>
             </>
         );
     }
 }
-
-export default Home;
