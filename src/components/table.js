@@ -1,8 +1,6 @@
-// table.js react-bootstrap-test
-//
 import React, { Component, Fragment } from "react"
 import ReactTable from 'react-table'
-import {ThemeContext} from './theme-context'
+import {ThemeContext} from '../theme-context'
 import 'react-table/react-table.css'
 
 // see https://react-select.com/

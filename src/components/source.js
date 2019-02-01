@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {LayerContext} from './layer-context'
+import {LayerContext} from '../layer-context'
 
 class Source extends Component {
     constructor(props) {

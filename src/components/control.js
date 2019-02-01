@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { Consumer as MapContextConsumer } from './map-context'
-import { ThemeContext } from './theme-context'
+import { Consumer as MapContextConsumer } from '../map-context'
+import { ThemeContext } from '../theme-context'
 
 /*
     This control has to access properties both from its immediate parent ("source")

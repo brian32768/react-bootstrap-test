@@ -1,56 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createTask } from './actions'
-import TasksPage from './TasksPage'
 import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    Button
-} from 'reactstrap'
-
-// My own React components
-import Table from './table'
-import Pictures from './pictures'
-import Home from './home'
-import About from './about'
-import Contact from './contact'
-import NotFound from './notfound'
-
+import { Collapse,
+    Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
+    Button } from 'reactstrap'
+import {About, Contact, Home, NotFound, Pictures, Table, TasksPage} from './components'
 import {ThemeContext, themes} from './theme-context'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 class PrimaryLayout extends Component {
-    constructor() {
-        super();
-        this.toggle = this.toggle.bind(this);
-        this.toggleTheme = this.toggleTheme.bind(this);
-        this.state = {
-            isOpen: false,
-            theme: themes.light
-        };
-    }
+    state = {
+        isOpen: false,
+        theme: themes.light
+    };
 
-    toggle() {
+    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
 
-    toggleTheme() {
+    toggleTheme = () => {
         this.setState({
             theme: (this.state.theme.name=="dark")? themes.light : themes.dark
         });
     }
 
+    onCreateTask = ({ title, description }) => {
+        this.props.dispatch(createTask({title, description}));
+    }
+
     render() {
-        console.log("App render", this.props, this.state);
+        console.log("PrimaryLayout() render", this.props, this.state);
         return (
             <ThemeContext.Provider value={this.state.theme}>
 
@@ -72,6 +55,9 @@ class PrimaryLayout extends Component {
                   <NavLink href="/table">Table</NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink href="/tasks">Tasks</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink href="/pictures">Pictures</NavLink>
                 </NavItem>
                 <NavItem>
@@ -90,8 +76,16 @@ class PrimaryLayout extends Component {
                 <Route       path="/pictures" component={Pictures} />
                 <Route       path="/about"    component={About} />
                 <Route       path="/contact"  component={Contact} />
-                <Route       path="/404"      component={NotFound} />
-                <Redirect to="/404" />
+
+                <Route path="/tasks" render={() => {
+                    return (
+                        <TasksPage
+                            tasks={ this.props.tasks }
+                            onCreateTask={ this.onCreateTask }
+                        />
+                    );
+                }} />
+                <Route component={NotFound} />
             </Switch>
 
             </ThemeContext.Provider>
@@ -99,23 +93,15 @@ class PrimaryLayout extends Component {
     }
 }
 
-class App extends Component {
-    onCreateTask = ({ title, description }) => {
-        this.props.dispatch(createTask({title, description}));
-    }
 
+class App extends Component {
     render() {
-        console.log("App render() props=", this.props);
         return (
-            <div className="main-content">
-            <TasksPage
-                tasks={ this.props.tasks }
-                onCreateTask={ this.onCreateTask }
-            />
+            <>
             <BrowserRouter>
-            <PrimaryLayout/>
+            <PrimaryLayout dispatch={this.props.dispatch} tasks={this.props.tasks}/>
             </BrowserRouter>
-            </div>
+            </>
         )
     }
 }
@@ -128,5 +114,5 @@ let mapStateToProps = (state) => {
     }
 };
 
-// Connect the Redux datastore to the App.
+// Connect the Redux datastore to the app.
 export default connect(mapStateToProps)(App);

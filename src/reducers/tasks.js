@@ -21,7 +21,7 @@ const tasks = (state = { tasks: mockTasks }, action) => {
             console.log("reducers CREATE_TASK");
             return { tasks: state.tasks.concat(action.payload) };
     }
-    console.log("Unrecognized action:", action.type, " state not changed.");
+    console.log("Unrecognized action:", action.type, "; state not changed.");
     return state;
 }
 

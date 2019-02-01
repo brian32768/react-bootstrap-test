@@ -4,10 +4,10 @@ import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 
 // We have not 1 but 2 upstream context here,
 // to specify a theme and map stuff and
-import {ThemeContext} from './theme-context'
-import {MapContext} from './map-context'
+import {ThemeContext} from '../theme-context'
+import {MapContext} from '../map-context'
 // a downstream context, to pass stuff to child components
-import {LayerContext} from './layer-context'
+import {LayerContext} from '../layer-context'
 
 import Map from './map'
 import Source from './source'

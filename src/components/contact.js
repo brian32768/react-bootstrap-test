@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Card, CardImg, CardText, CardBody,
          CardTitle, CardSubtitle, Button } from 'reactstrap'
-import {ThemeContext} from './theme-context'
+import {ThemeContext} from '../theme-context'
 
 const img = require('/assets/Proud.jpg');
 const alt = 'This is a pigeon';

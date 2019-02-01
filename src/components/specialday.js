@@ -1,7 +1,3 @@
-// specialday.js
-// Example of a component implemented as a function instead of a class;
-// it celebrates Friday.
-//
 import React from "react";
 import ReactDOM from "react-dom";
 

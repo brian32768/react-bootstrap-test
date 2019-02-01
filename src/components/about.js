@@ -1,10 +1,8 @@
-// about.js react-bootstrap-test
-//
 import React, {Component} from 'react';
-import {ThemeContext} from './theme-context';
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
+import {ThemeContext} from '../theme-context';
 
-class About extends Component {
+export default class About extends Component {
     render() {
         let props = this.props;
         let theme = this.context;
@@ -26,5 +24,3 @@ class About extends Component {
     }
 }
 About.contextType = ThemeContext;
-
-export default About;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { ThemeConsumer } from './theme-context'
+import { ThemeConsumer } from '../theme-context'
 
 import SpecialDay from './specialday'
 import Map from './map'
