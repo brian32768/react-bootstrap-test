@@ -1,28 +1,57 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
 import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
+import deepmerge from 'deepmerge'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { devToolsEnhancer } from 'redux-devtools-extension'
 import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Button } from 'reactstrap'
-import { Provider } from 'react-redux'
-import { tasks } from './src/reducers'
 import { connect } from 'react-redux'
 import { createTask } from './actions'
 import {About, Contact, Home, NotFound, Pictures, Table, TasksPage} from './components'
-import {ThemeContext, themes} from './theme-context'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import { uniqueId } from './actions'
+import { themes } from './theme-context'
+import './index.css'
 
-let store = createStore(tasks,
-    devToolsEnhancer({ trace: true, traceLimit: 25 }));
-    state = {
-        isOpen: false,
-        theme: themes.light
-    };
+const initialState = {
+    theme: themes.light,
 
-    toggle = () => {
+    tasks: [
+        {
+            id: uniqueId(),
+            title: 'Learn Redux',
+            description: 'The store, actions, and reducers, oh my!',
+            status: 'In Progress',
+        },
+        {
+            id: uniqueId(),
+            title: 'Peace on Earth',
+            description: 'No big deal.',
+            status: 'In Progress',
+        },
+    ]
+}
+
+const reducer = (state = initialState, action) => {
+    switch(action.type) {
+        case 'CREATE_TASK':
+            console.log("reducer CREATE_TASK");
+            let newState = {
+                tasks: state.tasks.concat(action.payload)
+            };
+            return deepmerge(state, newState);
+    }
+    console.log("Unrecognized action:", action.type, "; state not changed.");
+    return state;
+}
+
+let store = createStore(reducer, initialState);
+//    devToolsEnhancer({ trace: true, traceLimit: 25 }));
+
+/*    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
@@ -33,27 +62,24 @@ let store = createStore(tasks,
             theme: (this.state.theme.name=="dark")? themes.light : themes.dark
         });
     }
-
-    onCreateTask = ({ title, description }) => {
+onCreateTask = ({ title, description }) => {
         this.props.dispatch(createTask({title, description}));
     }
 
+    */
+
 ReactDOM.render(
     <Provider store={store}>
-
-    <BrowserRouter>
-    <ThemeContext.Provider value={this.state.theme}>
 
     <Navbar color="light" light expand="md">
       <NavbarBrand href="/">
         <span id="sitelogo"></span>
         <span id="sitename"></span>
       </NavbarBrand>
-      <NavbarToggler onClick={this.toggle} />
-      <Collapse isOpen={this.state.isOpen} navbar>
+      <Collapse isOpen={ true } navbar>
         <Nav className="ml-auto" navbar>
         <NavItem>
-            <Button onClick={this.toggleTheme}>Toggle theme</Button>
+            <Button>Toggle theme</Button>
         </NavItem>
         <NavItem>
           <NavLink href="/">Map</NavLink>
@@ -77,6 +103,7 @@ ReactDOM.render(
       </Collapse>
     </Navbar>
 
+    <BrowserRouter>
     <Switch>
         <Route exact path="/"         component={Home} />
         <Route       path="/table"    component={Table} />
@@ -88,20 +115,21 @@ ReactDOM.render(
             return (
                 <TasksPage
                     tasks={ this.props.tasks }
-                    onCreateTask={ this.onCreateTask }
+                    onCreateTask={ ({ title, description }) => {
+                            this.props.dispatch(createTask({title, description}));
+                        }
+                    }
                 />
             );
         }} />
         <Route component={NotFound} />
     </Switch>
-
-    </ThemeContext.Provider>
     </BrowserRouter>
-
     </Provider>,
     document.getElementById("app")
 );
 
+/*
 // Map Redux state to component props
 let mapStateToProps = (state) => {
     console.log("mapStateToProps", state);
@@ -112,3 +140,4 @@ let mapStateToProps = (state) => {
 
 // Connect the Redux datastore to the app.
 export default connect(mapStateToProps)(App);
+*/

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import NewTask from './newtask'
 import TaskList from './tasklist'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../App.css'
 
 export default class TasksPage extends Component {
     render() {
