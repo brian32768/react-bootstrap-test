@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
+import { connect } from 'react-redux'
 
 import SpecialDay from './specialday'
 import Map from './map'
@@ -20,7 +21,7 @@ const cities = [
     "Acropolis",
 ]
 
-export default class Home extends Component {
+class Home extends Component {
     state = {
         tooltipOpen: false,
         map: "wondercity",
@@ -126,3 +127,16 @@ export default class Home extends Component {
         );
     }
 }
+
+// Map Redux state to component props
+// We're just going to grab the part of the Redux state
+// that we need here and ignore the rest.
+
+let mapStateToProps = (state) => {
+    return {
+        theme: state.theme
+    };
+}
+
+// Connect the Redux datastore to the app.
+export default connect(mapStateToProps)(Home);

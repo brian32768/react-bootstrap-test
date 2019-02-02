@@ -66,67 +66,45 @@ let store = createStore(reducer, initialState);
 
     */
 
-function render() {
-    ReactDOM.render(
-        <Provider store={store}>
-        <MyNavbar {...store} />
-        <BrowserRouter>
-        <Switch>
-            <Route exact path="/" store={ store }
-                render={() =>
-                    <Home {...store.getState().theme} />}
-            />
+ReactDOM.render(
+    <Provider store={store}>
+    <MyNavbar {...store} />
+    <BrowserRouter>
+    <Switch>
+        <Route exact path="/" component={Home} />
 
-            <Route  path="/table" store={ store }
-                render={() =>
-                    <Table {...store.getState().theme} />}
-            />
+        <Route  path="/table" store={ store }
+            render={() =>
+                <Table {...store.getState().theme} />}
+        />
 
-            <Route path="/pictures" store={ store }
-                render={() =>
-                    <Pictures {...store.getState().theme} />}
-            />
+        <Route path="/pictures" store={ store }
+            render={() =>
+                <Pictures {...store.getState().theme} />}
+        />
 
-            <Route path="/about" store={ store }
-                render={() =>
-                    <About {...store.getState().theme} />}
-            />
+        <Route path="/about" store={ store }
+            render={() =>
+                <About {...store.getState().theme} />}
+        />
 
-            <Route path="/contact" store={ store }
-                render={() =>
-                    <Contact {...store.getState().theme} />}
-            />
+        <Route path="/contact" store={ store }
+            render={() =>
+                <Contact {...store.getState().theme} />}
+        />
 
-            <Route path="/tasks" store={ store }
-                render={() =>
-                    <TasksPage {...store.getState()} />}
-            />
+        <Route path="/tasks" store={ store }
+            render={() =>
+                <TasksPage {...store.getState()} />}
+        />
 
-            <Route store={ store }
-                render={() =>
-                    <NotFound  {...store.getState().theme} />}
-            />
+        <Route store={ store }
+            render={() =>
+                <NotFound  {...store.getState().theme} />}
+        />
 
-        </Switch>
-        </BrowserRouter>
-        </Provider>,
-        document.getElementById("app")
-    );
-}
-
-// This will cause render to be called every time state changes
-store.subscribe(render)
-render();
-
-/*
-// Map Redux state to component props
-let mapStateToProps = (state) => {
-    console.log("mapStateToProps", state);
-    return {
-        tasks: state.tasks
-    }
-};
-
-// Connect the Redux datastore to the app.
-export default connect(mapStateToProps)(App);
-*/
+    </Switch>
+    </BrowserRouter>
+    </Provider>,
+    document.getElementById("app")
+);
