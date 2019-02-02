@@ -7,3 +7,5 @@ export {default as Table} from './table';
 export {default as NewTask} from './newtask';
 export {default as TasksPage} from './taskspage';
 export {default as TaskList} from './tasklist';
+
+export {default as MyNavbar} from './navbar';

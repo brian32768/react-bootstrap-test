@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 import { Card, CardImg, CardText, CardBody,
          CardTitle, CardSubtitle, Button } from 'reactstrap'
-import {ThemeContext} from '../theme-context'
 
 const img = require('/assets/Proud.jpg');
 const alt = 'This is a pigeon';
 
 export default class Contact extends Component {
     render() {
-        let theme = this.context;
+        let theme = this.props;
         let inverse = (theme.name == "dark")
         console.log("Contact.render() theme=", theme.name)
         return (
@@ -27,4 +26,3 @@ export default class Contact extends Component {
         );
     }
 }
-Contact.contextType = ThemeContext;

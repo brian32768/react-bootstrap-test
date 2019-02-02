@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
+import PropTypes from 'prop-types'
 import ReactTable from 'react-table'
-import {ThemeContext} from '../theme-context'
 import 'react-table/react-table.css'
 
 // see https://react-select.com/
@@ -36,7 +36,7 @@ const columns = [{
 export default class Table extends Component {
     render() {
         let onChange = () => {};
-        let theme = this.context;
+        let theme = this.props;
         console.log("Table.render() theme=", theme)
         const columns = [{
                 Header: 'src',
@@ -49,7 +49,7 @@ export default class Table extends Component {
                 accessor: 'text'
         }]
         return (
-            <Fragment>
+            <>
             <h2>Table</h2>
             <h3>single select</h3>
                 <Select
@@ -63,8 +63,7 @@ export default class Table extends Component {
                 data={items}
                 columns={columns}
             />
-          </Fragment>
+          </>
         );
     }
 }
-Table.contextType = ThemeContext;

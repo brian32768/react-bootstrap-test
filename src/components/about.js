@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
-import {ThemeContext} from '../theme-context';
 
 export default class About extends Component {
     render() {
-        let props = this.props;
-        let theme = this.context;
+        let theme = this.props;
         let inverse = (theme.name == "dark")
-        console.log('About theme=', theme)
         return (
             <div >
               <Card inverse={inverse} style={{backgroundColor: theme.background}}>
@@ -15,12 +12,11 @@ export default class About extends Component {
                 About react-bootstrap-test
               </CardTitle>
               <CardText>
-                  This app is a test of React and Bootstrap.
-                  Can you tell this is using a "{theme.name}" theme?
+                  This app is a test of React and Bootstrap.<br/>
+                  Can you tell this is using the "{theme.name}" theme?
               </CardText>
               </Card>
             </div>
         );
     }
 }
-About.contextType = ThemeContext;

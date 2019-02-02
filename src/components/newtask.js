@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg,
     Button} from 'reactstrap'
-import {ThemeContext} from '../theme-context'
 
 export default class NewTask extends Component {
     state = {
@@ -35,7 +34,7 @@ export default class NewTask extends Component {
         }
 
     render() {
-        let theme = this.context;
+        let theme = this.props.theme;
         let inverse = (theme.name == "dark");
         return (
             <Card>
@@ -50,4 +49,3 @@ export default class NewTask extends Component {
         );
     }
 }
-NewTask.contextType = ThemeContext;

@@ -5,19 +5,17 @@ import deepmerge from 'deepmerge'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { devToolsEnhancer } from 'redux-devtools-extension'
-import { Collapse,
-    Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-    Button } from 'reactstrap'
 import { connect } from 'react-redux'
 import { createTask } from './actions'
+import { MyNavbar } from './components'
 import {About, Contact, Home, NotFound, Pictures, Table, TasksPage} from './components'
 import 'bootstrap/dist/css/bootstrap.css'
 import { uniqueId } from './actions'
-import { themes } from './theme-context'
+import { themes } from './themes'
 import './index.css'
 
 const initialState = {
-    theme: themes.light,
+    theme: themes.dark,
 
     tasks: [
         {
@@ -36,10 +34,16 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
+    let newState;
     switch(action.type) {
+        case 'TOGGLE_THEME':
+            newState = {
+                theme: (state.theme.name=='light')?
+                    themes.dark : themes.light
+            };
+            return deepmerge(state, newState);
         case 'CREATE_TASK':
-            console.log("reducer CREATE_TASK");
-            let newState = {
+            newState = {
                 tasks: state.tasks.concat(action.payload)
             };
             return deepmerge(state, newState);
@@ -51,83 +55,68 @@ const reducer = (state = initialState, action) => {
 let store = createStore(reducer, initialState);
 //    devToolsEnhancer({ trace: true, traceLimit: 25 }));
 
-/*    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
-
-    toggleTheme = () => {
-        this.setState({
-            theme: (this.state.theme.name=="dark")? themes.light : themes.dark
-        });
-    }
-onCreateTask = ({ title, description }) => {
+/*    onCreateTask = ({ title, description }) => {
         this.props.dispatch(createTask({title, description}));
     }
 
+    tasks={ this.props.tasks }
+    onCreateTask={ ({title, description}) => {
+        this.props.dispatch(createTask({title, description}));
+} />
+
     */
 
-ReactDOM.render(
-    <Provider store={store}>
+function render() {
+    ReactDOM.render(
+        <Provider store={store}>
+        <MyNavbar {...store} />
+        <BrowserRouter>
+        <Switch>
+            <Route exact path="/" store={ store }
+                render={() =>
+                    <Home {...store.getState().theme} />}
+            />
 
-    <Navbar color="light" light expand="md">
-      <NavbarBrand href="/">
-        <span id="sitelogo"></span>
-        <span id="sitename"></span>
-      </NavbarBrand>
-      <Collapse isOpen={ true } navbar>
-        <Nav className="ml-auto" navbar>
-        <NavItem>
-            <Button>Toggle theme</Button>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/">Map</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/table">Table</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/tasks">Tasks</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/pictures">Pictures</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/about">About</NavLink>
-        </NavItem>
-        <NavItem>
-            <NavLink href="/contact">Contact us</NavLink>
-        </NavItem>
-        </Nav>
-      </Collapse>
-    </Navbar>
+            <Route  path="/table" store={ store }
+                render={() =>
+                    <Table {...store.getState().theme} />}
+            />
 
-    <BrowserRouter>
-    <Switch>
-        <Route exact path="/"         component={Home} />
-        <Route       path="/table"    component={Table} />
-        <Route       path="/pictures" component={Pictures} />
-        <Route       path="/about"    component={About} />
-        <Route       path="/contact"  component={Contact} />
+            <Route path="/pictures" store={ store }
+                render={() =>
+                    <Pictures {...store.getState().theme} />}
+            />
 
-        <Route path="/tasks" render={() => {
-            return (
-                <TasksPage
-                    tasks={ this.props.tasks }
-                    onCreateTask={ ({ title, description }) => {
-                            this.props.dispatch(createTask({title, description}));
-                        }
-                    }
-                />
-            );
-        }} />
-        <Route component={NotFound} />
-    </Switch>
-    </BrowserRouter>
-    </Provider>,
-    document.getElementById("app")
-);
+            <Route path="/about" store={ store }
+                render={() =>
+                    <About {...store.getState().theme} />}
+            />
+
+            <Route path="/contact" store={ store }
+                render={() =>
+                    <Contact {...store.getState().theme} />}
+            />
+
+            <Route path="/tasks" store={ store }
+                render={() =>
+                    <TasksPage {...store.getState()} />}
+            />
+
+            <Route store={ store }
+                render={() =>
+                    <NotFound  {...store.getState().theme} />}
+            />
+
+        </Switch>
+        </BrowserRouter>
+        </Provider>,
+        document.getElementById("app")
+    );
+}
+
+// This will cause render to be called every time state changes
+store.subscribe(render)
+render();
 
 /*
 // Map Redux state to component props

@@ -4,7 +4,6 @@ import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 
 // We have not 1 but 2 upstream context here,
 // to specify a theme and map stuff and
-import {ThemeContext} from '../theme-context'
 import {MapContext} from '../map-context'
 // a downstream context, to pass stuff to child components
 import {LayerContext} from '../layer-context'
@@ -40,7 +39,7 @@ export default class Layer extends Component {
     }
 
     render() {
-        const callChildren = (theme) => {
+        const callChildren = () => {
             return (
                 <div style={{opacity:this.props.opacity}}>
                 {this.props.children}
@@ -50,17 +49,19 @@ export default class Layer extends Component {
         console.log("Layer.render props=", this.props.children, this.context);
 
         return (
-            <ThemeContext.Consumer>
-            {theme => (
-                <LayerContext.Provider value={{
-                    onSetSource: this.setSource,
-                    map:  this.context.map
-                }}>
-                    {callChildren(theme)}
-                </LayerContext.Provider>
-            )}
-            </ThemeContext.Consumer>
+            <>
+            layer needs some work
+            </>
         );
+/*        {() => (
+            <LayerContext.Provider value={{
+                onSetSource: this.setSource,
+                map:  this.context.map
+            }}>
+            {callChildren()}
+            </LayerContext.Provider>
+        )}
+        */
     }
 }
 Layer.contextType = MapContext;
