@@ -1,28 +1,33 @@
+import deepmerge from 'deepmerge'
 import { uniqueId } from '../actions'
 
-const mockTasks = [
-    {
-        id: uniqueId(),
-        title: 'Learn Redux',
-        description: 'The store, actions, and reducers, oh my!',
-        status: 'In Progress',
-    },
-    {
-        id: uniqueId(),
-        title: 'Peace on Earth',
-        description: 'No big deal.',
-        status: 'In Progress',
-    },
-];
+const initialState = {
+    tasks: [
+        {
+            id: uniqueId(),
+            title: 'Learn Redux',
+            description: 'The store, actions, and reducers, oh my!',
+            status: 'In Progress',
+        },
+        {
+            id: uniqueId(),
+            title: 'Peace on Earth',
+            description: 'No big deal.',
+            status: 'In Progress',
+        },
+    ]
+};
 
-const tasks = (state = { tasks: mockTasks }, action) => {
+const reducer = (state=initialState, action) => {
+    let newstate;
     switch(action.type) {
         case 'CREATE_TASK':
-            console.log("reducers CREATE_TASK");
-            return { tasks: state.tasks.concat(action.payload) };
+            newstate = { tasks: state.tasks.concat(action.payload) };
+            break;
+        default:
+            newstate = state;
     }
-    console.log("Unrecognized action:", action.type, "; state not changed.");
-    return state;
+    return newstate;
 }
 
-export default tasks;
+export default reducer

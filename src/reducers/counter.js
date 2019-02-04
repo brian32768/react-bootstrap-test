@@ -1,4 +1,13 @@
-const counter = (state={count:0}, action) => {
+/* The combinReducer rules:
+    1. Must always return a valid state, even if action is unknown.
+    2. Must return an initial state if state is undefined.
+*/
+
+const initialState = {
+    count: 0
+}
+
+const reducer = (state=initialState, action) => {
     let count = state.count;
     let newstate;
     switch (action.type) {
@@ -13,10 +22,9 @@ const counter = (state={count:0}, action) => {
             };
             break;
         default:
-            console.log("Unknown action requested", action)
-            return state;
+            newstate = state;
     }
     return newstate;
 }
 
-export default counter
+export default reducer

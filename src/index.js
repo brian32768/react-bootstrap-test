@@ -1,59 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
-import deepmerge from 'deepmerge'
+import reducer from './reducers'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
 import { connect } from 'react-redux'
-import { createTask } from './actions'
 import { MyNavbar } from './components'
 import {About, Contact, Home, NotFound, Pictures, Table, TasksPage} from './components'
 import 'bootstrap/dist/css/bootstrap.css'
-import { uniqueId } from './actions'
+import { createTask } from './actions'
 import { themes } from './themes'
 import './index.css'
 
-const initialState = {
-    theme: themes.dark,
+const store = createStore(reducer);
+console.log(store.getState());
 
-    tasks: [
-        {
-            id: uniqueId(),
-            title: 'Learn Redux',
-            description: 'The store, actions, and reducers, oh my!',
-            status: 'In Progress',
-        },
-        {
-            id: uniqueId(),
-            title: 'Peace on Earth',
-            description: 'No big deal.',
-            status: 'In Progress',
-        },
-    ]
-}
-
-const reducer = (state = initialState, action) => {
-    let newState;
-    switch(action.type) {
-        case 'TOGGLE_THEME':
-            newState = {
-                theme: (state.theme.name=='light')?
-                    themes.dark : themes.light
-            };
-            return deepmerge(state, newState);
-        case 'CREATE_TASK':
-            newState = {
-                tasks: state.tasks.concat(action.payload)
-            };
-            return deepmerge(state, newState);
-    }
-    console.log("Unrecognized action:", action.type, "; state not changed.");
-    return state;
-}
-
-let store = createStore(reducer, initialState);
-//    devToolsEnhancer({ trace: true, traceLimit: 25 }));
+store.dispatch(createTask({
+    title:"Learn more about Redux", description:"Expand the state." })
+);
+console.log(store.getState());
 
 /*    onCreateTask = ({ title, description }) => {
         this.props.dispatch(createTask({title, description}));

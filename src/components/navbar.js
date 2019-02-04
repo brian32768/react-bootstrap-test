@@ -1,7 +1,9 @@
 import React from 'react'
+import { toggleTheme } from '../actions'
 import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Button } from 'reactstrap'
+
 
 export default class MyNavbar extends React.Component {
     state = {
@@ -14,16 +16,14 @@ export default class MyNavbar extends React.Component {
     }
 
     toggleTheme = (e) => {
-        this.props.dispatch(
-            { type: 'TOGGLE_THEME', payload: null }
-        )
+        this.props.dispatch(toggleTheme());
     }
 
     render() {
         let theme = this.props.getState().theme;
         return (
             <>
-                <Navbar color={ theme.name } light expand="md">
+                <Navbar light expand="md">
                     <NavbarBrand href="/">
                         <span id="sitelogo"></span>
                         <span id="sitename"></span>

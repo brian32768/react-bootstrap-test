@@ -3,7 +3,7 @@ export function uniqueId() {
     return _id++;
 }
 
-// This is my action creator
+// Here are my action creators
 
 export function createTask({ title, description }) {
     console.log("actions.createTask", title, description);
@@ -14,6 +14,16 @@ export function createTask({ title, description }) {
             title,
             description,
 //            status: 'Unstarted',
+        },
+    };
+}
+
+export function toggleTheme() {
+    console.log("actions.toggleTheme");
+    return {
+        type: 'TOGGLE_THEME',
+        payload: {
+            id: uniqueId(),
         },
     };
 }
