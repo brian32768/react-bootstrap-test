@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
 
-export default class About extends Component {
+class About extends Component {
     render() {
-        let theme = this.props;
+        let theme = this.props.theme;
         let inverse = (theme.name == "dark")
         return (
-            <div >
-              <Card inverse={inverse} style={{backgroundColor: theme.background}}>
+            <Card inverse={inverse} style={{backgroundColor: theme.background}}>
               <CardTitle>
                 About react-bootstrap-test
               </CardTitle>
@@ -15,8 +15,10 @@ export default class About extends Component {
                   This app is a test of React and Bootstrap.<br/>
                   Can you tell this is using the "{theme.name}" theme?
               </CardText>
-              </Card>
-            </div>
+            </Card>
         );
     }
 }
+
+let mapStateToProps = (state) => ( state.theme );
+export default connect(mapStateToProps)(About);

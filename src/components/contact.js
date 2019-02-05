@@ -1,15 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Card, CardImg, CardText, CardBody,
          CardTitle, CardSubtitle, Button } from 'reactstrap'
 
 const img = require('/assets/Proud.jpg');
 const alt = 'This is a pigeon';
 
-export default class Contact extends Component {
+class Contact extends Component {
     render() {
-        let theme = this.props;
+        let theme = this.props.theme;
         let inverse = (theme.name == "dark")
-        console.log("Contact.render() theme=", theme.name)
         return (
             <div>
               <Card inverse={inverse} style={{backgroundColor: theme.background}} >
@@ -26,3 +26,6 @@ export default class Contact extends Component {
         );
     }
 }
+
+let mapStateToProps = (state) => ( state.theme );
+export default connect(mapStateToProps)(Contact);

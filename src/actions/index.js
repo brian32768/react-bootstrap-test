@@ -13,7 +13,17 @@ export function createTask({ title, description }) {
             id: uniqueId(),
             title,
             description,
-//            status: 'Unstarted',
+            status: 'Unstarted',
+        },
+    };
+}
+export function changeTaskStatus({ id, status }) {
+    console.log("actions.changeTaskStatus", id, status);
+    return {
+        type: 'CHNAGE_TASK_STATUS',
+        payload: {
+            id,
+            status
         },
     };
 }

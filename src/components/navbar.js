@@ -1,11 +1,11 @@
 import React from 'react'
 import { toggleTheme } from '../actions'
+import { connect } from 'react-redux'
 import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Button } from 'reactstrap'
 
-
-export default class MyNavbar extends React.Component {
+class MyNavbar extends React.Component {
     state = {
         isOpen: true
     };
@@ -16,14 +16,15 @@ export default class MyNavbar extends React.Component {
     }
 
     toggleTheme = (e) => {
+        console.log("toggleTheme");
         this.props.dispatch(toggleTheme());
     }
 
     render() {
-        let theme = this.props.getState().theme;
+        let theme = this.props.theme;
         return (
             <>
-                <Navbar light expand="md">
+                <Navbar color={ theme.name } light expand="md">
                     <NavbarBrand href="/">
                         <span id="sitelogo"></span>
                         <span id="sitename"></span>
@@ -59,3 +60,6 @@ export default class MyNavbar extends React.Component {
         );
     }
 }
+
+let mapStateToProps = (state) => ( state.theme );
+export default connect(mapStateToProps)(MyNavbar);

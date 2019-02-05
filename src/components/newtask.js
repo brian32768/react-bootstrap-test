@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import {Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg,
     Button} from 'reactstrap'
 
-export default class NewTask extends Component {
+class NewTask extends Component {
     state = {
         showForm: false,
         title: '',
@@ -37,7 +38,7 @@ export default class NewTask extends Component {
         let theme = this.props.theme;
         let inverse = (theme.name == "dark");
         return (
-            <Card>
+            <Card inverse={inverse} style={{backgroundColor: theme.background}}>
             <CardBody>
                 <input className="input" name="title" placeholder="title" onChange={ this.change } value={ this.state.title }/><br />
                 <input className="input" name="description" placeholder="description" onChange={ this.change } value={ this.state.description }/>
@@ -49,3 +50,6 @@ export default class NewTask extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ( state.theme );
+export default connect(mapStateToProps)(NewTask);

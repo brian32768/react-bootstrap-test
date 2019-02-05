@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 
@@ -33,11 +34,10 @@ const columns = [{
     Header: 'src',
 }]
 
-export default class Table extends Component {
+class Table extends Component {
     render() {
         let onChange = () => {};
-        let theme = this.props;
-        console.log("Table.render() theme=", theme)
+        let theme = this.props.theme;
         const columns = [{
                 Header: 'src',
                 accessor: 'src'
@@ -67,3 +67,6 @@ export default class Table extends Component {
         );
     }
 }
+
+let mapStateToProps = (state) => ( state.theme );
+export default connect(mapStateToProps)(Table);

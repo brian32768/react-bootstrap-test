@@ -13,12 +13,6 @@ import { themes } from './themes'
 import './index.css'
 
 const store = createStore(reducer);
-console.log(store.getState());
-
-store.dispatch(createTask({
-    title:"Learn more about Redux", description:"Expand the state." })
-);
-console.log(store.getState());
 
 /*    onCreateTask = ({ title, description }) => {
         this.props.dispatch(createTask({title, description}));
@@ -33,41 +27,16 @@ console.log(store.getState());
 
 ReactDOM.render(
     <Provider store={store}>
-    <MyNavbar {...store} />
+    <MyNavbar />
     <BrowserRouter>
     <Switch>
-        <Route exact path="/" component={Home} />
-
-        <Route  path="/table" store={ store }
-            render={() =>
-                <Table {...store.getState().theme} />}
-        />
-
-        <Route path="/pictures" store={ store }
-            render={() =>
-                <Pictures {...store.getState().theme} />}
-        />
-
-        <Route path="/about" store={ store }
-            render={() =>
-                <About {...store.getState().theme} />}
-        />
-
-        <Route path="/contact" store={ store }
-            render={() =>
-                <Contact {...store.getState().theme} />}
-        />
-
-        <Route path="/tasks" store={ store }
-            render={() =>
-                <TasksPage {...store.getState()} />}
-        />
-
-        <Route store={ store }
-            render={() =>
-                <NotFound  {...store.getState().theme} />}
-        />
-
+    <Route exact path="/" component={ Home } />
+    <Route path="/table" component={ Table } />
+    <Route path="/pictures" component={ Pictures } />
+    <Route path="/about" component={ About } />
+    <Route path="/contact" component={ Contact } />
+    <Route path="/tasks" component={ TasksPage } />
+    <Route render={() => <NotFound/> } />
     </Switch>
     </BrowserRouter>
     </Provider>,

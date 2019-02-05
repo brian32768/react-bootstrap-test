@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import {
     Carousel,
     CarouselItem,
@@ -33,7 +34,7 @@ const items = [
     },
 ];
 
-export default class Pictures extends Component {
+class Pictures extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -82,7 +83,7 @@ export default class Pictures extends Component {
         });
 
         return (
-            <Fragment>
+            <>
             <h2>Pictures</h2>
             <Select
                 allowClear
@@ -108,7 +109,10 @@ export default class Pictures extends Component {
                     <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
                     <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
                 </Carousel>
-            </Fragment>
+            </>
         );
     }
 }
+
+let mapStateToProps = (state) => ( state.theme );
+export default connect(mapStateToProps)(Pictures);

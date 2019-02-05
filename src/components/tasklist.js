@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-export default class TaskList extends Component {
-    render() {
-        console.log("TaskList", this.props);
-        return (
-            <>
-            <h2>tasks</h2>
-            <ol>
-            { this.props.tasks.map(t =>
-                <li key={ t.id }>{ t.title } - { t.description }</li>
-            )}
-            </ol>
-            </>
-        );
-    }
-}
+const TaskList = (props) => (
+    <>
+        <h2>Tasks</h2>
+        <ol>
+        { props.tasks.map(t =>
+            <li key={ t.id }>{ t.title } - { t.description }</li>
+        )}
+        </ol>
+    </>
+);
+
+const mapStateToProps = (state) => ( state.tasks );
+export default connect(mapStateToProps)(TaskList);
