@@ -1,12 +1,7 @@
-import { actions, taskStatus } from './action-types'
-
-let _id = 1;
-export function uniqueId() {
-    return _id++;
-}
+import { actions, taskStatus, uniqueId } from './action-types'
 
 export function addTask({ title, description }) {
-    console.log("actions.createTask", title, description);
+    console.log("actions.addTask", title, description);
     return {
         type: actions.ADD_TASK,
         payload: {

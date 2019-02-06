@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configStore from './redux/configstore'
 import { connect } from 'react-redux'
+import { Container, Row, Col } from 'reactstrap'
 import { MyNavbar } from './components'
 import { About, Contact, Home, NotFound, Pictures, Table, TasksPage } from './components'
 import { createTask } from './redux/actions'
@@ -13,16 +14,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './index.css'
 
 const { store, persistor } = configStore();
-
-/*    onCreateTask = ({ title, description }) => {
-        this.props.dispatch(createTask({title, description}));
-    }
-
-    tasks={ this.props.tasks }
-    onCreateTask={ ({title, description}) => {
-        this.props.dispatch(createTask({title, description}));
-} />
-    */
 
 let showPosition = (position) => {
     console.log(position.coords.latitude, position.coords.longitude);

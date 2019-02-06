@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 import { devToolsEnhancer } from 'redux-devtools-extension'
-import counter from './counter'
+import bookmarks from './bookmarks'
 import tasks from './tasks'
 import theme from './theme'
 
 export default combineReducers({
-    counter,
+    bookmarks,
     tasks,
     theme,
     //devToolsEnhancer({ trace: true, traceLimit: 25 })

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { nextBookmark, selectBookmark } from '../redux/actions'
 import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
@@ -9,21 +10,10 @@ import SpecialDay from './specialday'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import Control from './control'
 
-const cities = [
-    "Rivendell",
-    "Springfield",
-    "Smallville",
-    "Gotham City",
-    "Metropolis",
-    "Alphaville",
-    "Acropolis",
-]
-
 class Home extends Component {
     state = {
         tooltipOpen: false,
         map: "wondercity",
-        cityIndex: 0,
         mapOpacity: 100
     };
 
@@ -33,88 +23,66 @@ class Home extends Component {
        });
     }
 
-    changeMap = () => {
-        this.setState({map: cities[this.state.cityIndex]});
-        this.state.cityIndex += 1;
-        if (this.state.cityIndex >= cities.length) {
-            this.state.cityIndex = 0;
-        }
-        console.log("changeMap", this.state)
-    }
-
     changeOpacity = (value) => {
         this.setState({mapOpacity : value});
     }
 
-    startChangeCity = () => { console.log("start") }
-    stopChangeCity = () =>  { console.log("stop") }
-    updateCity = (value) => {
-        console.log("New city", value)
-        this.state.cityIndex = value
-        this.setState({map: cities[this.state.cityIndex]});
+    selectBookmark = (value) => {
+        console.log("Home.selectBookmark", value)
+        this.props.dispatch(selectBookmark(value));
+    }
+
+    nextBookmark = (e) => {
+        console.log("Home.nextBookmark");
+        this.props.dispatch(nextBookmark());
     }
 
     render() {
+        console.log("props = ", this.props);
         return (
-            <>
-            {/* A Map will have its own internal MapContext, the ThemeContext wrapping around
-            everything lets me test using multiple contexts in the
-            same application.
-
-            Since there can only be a map on this "home" page it makes sense
-            to declare the Map here.
-
-            Any component between our Map tags should be able to
-            access the current OpenLayers map. (Should we actually be using OL.) */}
-
+        <>
             <Container>
-                <Row>
-                    <Col>
-                        <SpecialDay /><br />
-                        These controls are outside the map view but still
-                        uses the current map of <b>{this.state.map}</b>
-                        <div className="sliders">
-                            Map selection slider
-                            <Slider max={ cities.length-1 } value={ this.state.cityIndex }
-                                onBeforeChange={ this.startChangeCity }
-                                onAfterChange={ this.stopChangeCity }
-                                onChange={ this.updateCity }
-                            />
+                <Row><Col>
+                    <SpecialDay /> The bookmark for { this.props.bookmarks.list[this.props.bookmarks.selected].title } is selected.<br />
+                </Col></Row>
+                <Row><Col>
+                    <div className="sliders">
+                        Map selection slider
+                        <Slider max={ this.props.bookmarks.list.length-1 }
+                            value={ this.props.bookmarks.selected }
+                            onChange={ this.selectBookmark }
+                        />
 
-                            <Control
-                                onChange={ this.changeOpacity }
-                                title="Layer 1"
-                                value={ this.state.mapOpacity }
-                            />
+                        <Control
+                            onChange={ this.changeOpacity }
+                            title="Layer 1"
+                            value={ this.state.mapOpacity }
+                        />
 
-                            Range slider test
-                            <Range />
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
+                        Range slider test
+                        <Range />
+                    </div>
+                </Col></Row>
+                <Row><Col>
                     <Map useDefaultControls={true}
                         view=<View zoom={ this.state.zoom } center={ this.state.center }/>
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
                     </Map>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                    <Button onClick={ this.changeMap }>Change map</Button>
+                </Col></Row>
+                <Row><Col>
+                    <Button onClick={ this.nextBookmark }>Next bookmark</Button>
                     <Button tag="a" color="success" href="http://reactstrap.github.io" target="_blank">ReactStrap docs</Button>
                     <Button tag="a" href="/404test">Nowhere</Button>
-                  </Col>
-                </Row>
-
+                </Col></Row>
             </Container>
-
-            </>
+        </>
         );
     }
 }
 
-let mapStateToProps = (state) => ( state.theme );
+let mapStateToProps = (state) => (Object.assign({},
+    state.theme,
+    state.bookmarks)
+);
 export default connect(mapStateToProps)(Home);
