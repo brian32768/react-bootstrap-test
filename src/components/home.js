@@ -6,9 +6,7 @@ import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 
 import SpecialDay from './specialday'
-import Map from './map'
-import Source from './source'
-import Layer from './layer'
+import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import Control from './control'
 
 const cities = [
@@ -98,6 +96,12 @@ class Home extends Component {
                 </Row>
                 <Row>
                     <Col>
+                    <Map useDefaultControls={true}
+                        view=<View zoom={ this.state.zoom } center={ this.state.center }/>
+                    >
+                        <layer.Tile name="OpenStreetMap" source="OSM"/>
+                    </Map>
+
                     <div id="mymap" className="map"
                         ref={ node => { this.mapnode = node }} >
                         Here are my layers:
