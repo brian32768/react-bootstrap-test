@@ -7,15 +7,11 @@ body {
   background-color: #8E7C93;
 }
 
-.container {
-  background-color: #FFF;
-  margin: 100px;
-  padding: 10px;
-  border-radius: 3px;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.container .row {
+  background-color: white;
+  margin: 3px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .buttons {
@@ -117,14 +113,11 @@ footer {
     margin: 10px;
 }
 
-#mymap {
-    background-image: url("/assets/pigeon_forge.gif");
-    color: blue;
-    width: 600px;
-    height: 371px;
-    background-color: rgb(182, 172, 171);
-    margin: 10px;
+.ol-react-map {
+    width: 640px;
+    height: 300px;
 }
+
 .ol-full-screen .ol-rotate .ol-zoom-extent .ol-mouse-position {
     position: relative;
     top: 4px;
