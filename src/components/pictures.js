@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
     Carousel,
@@ -35,42 +35,34 @@ const items = [
 ];
 
 class Pictures extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeIndex : 0,
-            animating: false
-        }
-        this.select   = this.select.bind(this);
-        this.next     = this.next.bind(this);
-        this.previous = this.previous.bind(this);
-        this.onClick  = this.onClick.bind(this);
+    state = {
+        activeIndex : 0,
+        animating: false
     }
 
-    next() {
+    next = () => {
        if (this.animating) return;
        const nextIndex = this.state.activeIndex === items.length - 1 ? 0 : this.state.activeIndex + 1;
        this.setState({ activeIndex: nextIndex });
     }
 
-    previous() {
+    previous = () => {
        if (this.animating) return;
        const nextIndex = this.state.activeIndex === 0 ? items.length - 1 : this.state.activeIndex - 1;
        this.setState({ activeIndex: nextIndex });
     }
 
-    onClick() {
+    onClick = () => {
          console.log("clicked");
     }
 
-    select(options) {
+    select = (options) => {
         console.log(`Option selected:`, options.value, this.state);
         this.setState({ activeIndex: options.value });
     }
 
     render() {
         let { activeIndex } = this.state;
-        console.log("render() activeIndex =", activeIndex);
         const slides = items.map((item) => {
           return (
             <CarouselItem

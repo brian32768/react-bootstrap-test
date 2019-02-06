@@ -1,18 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Link, Route, Redirect, Switch} from 'react-router-dom'
-import reducer from './reducers'
-import { createStore } from 'redux'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import configStore from './redux/configstore'
 import { connect } from 'react-redux'
 import { MyNavbar } from './components'
-import {About, Contact, Home, NotFound, Pictures, Table, TasksPage} from './components'
-import 'bootstrap/dist/css/bootstrap.css'
-import { createTask } from './actions'
+import { About, Contact, Home, NotFound, Pictures, Table, TasksPage } from './components'
+import { createTask } from './redux/actions'
 import { themes } from './themes'
+import 'bootstrap/dist/css/bootstrap.css'
 import './index.css'
 
-const store = createStore(reducer);
+const { store, persistor } = configStore();
 
 /*    onCreateTask = ({ title, description }) => {
         this.props.dispatch(createTask({title, description}));
@@ -22,23 +22,44 @@ const store = createStore(reducer);
     onCreateTask={ ({title, description}) => {
         this.props.dispatch(createTask({title, description}));
 } />
-
     */
+
+let showPosition = (position) => {
+    console.log(position.coords.latitude, position.coords.longitude);
+}
+
+let errorPosition = (position) => {
+    console.error("Could not read position", position);
+}
+
+let getLocation = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
+    } else {
+        console.error("Geolocation not available");
+    }
+}
+
+window.addEventListener('load', () => {
+    getLocation();
+});
 
 ReactDOM.render(
     <Provider store={store}>
-    <MyNavbar />
-    <BrowserRouter>
-    <Switch>
-    <Route exact path="/" component={ Home } />
-    <Route path="/table" component={ Table } />
-    <Route path="/pictures" component={ Pictures } />
-    <Route path="/about" component={ About } />
-    <Route path="/contact" component={ Contact } />
-    <Route path="/tasks" component={ TasksPage } />
-    <Route render={() => <NotFound/> } />
-    </Switch>
-    </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+            <MyNavbar />
+            <BrowserRouter>
+            <Switch>
+            <Route exact path="/" component={ Home } />
+            <Route path="/table" component={ Table } />
+            <Route path="/pictures" component={ Pictures } />
+            <Route path="/about" component={ About } />
+            <Route path="/contact" component={ Contact } />
+            <Route path="/tasks" component={ TasksPage } />
+            <Route render={() => <NotFound/> } />
+            </Switch>
+            </BrowserRouter>
+        </PersistGate>
     </Provider>,
     document.getElementById("app")
 );

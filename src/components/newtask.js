@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import { addTask } from '../redux/actions'
 import {Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg,
     Button} from 'reactstrap'
 
@@ -19,24 +20,24 @@ class NewTask extends Component {
     submit = (e) => {
         e.preventDefault();
         console.log("NewTask.submit",e,this.props);
-        this.props.onCreateTask({
+        this.props.dispatch( addTask({
             title: this.state.title,
             description: this.state.description
-        });
+        }));
         this.resetForm();
     }
     //toggleForm(e) = (e) => {
         //}
-        change = (e) => {
-            const { target: {name, value} } = e;
-            this.setState({
-                [name]:value
-            });
-        }
+    change = (e) => {
+        const { target: {name, value} } = e;
+        this.setState({
+            [name]:value
+        });
+    }
 
     render() {
         let theme = this.props.theme;
-        let inverse = (theme.name == "dark");
+        let inverse = (theme.name === "dark");
         return (
             <Card inverse={inverse} style={{backgroundColor: theme.background}}>
             <CardBody>
@@ -51,5 +52,14 @@ class NewTask extends Component {
     }
 }
 
-const mapStateToProps = (state) => ( state.theme );
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+        theme: state.theme.theme,
+        tasks: state.tasks.tasks
+    };
+}
+//const mapDispatchToProps = {
+//    createTask,
+//};
 export default connect(mapStateToProps)(NewTask);

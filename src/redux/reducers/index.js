@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 import { devToolsEnhancer } from 'redux-devtools-extension'
 import counter from './counter'
 import tasks from './tasks'

@@ -1,4 +1,4 @@
-import { themes } from '../themes'
+import { themes } from '../../themes'
 
 const initialState = {
     theme: themes.dark,

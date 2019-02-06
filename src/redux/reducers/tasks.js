@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge'
-import { uniqueId } from '../actions'
+import { uniqueId, actions } from '../actions'
 
 const initialState = {
     tasks: [
@@ -21,7 +21,7 @@ const initialState = {
 const reducer = (state=initialState, action) => {
     let newstate;
     switch(action.type) {
-        case 'CREATE_TASK':
+        case actions.ADD_TASK:
             newstate = { tasks: state.tasks.concat(action.payload) };
             break;
         default:
