@@ -67,8 +67,6 @@ class Home extends Component {
             Any component between our Map tags should be able to
             access the current OpenLayers map. (Should we actually be using OL.) */}
 
-            <Map name="starting point" mapnode={ this.mapnode } >
-
             <Container>
                 <Row>
                     <Col>
@@ -101,20 +99,6 @@ class Home extends Component {
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
                     </Map>
-
-                    <div id="mymap" className="map"
-                        ref={ node => { this.mapnode = node }} >
-                        Here are my layers:
-
-                        <Layer name="1" opacity={ this.state.mapOpacity/100 }>
-                          <Source url="https://map46.com" attributions="©2018 Wildsong"/>
-                        </Layer>
-
-                        <Layer name="2">
-                          <Source url="https://openstreetmap.org" attributions="©2018 OpenStreetMap"/>
-                        </Layer>
-
-                    </div>
                     </Col>
                 </Row>
                 <Row>
@@ -126,7 +110,7 @@ class Home extends Component {
                 </Row>
 
             </Container>
-            </Map>
+
             </>
         );
     }
