@@ -1,19 +1,22 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { nextBookmark, selectBookmark } from '../redux/actions'
-import {Container, Row, Col, Button, Tooltip} from 'reactstrap'
+import { Container, Row, Col, Button, Tooltip } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
+import { transform } from 'ol/proj'
 
 import SpecialDay from './specialday'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import Control from './control'
 
-class Home extends Component {
+const wgs84 = "EPSG:4326";
+const wm = "EPSG:3857";
+
+class Home extends React.Component {
     state = {
         tooltipOpen: false,
-        map: "wondercity",
         mapOpacity: 100
     };
 
@@ -38,12 +41,15 @@ class Home extends Component {
     }
 
     render() {
-        console.log("props = ", this.props);
+        const selectedBookmark = this.props.bookmarks.list[this.props.bookmarks.selected]
+        const location_wm = transform(selectedBookmark.location, wgs84,wm)
+        const zoom = selectedBookmark.zoom
+        console.log("Home.render props = ", this.props, selectedBookmark.location, location_wm);
         return (
         <>
             <Container>
                 <Row><Col>
-                    <SpecialDay /> The bookmark for { this.props.bookmarks.list[this.props.bookmarks.selected].title } is selected.<br />
+                    <SpecialDay /> { selectedBookmark.title } is selected. { selectedBookmark.location } <br />
                 </Col></Row>
                 <Row><Col>
                     <div className="sliders">
@@ -65,7 +71,7 @@ class Home extends Component {
                 </Col></Row>
                 <Row><Col>
                     <Map useDefaultControls={true}
-                        view=<View zoom={ this.state.zoom } center={ this.state.center }/>
+                        view=<View zoom={ zoom } center={ location_wm }/>
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
                     </Map>

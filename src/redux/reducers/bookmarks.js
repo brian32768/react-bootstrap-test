@@ -6,31 +6,38 @@ const initialState = {
         selected: 0,
         list: [{
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [-12,46],
+                zoom: 10,
         	    title: "Rivendell",
         	}, {
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [123,46],
+                zoom: 14,
         	    title: "Springfield",
         	}, {
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [-23,46],
+                zoom: 13,
         	    title: "Smallville",
         	}, {
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [123,6],
+                zoom: 7,
         	    title: "Gotham City",
         	}, {
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [-13,46],
+                zoom: 10,
         	    title: "Metropolis",
         	}, {
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [13,46],
+                zoom: 11,
         	    title: "Alphaville",
         	}, {
         	    id: uniqueId(),
-        	    location: [-123,46],
+        	    location: [-121,46],
+                zoom: 19,
         	    title: "Acropolis",
         	},
         ]
