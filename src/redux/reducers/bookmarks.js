@@ -8,37 +8,37 @@ const initialState = {
         	    id: uniqueId(),
         	    location: [-12,46],
                 zoom: 10,
-        	    title: "Rivendell",
+        	    title: "Astoria",
         	}, {
         	    id: uniqueId(),
         	    location: [123,46],
                 zoom: 14,
-        	    title: "Springfield",
+        	    title: "Gearhart",
         	}, {
         	    id: uniqueId(),
         	    location: [-23,46],
                 zoom: 13,
-        	    title: "Smallville",
+        	    title: "Cannon Beach",
         	}, {
         	    id: uniqueId(),
         	    location: [123,6],
                 zoom: 7,
-        	    title: "Gotham City",
+        	    title: "Jewell",
         	}, {
         	    id: uniqueId(),
         	    location: [-13,46],
                 zoom: 10,
-        	    title: "Metropolis",
+        	    title: "Seaside",
         	}, {
         	    id: uniqueId(),
         	    location: [13,46],
                 zoom: 11,
-        	    title: "Alphaville",
+        	    title: "Hammond",
         	}, {
         	    id: uniqueId(),
         	    location: [-121,46],
                 zoom: 19,
-        	    title: "Acropolis",
+        	    title: "Warrenton",
         	},
         ]
     }
