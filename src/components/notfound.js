@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap'
 //const img = require('/assets/lewis_and_clark.jpg');

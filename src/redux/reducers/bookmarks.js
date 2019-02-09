@@ -3,82 +3,56 @@ import { actions, uniqueId } from '../actions'
 
 const initialState = {
     bookmarks: {
-        selected: 0,
-        list: [{
-        	    id: uniqueId(),
-        	    location: [-12,46],
-                zoom: 10,
-        	    title: "Astoria",
-        	}, {
-        	    id: uniqueId(),
-        	    location: [123,46],
-                zoom: 14,
-        	    title: "Gearhart",
-        	}, {
-        	    id: uniqueId(),
-        	    location: [-23,46],
-                zoom: 13,
-        	    title: "Cannon Beach",
-        	}, {
-        	    id: uniqueId(),
-        	    location: [123,6],
-                zoom: 7,
-        	    title: "Jewell",
-        	}, {
-        	    id: uniqueId(),
-        	    location: [-13,46],
-                zoom: 10,
-        	    title: "Seaside",
-        	}, {
-        	    id: uniqueId(),
-        	    location: [13,46],
-                zoom: 11,
-        	    title: "Hammond",
-        	}, {
-        	    id: uniqueId(),
-        	    location: [-121,46],
-                zoom: 19,
-        	    title: "Warrenton",
-        	},
-        ]
+        1 : {
+    	    location: [-123.836,46.182],
+            zoom: 13,
+    	    title: "Astoria",
+    	},
+    	2 : {
+    	    location: [-123.969,45.893],
+            zoom: 13,
+    	    title: "Cannon Beach",
+        },
+        3 : {
+    	    location: [-123.9188,46.026],
+            zoom: 13,
+    	    title: "Gearhart",
+        },
+        4 : {
+            location: [-123.9520,46.2000],
+            zoom: 14,
+            title: "Hammond",
+        },
+        5 : {
+            location: [-123.5032,46.9345],
+            zoom: 14,
+    	    title: "Jewell",
+        },
+        6 : {
+    	    location: [-123.9407,45.7297],
+            zoom: 13,
+    	    title: "Neahkahnie Beach",
+    	},
+        7 : {
+    	    location: [-123.920,45.994],
+            zoom: 12,
+    	    title: "Seaside",
+    	},
+        8 : {
+    	    location: [-123.924,46.165],
+            zoom: 13,
+    	    title: "Warrenton",
+    	},
     }
 };
 
 const reducer = (state=initialState, action) => {
-    let newstate;
     switch(action.type)  {
 	case actions.ADD_BOOKMARK:
-	    newstate = { bookmarks: {
-            selected: state.bookmarks.selected,
-            list: state.bookmarks.list.concat(action.payload)
-        }};
-	    break;
-    case actions.SELECT_BOOKMARK:
-        newstate = { bookmarks: {
-            selected: action.payload.index,
-            list: state.bookmarks.list
-        }};
-        break;
-    case actions.NEXT_BOOKMARK:
-        let n;
-        if (isNaN(state.bookmarks.selected)) {
-            n = 0;
-        } else {
-            n = state.bookmarks.selected + 1;
-            if (n >= state.bookmarks.list.length) {
-                // Don't change selection when we hit upper rail
-                return state;
-            }
-        }
-        newstate = { bookmarks: {
-            selected: n,
-            list: state.bookmarks.list
-        }};
-        break;
-	default:
-	    return state;
+	    return { bookmarks: state.bookmarks.concat(action.payload)
+        };
     }
-    return newstate;
+    return state;
 }
 
 export default reducer

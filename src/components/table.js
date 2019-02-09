@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ReactTable from 'react-table'
@@ -34,7 +34,10 @@ const columns = [{
     Header: 'src',
 }]
 
-class Table extends Component {
+class Table extends React.Component {
+    static propTypes = {
+        theme: PropTypes.object
+    }
     render() {
         let onChange = () => {};
         let theme = this.props.theme;

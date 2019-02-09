@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
@@ -10,7 +10,7 @@ import { Consumer as MapContextConsumer } from '../map-context'
     And maybe the ThemeContext too, just to make it more interesting.
 */
 
-export default class Control extends Component {
+export default class Control extends React.Component {
     static propTypes = {
         source: PropTypes.string,
         title: PropTypes.string,

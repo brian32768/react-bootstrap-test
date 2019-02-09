@@ -19,15 +19,11 @@ const initialState = {
 };
 
 const reducer = (state=initialState, action) => {
-    let newstate;
     switch(action.type) {
         case actions.ADD_TASK:
-            newstate = { tasks: state.tasks.concat(action.payload) };
-            break;
-        default:
-            newstate = state;
+            return { tasks: state.tasks.concat(action.payload) };
     }
-    return newstate;
+    return state;
 }
 
 export default reducer

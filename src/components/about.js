@@ -1,11 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
 
-class About extends Component {
+class About extends React.Component {
+    static propTypes = {
+        theme: PropTypes.object
+    }
     render() {
-        let theme = this.props.theme;
-        let inverse = (theme.name == "dark")
+        const theme = this.props.theme;
+        const inverse = (theme.name == "dark")
         return (
             <Card inverse={inverse} style={{backgroundColor: theme.background}}>
               <CardTitle>

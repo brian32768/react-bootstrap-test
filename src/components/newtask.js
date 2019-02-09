@@ -1,10 +1,14 @@
-import React, {Component} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { addTask } from '../redux/actions'
 import {Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg,
     Button} from 'reactstrap'
 
-class NewTask extends Component {
+class NewTask extends React.Component {
+    static propTypes = {
+        theme: PropTypes.object
+    }
     state = {
         showForm: false,
         title: '',

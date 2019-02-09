@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { nextBookmark, selectBookmark, setMouseCoord } from '../redux/actions'
-import { Container, Row, Col, Button, Tooltip } from 'reactstrap'
+import { setMapCenter, setMapZoom } from '../redux/actions'
+import { Container, Row, Col, Button, Tooltip,
+    ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import { transform } from 'ol/proj'
 
 import SpecialDay from './specialday'
+import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import Control from './control'
 
@@ -15,8 +17,18 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const wgs84 = "EPSG:4326";
 const wm = "EPSG:3857";
+const defaultPosition = transform([-123,46], wgs84,wm);
+
+// Round off to some reasonable number of decimal places
+// based on this zoom level
 
 class Home extends React.Component {
+    static propTypes = {
+        theme: PropTypes.object,
+        bookmarks: PropTypes.object,
+        position: PropTypes.object,
+    }
+
     state = {
         tooltipOpen: false,
         mapOpacity: 100
@@ -32,44 +44,57 @@ class Home extends React.Component {
         this.setState({mapOpacity : value});
     }
 
-    selectBookmark = (value) => {
-        console.log("Home.selectBookmark", value)
-        this.props.dispatch(selectBookmark(value));
-    }
+    gotoBookmark = (e) => {
+        const bookmarkId = e.target.name;
+        const bookmark = this.props.bookmarks[bookmarkId]
+        console.log('Home.goto', bookmarkId, bookmark);
 
-    nextBookmark = (e) => {
-        console.log("Home.nextBookmark");
-        this.props.dispatch(nextBookmark());
+        this.props.dispatch( setMapCenter(bookmark.location) );
+        this.props.dispatch( setMapZoom(bookmark.zoom) );
     }
 
     onMapClick = (e) => {
-        console.log("Home.click", e.coordinate);
-        this.props.dispatch( setMouseCoord(e.coordinate) );
+        const coord = transform(e.coordinate, wm,wgs84)
+        console.log("Home.onMapClick", coord);
+        console.log(coord[0], coord[1]);
+    }
+
+    // If you don't catch this event and then you click on the map,
+    // the click handler will cause the map to pan back to its starting point
+    onMapMove = (e) => {
+        const v = e.map.getView()
+        const center_wm = v.getCenter()
+        const zoom = v.getZoom();
+        const center_wgs84 = transform(center_wm, wm,wgs84)
+        console.log("Home.onMapMove", center_wgs84, zoom);
+
+        this.props.dispatch( setMapCenter(center_wgs84[0], center_wgs84[1]) )
+        this.props.dispatch( setMapCenter(zoom) )
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log("componentDidUpdate");
     }
 
     render() {
-        const selectedBookmark = this.props.bookmarks.list[this.props.bookmarks.selected]
-        const location_wm = transform(selectedBookmark.location, wgs84,wm)
-        const zoom = selectedBookmark.zoom
-        console.log("Home.render props = ", this.props, selectedBookmark.location, location_wm);
+        console.log("Home.render props = ", this.props);
+
+        // Show a list of bookmarks
+        const hash = this.props.bookmarks.hash
+        const keys=Object.keys(hash);
+        const list = keys.map(k => [k, hash[k].title]);
+
         return (
         <>
             <Container>
-                <Row><Col>
-                    <SpecialDay /> { selectedBookmark.title } is selected. { selectedBookmark.location } <br />
-                </Col></Row>
-                <Row><Col>
-                <input name="lat" value={ this.props.mouse.lat } onChange={ this.onChange }/>
-                <input name="lon" value={ this.props.mouse.lon } onChange={ this.onChange }/>
-                </Col></Row>
-                <Row><Col>
+                <Row>
+                    <SpecialDay /> &nbsp; { text }
+                </Row>
+                <Row>
+                <Position value={ this.props.position }/>
+                </Row>
+                <Row>
                     <div className="sliders">
-                        Map selection slider
-                        <Slider max={ this.props.bookmarks.list.length-1 }
-                            value={ this.props.bookmarks.selected }
-                            onChange={ this.selectBookmark }
-                        />
-
                         <Control
                             onChange={ this.changeOpacity }
                             title="Layer 1"
@@ -79,20 +104,31 @@ class Home extends React.Component {
                         Range slider test
                         <Range />
                     </div>
-                </Col></Row>
+                </Row>
                 <Row><Col>
                     <Map useDefaultControls={true}
-                        onSingleClick={ this.onMapClick }
-                        view=<View zoom={ zoom } center={ location_wm }/>
+                        onSingleClick={ this.onMapClick } onMoveEnd={ this.onMapMove }
+                        view=<View zoom={ this.props.position.zoom }
+                            center={ this.props.position.location }
+                            minZoom={ 9 } maxZoom={ 19 }
+                            />
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
                     </Map>
+                </Col><Col>
+                    <ListGroup>
+                    { list.map(item =>
+                          <ListGroupItem tag="button" key={ item[0] } name={ item[0] }
+                          onClick={ this.gotoBookmark }
+                          action>{item[0]} {item[1]}</ListGroupItem>
+                    )}
+                    </ListGroup>
                 </Col></Row>
-                <Row><Col>
-                    <Button onClick={ this.nextBookmark }>Next bookmark</Button>
+                <Row>
+                    <Button tag="button">Do nothing</Button>
                     <Button tag="a" color="success" href="http://reactstrap.github.io" target="_blank">ReactStrap docs</Button>
-                    <Button tag="a" href="/404test">Nowhere</Button>
-                </Col></Row>
+                    <Button tag="a" href="/huhwhat">404 page</Button>
+                </Row>
             </Container>
         </>
         );
@@ -102,6 +138,6 @@ class Home extends React.Component {
 let mapStateToProps = (state) => (Object.assign({},
     state.theme,
     state.bookmarks,
-    state.mouse,
+    state.position,
 ));
 export default connect(mapStateToProps)(Home);

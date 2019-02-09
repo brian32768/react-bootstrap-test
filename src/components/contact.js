@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Card, CardImg, CardText, CardBody,
          CardTitle, CardSubtitle, Button } from 'reactstrap'
@@ -6,7 +7,10 @@ import { Card, CardImg, CardText, CardBody,
 const img = require('/assets/Proud.jpg');
 const alt = 'This is a pigeon';
 
-class Contact extends Component {
+class Contact extends React.Component {
+    static propTypes = {
+        theme: PropTypes.object
+    }
     render() {
         let theme = this.props.theme;
         let inverse = (theme.name == "dark")

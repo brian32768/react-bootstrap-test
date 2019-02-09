@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import NewTask from './newtask'
 import TaskList from './tasklist'
 

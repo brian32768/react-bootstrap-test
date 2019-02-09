@@ -1,3 +1,4 @@
+import { actions } from '../actions'
 import { themes } from '../../themes'
 
 const initialState = {
@@ -5,17 +6,13 @@ const initialState = {
 }
 
 const reducer = (state=initialState, action) => {
-    let theme = state.theme;
-    let newstate;
     switch(action.type) {
-        case 'TOGGLE_THEME':
-            newstate = { theme: (theme.name==='dark')?
+        case actions.TOGGLE_THEME:
+            const theme = state.theme;
+            return { theme: (theme.name==='dark')?
                                 themes.light : themes.dark };
-            break;
-        default:
-            newstate = state;
     }
-    return newstate;
+    return state;
 }
 
 export default reducer
