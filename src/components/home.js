@@ -93,7 +93,17 @@ class Home extends React.Component {
         const hash = this.props.bookmarks;
         const keys = Object.keys(hash);
         const list = keys.map(k => [k, hash[k].title]);
-
+        //  this draws a blue 5 pointed star
+        const pointMarker = {
+            image: {
+                type: 'regularShape',
+                points: 5,
+                radius: 5,
+                radius1: 5,
+                radius2: 2,
+                stroke: { color: 'blue', width: 1.5 }
+            }
+        };
         console.log("Home.render props = ", this.props);
 
         return (
@@ -126,6 +136,12 @@ class Home extends React.Component {
                             />
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
+
+                        <layer.Vector
+                            style={ pointMarker }
+                            opacity={ 1 } >
+                            <interaction.Draw type="Point" />
+                        </layer.Vector>
                     </Map>
                 </Col><Col>
                     <ListGroup>

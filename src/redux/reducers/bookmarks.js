@@ -24,7 +24,7 @@ const initialState = {
             title: "Hammond",
         },
         5 : {
-            location: [-123.5032,46.9345],
+            location: [-123.5032,45.9345],
             zoom: 14,
     	    title: "Jewell",
         },
