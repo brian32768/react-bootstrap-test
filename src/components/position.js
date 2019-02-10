@@ -32,9 +32,8 @@ const lut_accuracy = [
 
 class Position extends React.Component {
     static propTypes = {
-        lon: PropTypes.number,
-        lat: PropTypes.number,
-        zoom: PropTypes.number,
+        coord: PropTypes.array,
+        zoom: PropTypes.number.isRequired,
     }
     onChange = (e) => {
         console.log("Position.onChange", e);
@@ -42,13 +41,13 @@ class Position extends React.Component {
     render() {
         console.log("Position.render props = ", this.props);
         const d = lut_accuracy[this.props.zoom];
-        const lat = parseFloat(this.props.lat).toFixed(d)
-        const lon = parseFloat(this.props.lon).toFixed(d)
+        const x = parseFloat(this.props.coord[0]).toFixed(d)
+        const y = parseFloat(this.props.coord[1]).toFixed(d)
         return (
             <Card>
-                <input name="lat" value={ lat } onChange={ this.onChange }/>
-                <input name="lon" value={ lon } onChange={ this.onChange }/>
-                zoom { this.props.zoom }
+                <input name="x" value={ x } onChange={ this.onChange }/>
+                <input name="y" value={ y } onChange={ this.onChange }/>
+                Zoom { this.props.zoom }
             </Card>
         );
     }

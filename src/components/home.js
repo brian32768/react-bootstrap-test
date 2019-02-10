@@ -28,6 +28,7 @@ class Home extends React.Component {
     }
 
     state = {
+        displayPoint: [0,0], displayZoom: 0,
         tooltipOpen: false,
         mapOpacity: 100
     };
@@ -44,18 +45,24 @@ class Home extends React.Component {
 
     gotoBookmark = (e) => {
         const bookmarkId = e.target.name;
-        const bookmark = this.props.bookmarks[bookmarkId]
-        console.log('Home.goto', bookmarkId, bookmark);
+        const bookmark_wgs84 = this.props.bookmarks[bookmarkId]
+        const coord = transform(bookmark_wgs84.location, wgs84, wm)
+        console.log('Home.goto', bookmarkId, coord);
 
         this.props.dispatch(
-            setMapPosition(bookmark.location[0], bookmark.location[1], bookmark.zoom)
+            setMapPosition(coord, bookmark_wgs84.zoom)
         );
     }
 
     onMapClick = (e) => {
-        const coord = transform(e.coordinate, wm,wgs84)
+        const coord = e.coordinate;
+        const v = e.map.getView()
+        const zoom = v.getZoom();
         console.log("Home.onMapClick", coord);
-        console.log(coord[0], coord[1]);
+        this.setState({
+            displayPoint: transform(coord, wm,wgs84),
+            displayZoom : zoom
+        })
     }
 
     // If you don't catch this event and then you click on the map,
@@ -65,10 +72,16 @@ class Home extends React.Component {
         const center_wm = v.getCenter()
         const zoom = v.getZoom();
         const center_wgs84 = transform(center_wm, wm,wgs84)
-        console.log("Home.onMapMove", center_wgs84, zoom);
-        /*this.props.dispatch(
-            setMapPosition(center_wgs84[0], center_wgs84[1], zoom)
-        );*/
+
+        // did map actually onMoveEnd
+        if (this.props.position.coordinate[0] !== center_wm[0]
+        || this.props.position.coordinate[1] !== center_wm[1]
+        || this.props.position.zoom !== zoom) {
+            console.log("Home.onMapMove", center_wgs84, zoom);
+            this.props.dispatch(
+                setMapPosition(center_wm, zoom)
+            );
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -81,8 +94,7 @@ class Home extends React.Component {
         const keys = Object.keys(hash);
         const list = keys.map(k => [k, hash[k].title]);
 
-        const center_wm = transform( [this.props.position.lon, this.props.position.lat], wgs84, wm);
-        console.log("Home.render props = ", this.props, center_wm);
+        console.log("Home.render props = ", this.props);
 
         return (
         <>
@@ -91,7 +103,7 @@ class Home extends React.Component {
                     <SpecialDay />
                 </Row>
                 <Row>
-                <Position lat={ this.props.position.lat } lon={ this.props.position.lon } zoom={ this.props.position.zoom }/>
+                <Position coord={ this.state.displayPoint } zoom={ this.state.displayZoom }/>
                 </Row>
                 <Row>
                     <div className="sliders">
@@ -109,7 +121,7 @@ class Home extends React.Component {
                     <Map useDefaultControls={true}
                         onSingleClick={ this.onMapClick } onMoveEnd={ this.onMapMove }
                         view=<View zoom={ this.props.position.zoom }
-                            center={ center_wm }
+                            center={ this.props.position.coordinate }
                             minZoom={ 9 } maxZoom={ 19 }
                             />
                     >

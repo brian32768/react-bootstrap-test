@@ -2,8 +2,7 @@ import { actions } from '../actions'
 
 const initialState = {
     position: {
-        lon: 0,
-        lat: 0,
+        coordinate: [0,0],
         zoom: 0
     }
 }
@@ -11,13 +10,14 @@ const initialState = {
 const reducer = (state=initialState, action) => {
     switch(action.type) {
         case actions.SET_MAP_POSITION:
-            return {
+            const newstate = {
                 position: {
-                    lon: action.payload.lon,
-                    lat: action.payload.lat,
+                    coordinate: action.payload.coordinate,
                     zoom: action.payload.zoom,
                 }
-            }
+            };
+            //console.log(state, '=>', newstate);
+            return newstate;
     }
     return state;
 }
