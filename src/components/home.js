@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setMapCenter, setMapZoom } from '../redux/actions'
+import { setMapPosition } from '../redux/actions'
 import { Container, Row, Col, Button, Tooltip,
     ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
@@ -13,11 +13,9 @@ import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import Control from './control'
 
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-
 const wgs84 = "EPSG:4326";
 const wm = "EPSG:3857";
-const defaultPosition = transform([-123,46], wgs84,wm);
+const defaultPosition = transform([-123,46], wgs84, wm);
 
 // Round off to some reasonable number of decimal places
 // based on this zoom level
@@ -49,8 +47,9 @@ class Home extends React.Component {
         const bookmark = this.props.bookmarks[bookmarkId]
         console.log('Home.goto', bookmarkId, bookmark);
 
-        this.props.dispatch( setMapCenter(bookmark.location) );
-        this.props.dispatch( setMapZoom(bookmark.zoom) );
+        this.props.dispatch(
+            setMapPosition(bookmark.location[0], bookmark.location[1], bookmark.zoom)
+        );
     }
 
     onMapClick = (e) => {
@@ -67,9 +66,9 @@ class Home extends React.Component {
         const zoom = v.getZoom();
         const center_wgs84 = transform(center_wm, wm,wgs84)
         console.log("Home.onMapMove", center_wgs84, zoom);
-
-        this.props.dispatch( setMapCenter(center_wgs84[0], center_wgs84[1]) )
-        this.props.dispatch( setMapCenter(zoom) )
+        /*this.props.dispatch(
+            setMapPosition(center_wgs84[0], center_wgs84[1], zoom)
+        );*/
     }
 
     componentDidUpdate(prevProps) {
@@ -77,21 +76,22 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log("Home.render props = ", this.props);
-
         // Show a list of bookmarks
-        const hash = this.props.bookmarks.hash
-        const keys=Object.keys(hash);
+        const hash = this.props.bookmarks;
+        const keys = Object.keys(hash);
         const list = keys.map(k => [k, hash[k].title]);
+
+        const center_wm = transform( [this.props.position.lon, this.props.position.lat], wgs84, wm);
+        console.log("Home.render props = ", this.props, center_wm);
 
         return (
         <>
             <Container>
                 <Row>
-                    <SpecialDay /> &nbsp; { text }
+                    <SpecialDay />
                 </Row>
                 <Row>
-                <Position value={ this.props.position }/>
+                <Position lat={ this.props.position.lat } lon={ this.props.position.lon } zoom={ this.props.position.zoom }/>
                 </Row>
                 <Row>
                     <div className="sliders">
@@ -109,7 +109,7 @@ class Home extends React.Component {
                     <Map useDefaultControls={true}
                         onSingleClick={ this.onMapClick } onMoveEnd={ this.onMapMove }
                         view=<View zoom={ this.props.position.zoom }
-                            center={ this.props.position.location }
+                            center={ center_wm }
                             minZoom={ 9 } maxZoom={ 19 }
                             />
                     >

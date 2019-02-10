@@ -4,8 +4,7 @@ export const actions = {
     DELETE_BOOKMARK: 'DELETE_BOOKMARK',
 
     // Position
-    SET_MAP_CENTER: 'SET_MAP_CENTER',
-    SET_MAP_ZOOM: 'SET_MAP_ZOOM',
+    SET_MAP_POSITION: 'SET_MAP_POSITION',
 
     // Tasks
     ADD_TASK: 'ADD_TASK',

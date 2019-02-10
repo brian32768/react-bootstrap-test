@@ -1,21 +1,12 @@
 import { actions } from './action-types'
 
-export function setMapCenter( lon, lat ) {
-    console.log("actions.setMapCenter", lat, lon);
+export function setMapPosition( lon, lat, zoom ) {
+    console.log("actions.setMapPosition", lat, lon, zoom);
     return {
-        type: actions.SET_MAP_CENTER,
+        type: actions.SET_MAP_POSITION,
         payload: {
             lon: lon,
             lat: lat,
-        }
-    };
-}
-
-export function setMapZoom( zoom ) {
-    console.log("actions.setMapZoom", zoom);
-    return {
-        type: actions.SET_MAP_ZOOM,
-        payload: {
             zoom: zoom
         }
     };

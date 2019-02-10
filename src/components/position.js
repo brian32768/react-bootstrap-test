@@ -32,21 +32,23 @@ const lut_accuracy = [
 
 class Position extends React.Component {
     static propTypes = {
-        position : PropTypes.object,
+        lon: PropTypes.number,
+        lat: PropTypes.number,
+        zoom: PropTypes.number,
     }
     onChange = (e) => {
         console.log("Position.onChange", e);
     }
     render() {
         console.log("Position.render props = ", this.props);
-        const d = lut_accuracy[this.props.position.zoom];
-        const lat = parseFloat(this.props.position.lat).toFixed(d)
-        const lon = parseFloat(this.props.position.lon).toFixed(d)
+        const d = lut_accuracy[this.props.zoom];
+        const lat = parseFloat(this.props.lat).toFixed(d)
+        const lon = parseFloat(this.props.lon).toFixed(d)
         return (
             <Card>
                 <input name="lat" value={ lat } onChange={ this.onChange }/>
                 <input name="lon" value={ lon } onChange={ this.onChange }/>
-                zoom { this.props.position.zoom }
+                zoom { this.props.zoom }
             </Card>
         );
     }
