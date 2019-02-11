@@ -26,18 +26,14 @@ class Home extends React.Component {
         mapExtent: PropTypes.object,
     }
 
+    geolocation = new Geolocation();
+
     state = {
         displayPoint: [0,0], displayZoom: 0,
         tooltipOpen: false,
         mapOpacity: 100,
         markerId: 1,
     };
-
-    constructor(props) {
-        super(props);
-        this.props.dispatch( setMapCenter(defaultPosition, 10) );
-        this.geolocation = new Geolocation();
-    }
 
     toggle = () => {
        this.setState({
@@ -49,36 +45,40 @@ class Home extends React.Component {
         this.setState({mapOpacity : value});
     }
 
+    gotoXY = (coord,zoom) => {
+        if (coord[0]==0 || coord[1]==0 || zoom==0) return;
+        console.log('Home.gotoXY', coord, zoom);
+        this.props.dispatch(
+            setMapCenter(coord, zoom)
+        );
+    }
+
     gotoBookmark = (e) => {
         const bookmarkId = e.target.name;
 
         // Bookmarks are stored in lat,lon
         const bookmark_wgs84 = this.props.bookmarks[bookmarkId]
         const coord = transform(bookmark_wgs84.location, wgs84, wm)
-        console.log('Home.goto', bookmarkId, coord);
 
         this.setState({
             displayPoint: bookmark_wgs84.location,
             displayZoom: bookmark_wgs84.zoom
         });
-        this.props.dispatch(
-            setMapCenter(coord, bookmark_wgs84.zoom)
-        );
+        this.gotoXY(coord, bookmark_wgs84.zoom);
     }
 
     gotoGeolocation = (e) => {
+        const defaultZoom = 15;
         console.log(this.geolocation)
         if (!this.geolocation.valid)
             return;
 
         this.setState({
-            displayPoint:  this.geolocation.coord,
-            displayZoom: 16,
-        })
+            displayPoint: this.geolocation.coord,
+            displayZoom: defaultZoom
+        });
         let coord_wm = transform(this.geolocation.coord, wgs84, wm);
-        this.props.dispatch(
-            setMapCenter(coord_wm, 16)
-        );
+        this.gotoXY(coord_wm, defaultZoom);
     }
 
     onMapClick = (e) => {
@@ -127,6 +127,9 @@ class Home extends React.Component {
         const hash = this.props.bookmarks;
         const keys = Object.keys(hash);
         const list = keys.map(k => [k, hash[k].title]);
+
+        // I think I might have to pass a function to the component
+        // instead of data, I think it never gets updated.
         let textMarker = {
             text: {
                 text: this.state.markerId.toString()
@@ -177,7 +180,7 @@ class Home extends React.Component {
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
 
                         <layer.Vector
-                            style={ textMarker }
+                            style={ pointMarker }
                             opacity={ 1 } >
                             <interaction.Draw type="Point" />
                         </layer.Vector>
