@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setMapPosition } from '../redux/actions'
+import { setMapCenter } from '../redux/actions'
 import { Container, Row, Col, Button, Tooltip,
     ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
@@ -13,25 +13,31 @@ import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import Control from './control'
 
+import { Geolocation } from '../geolocation'
+
 const wgs84 = "EPSG:4326";
 const wm = "EPSG:3857";
 const defaultPosition = transform([-123,46], wgs84, wm);
-
-// Round off to some reasonable number of decimal places
-// based on this zoom level
 
 class Home extends React.Component {
     static propTypes = {
         theme: PropTypes.object,
         bookmarks: PropTypes.object,
-        position: PropTypes.object,
+        mapExtent: PropTypes.object,
     }
 
     state = {
         displayPoint: [0,0], displayZoom: 0,
         tooltipOpen: false,
-        mapOpacity: 100
+        mapOpacity: 100,
+        markerId: 1,
     };
+
+    constructor(props) {
+        super(props);
+        this.props.dispatch( setMapCenter(defaultPosition, 10) );
+        this.geolocation = new Geolocation();
+    }
 
     toggle = () => {
        this.setState({
@@ -45,22 +51,45 @@ class Home extends React.Component {
 
     gotoBookmark = (e) => {
         const bookmarkId = e.target.name;
+
+        // Bookmarks are stored in lat,lon
         const bookmark_wgs84 = this.props.bookmarks[bookmarkId]
         const coord = transform(bookmark_wgs84.location, wgs84, wm)
         console.log('Home.goto', bookmarkId, coord);
 
+        this.setState({
+            displayPoint: bookmark_wgs84.location,
+            displayZoom: bookmark_wgs84.zoom
+        });
         this.props.dispatch(
-            setMapPosition(coord, bookmark_wgs84.zoom)
+            setMapCenter(coord, bookmark_wgs84.zoom)
+        );
+    }
+
+    gotoGeolocation = (e) => {
+        console.log(this.geolocation)
+        if (!this.geolocation.valid)
+            return;
+
+        this.setState({
+            displayPoint:  this.geolocation.coord,
+            displayZoom: 16,
+        })
+        let coord_wm = transform(this.geolocation.coord, wgs84, wm);
+        this.props.dispatch(
+            setMapCenter(coord_wm, 16)
         );
     }
 
     onMapClick = (e) => {
-        const coord = e.coordinate;
+        const coord = transform(e.coordinate,wm,wgs84);
         const v = e.map.getView()
         const zoom = v.getZoom();
         console.log("Home.onMapClick", coord);
+
         this.setState({
-            displayPoint: transform(coord, wm,wgs84),
+            markerId: ++this.state.markerId,
+            displayPoint: coord,
             displayZoom : zoom
         })
     }
@@ -69,30 +98,40 @@ class Home extends React.Component {
     // the click handler will cause the map to pan back to its starting point
     onMapMove = (e) => {
         const v = e.map.getView()
-        const center_wm = v.getCenter()
-        const zoom = v.getZoom();
-        const center_wgs84 = transform(center_wm, wm,wgs84)
+        const new_center_wm = v.getCenter()
+        const new_zoom = v.getZoom();
+        const new_center_wgs84 = transform(new_center_wm, wm,wgs84)
+        console.log("Home.onMapMove", this.props, new_center_wm, new_zoom);
 
-        // did map actually onMoveEnd
-        if (this.props.position.coordinate[0] !== center_wm[0]
-        || this.props.position.coordinate[1] !== center_wm[1]
-        || this.props.position.zoom !== zoom) {
-            console.log("Home.onMapMove", center_wgs84, zoom);
-            this.props.dispatch(
-                setMapPosition(center_wm, zoom)
-            );
-        }
+        if (new_center_wgs84[0] == 0 || new_center_wgs84[1] == 0 || new_zoom == 0)
+            return;
+
+        // does map actually nned to change?
+        if (this.props.mapExtent.center[0] == new_center_wm[0]
+        &&  this.props.mapExtent.center[1] == new_center_wm[1]
+        &&  this.props.mapExtent.zoom == new_zoom)
+            return;
+
+        console.log("MAP CENTER CHANGED");
+        this.props.dispatch(
+            setMapCenter(new_center_wm, new_zoom)
+        );
     }
-
+/*
     componentDidUpdate(prevProps) {
         console.log("componentDidUpdate");
     }
-
+*/
     render() {
         // Show a list of bookmarks
         const hash = this.props.bookmarks;
         const keys = Object.keys(hash);
         const list = keys.map(k => [k, hash[k].title]);
+        let textMarker = {
+            text: {
+                text: this.state.markerId.toString()
+            }
+        }
         //  this draws a blue 5 pointed star
         const pointMarker = {
             image: {
@@ -113,7 +152,7 @@ class Home extends React.Component {
                     <SpecialDay />
                 </Row>
                 <Row>
-                <Position coord={ this.state.displayPoint } zoom={ this.state.displayZoom }/>
+                    <Position coord={ this.state.displayPoint } zoom={ this.state.displayZoom }/>
                 </Row>
                 <Row>
                     <div className="sliders">
@@ -130,15 +169,15 @@ class Home extends React.Component {
                 <Row><Col>
                     <Map useDefaultControls={true}
                         onSingleClick={ this.onMapClick } onMoveEnd={ this.onMapMove }
-                        view=<View zoom={ this.props.position.zoom }
-                            center={ this.props.position.coordinate }
+                        view=<View zoom={ this.props.mapExtent.zoom }
+                            center={ this.props.mapExtent.center }
                             minZoom={ 9 } maxZoom={ 19 }
                             />
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
 
                         <layer.Vector
-                            style={ pointMarker }
+                            style={ textMarker }
                             opacity={ 1 } >
                             <interaction.Draw type="Point" />
                         </layer.Vector>
@@ -153,7 +192,7 @@ class Home extends React.Component {
                     </ListGroup>
                 </Col></Row>
                 <Row>
-                    <Button tag="button">Do nothing</Button>
+                    <Button tag="button" onClick={ this.gotoGeolocation }>Geolocate</Button>
                     <Button tag="a" color="success" href="http://reactstrap.github.io" target="_blank">ReactStrap docs</Button>
                     <Button tag="a" href="/huhwhat">404 page</Button>
                 </Row>
@@ -166,6 +205,6 @@ class Home extends React.Component {
 let mapStateToProps = (state) => (Object.assign({},
     state.theme,
     state.bookmarks,
-    state.position,
+    state.mapExtent,
 ));
 export default connect(mapStateToProps)(Home);

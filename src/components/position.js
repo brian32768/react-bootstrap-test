@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Card } from 'reactstrap'
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { transform } from 'ol/proj'
 
 const lut_accuracy = [
     0, // 0
@@ -29,6 +26,8 @@ const lut_accuracy = [
     6, // 20
 ];
 
+// This component only displays a posiion passed in as props.
+// It does not care about the position stored in redux state.
 
 class Position extends React.Component {
     static propTypes = {
@@ -41,8 +40,14 @@ class Position extends React.Component {
     render() {
         console.log("Position.render props = ", this.props);
         const d = lut_accuracy[this.props.zoom];
-        const x = parseFloat(this.props.coord[0]).toFixed(d)
-        const y = parseFloat(this.props.coord[1]).toFixed(d)
+        let x = this.props.coord[0];
+        let y = this.props.coord[1];
+        if (typeof x === 'string')
+            x = parseFloat(x)
+        if (typeof y === 'string')
+            y = parseFloat(y)
+        x = x.toFixed(d)
+        y = y.toFixed(d)
         return (
             <Card>
                 <input name="x" value={ x } onChange={ this.onChange }/>
@@ -53,7 +58,4 @@ class Position extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => (Object.assign({},
-    state.position,
-));
-export default connect(mapStateToProps)(Position);
+export default Position;

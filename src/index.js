@@ -15,26 +15,6 @@ import './index.css'
 
 const { store, persistor } = configStore();
 
-let showPosition = (position) => {
-    console.log(position.coords.latitude, position.coords.longitude);
-}
-
-let errorPosition = (position) => {
-    console.error("Could not read position", position);
-}
-
-let getLocation = () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
-    } else {
-        console.error("Geolocation not available");
-    }
-}
-
-window.addEventListener('load', () => {
-    getLocation();
-});
-
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
