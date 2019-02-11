@@ -1,5 +1,5 @@
 export { actions, taskStatus, uniqueId } from './action-types'
 export { addBookmark, deleteBookmark } from './bookmarks'
-export { setMapPosition } from './position'
+export { setMapCenter } from './mapextent'
 export { addTask, changeTaskStatus } from './tasks'
 export { toggleTheme } from './themes'

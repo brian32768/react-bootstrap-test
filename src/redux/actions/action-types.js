@@ -3,8 +3,8 @@ export const actions = {
     ADD_BOOKMARK: 'ADD_BOOKMARK',
     DELETE_BOOKMARK: 'DELETE_BOOKMARK',
 
-    // Position
-    SET_MAP_POSITION: 'SET_MAP_POSITION',
+    // Map extent
+    SET_MAP_CENTER: 'SET_MAP_CENTER',
 
     // Tasks
     ADD_TASK: 'ADD_TASK',
