@@ -11,21 +11,47 @@ I added more React code,
 I added code to do a fetch from a remote server (now using Axios!),
 and I added some glitzy Bootstrap 4 components using reactstrap.
 
-Today I am adding Redux.
+## Redux
 
-## Map components
+2019-January or so
 
-I added some mocked components to test passing values
-between parent and child components.
+I've added Redux and real maps. Open the console and watch log messages.
+First I added the Tasks menu which maintains a list of tasks. Then I added
+OpenStreetMap and implemented storing the current map extent and the bookmarks features.
+It does not remember is as history but it does save the extent
+so that if you flip to another page in the menu (say Table) and come back it restores the location.
 
-An OpenLayers "Map" has a bunch of things nested inside it, including Layers and Controls. A Layer (parent) has one Source (child) but the Layer has to call setSource with the source as a parameter. So I wrote some code here to simulate this.
+There are actions and reducers in src/redux.
 
-## Bootstrap 4 via reactstrap
+Redux implements a finite state machine. You tell it you want it to do something by dispatching an action
+and that fires a reducer, which looks at the current state and possibly transitions to a new state. React components can watch the state and re-render if it changes. A store in redux is used to contain the entire state for your app.
+
+### Implementing "History" aka "Time Travel"
+
+Use case: I want to set up a view of a map and send it to a friend as a (relatively short) link.
+
+Use case: I want to set up a view, leave for the weekend, and come back to it on Monday.
+
+Use case: Bookmark a map view
+
+The way to implement this seems to be via connected-react-router.
+Adding ````npm install connected-react-router```` pulls in the required dependencies (including "history").
+
+
+### Maps
+
+Initially I added some mocked components to test passing values between parent and child components that simulated maps. Then I realized that my ol-react makes adding a real map so easy that I added it to this project and now I can use OpenStreetMap instead of mocking.
+
+Map Extent: I use Reduxt to store the map extent, and the extent is passed to the OpenLayers View. When you go to another page and then come back, the state of the extent from redux is passed to the OL view so the map does not go back to its initial extent.
+
+Markers: You can add markers to the map by clicking on it. The markers go away if you reload the page.
+
+## Bootstrap 4 via Reactstrap
 
 To get Bootstrap 4 working I needed
-```npm install reactstrap bootstrap```
+````npm install reactstrap bootstrap````
 
-The bootstrap package is only needed for styles.
+The bootstrap package is only needed for its CSS, so ignore warnings.
 
 Refer to http://reactstrap.github.io/ for more information on reactstrap.
 

@@ -1,17 +1,28 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
+import { createBrowserHistory } from 'history';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import reducer from './reducers'
+import rootReducer from './reducers'
 
-const persistConfig = {
-    key: "root",
-    storage,
-}
+const history = createBrowserHistory();
 
-const pReducer = persistReducer(persistConfig, reducer)
+// This object defines where the storage takes place,
+// in this case, it's in local storage in your browser.
+//const persistConfig = {
+//    key: "root",
+//    storage,
+//}
+
+//const rootReducer = persistReducer(persistConfig, reducer)
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
-    let store = createStore(pReducer)
-    let persistor = persistStore(store)
-    return { store, persistor }
+    let store = createStore(
+        connectRouter(history)(rootReducer),
+        composeEnhancer(applyMiddleware(routerMiddleware(history)))
+    );
+    //let persistor = persistStore(store)
+    //return { store, persistor }
+    return { store }
 }

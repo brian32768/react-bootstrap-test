@@ -11,6 +11,7 @@ import { transform } from 'ol/proj'
 import SpecialDay from './specialday'
 import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
+import usng from 'usng/usng'
 import Control from './control'
 
 import { Geolocation } from '../geolocation'
@@ -117,11 +118,14 @@ class Home extends React.Component {
             setMapCenter(new_center_wm, new_zoom)
         );
     }
-/*
-    componentDidUpdate(prevProps) {
-        console.log("componentDidUpdate");
+
+    componentDidUpdate(oldProps) {
+        console.log("This location:", this.props.location);
+        if (oldProps.location != this.props.location) {
+            console.log("Home location changed", oldProps.location);
+        }
     }
-*/
+
     render() {
         // Show a list of bookmarks
         const hash = this.props.bookmarks;

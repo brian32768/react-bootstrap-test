@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
+//import { PersistGate } from 'redux-persist/integration/react'
 import configStore from './redux/configstore'
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'reactstrap'
@@ -13,11 +13,10 @@ import { themes } from './themes'
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css'
 
-const { store, persistor } = configStore();
+const { store } = configStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
             <MyNavbar />
             <BrowserRouter>
             <Switch>
@@ -30,7 +29,6 @@ ReactDOM.render(
             <Route render={() => <NotFound/> } />
             </Switch>
             </BrowserRouter>
-        </PersistGate>
     </Provider>,
     document.getElementById("app")
 );
