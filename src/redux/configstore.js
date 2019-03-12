@@ -9,20 +9,22 @@ const history = createBrowserHistory();
 
 // This object defines where the storage takes place,
 // in this case, it's in local storage in your browser.
-//const persistConfig = {
-//    key: "root",
-//    storage,
-//}
+const persistConfig = {
+    key: "root",
+    storage,
+}
 
-//const rootReducer = persistReducer(persistConfig, reducer)
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const pReducer = persistReducer(persistConfig, rootReducer)
+
+// I think the routerMiddleware thing is what makes
+// the standard history thing work.
+// I probably need to implement my own middleware for OL
 
 export default () => {
     let store = createStore(
-        connectRouter(history)(rootReducer),
-        composeEnhancer(applyMiddleware(routerMiddleware(history)))
+        connectRouter(history)(pReducer),
+        compose(applyMiddleware(routerMiddleware(history)))
     );
-    //let persistor = persistStore(store)
-    //return { store, persistor }
-    return { store }
+    let persistor = persistStore(store)
+    return { store, persistor }
 }

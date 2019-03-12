@@ -13,7 +13,7 @@ import { themes } from './themes'
 import 'bootstrap/dist/css/bootstrap.css'
 import './index.css'
 
-const { store } = configStore();
+const { store, persistor } = configStore();
 
 ReactDOM.render(
     <Provider store={store}>
