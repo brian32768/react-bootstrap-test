@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
+import VerticalNavbar from './verticalnavbar'
 
 // see https://react-select.com/
 import Select from 'react-select'
@@ -61,11 +62,11 @@ class Table extends React.Component {
                     defaultValue={items[0]}
                     options={ items }
                 />
-
-            <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
-                data={items}
-                columns={columns}
-            />
+                <VerticalNavbar />
+                <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
+                    data={items}
+                    columns={columns}
+                />
           </>
         );
     }
