@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faCamera, faTable, faInfoCircle, faListOl } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { toggleTheme } from '../redux/actions'
 import { Collapse,
@@ -38,19 +40,19 @@ const MyNavbar = ({ theme, toggleTheme }) => {
                         <Button onClick={ toggleTheme }>Toggle theme</Button>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/">Home</NavLink>
+                        <NavLink href="/"><FontAwesomeIcon icon={ faCoffee } /> Home</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/table">Table</NavLink>
+                        <NavLink href="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/tasks">Tasks</NavLink>
+                        <NavLink href="/tasks"><FontAwesomeIcon icon={ faListOl } /> Tasks</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/pictures">Pictures</NavLink>
+                        <NavLink href="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="/about">About</NavLink>
+                        <NavLink href="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink href="/contact">Contact us</NavLink>
