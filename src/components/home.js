@@ -7,7 +7,7 @@ import { Container, Row, Col, Button, Tooltip,
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import { transform } from 'ol/proj'
-
+import axios from 'axios'
 import SpecialDay from './specialday'
 import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
@@ -35,6 +35,20 @@ class Home extends React.Component {
         mapOpacity: 100,
         markerId: 1,
     };
+
+    constructor(props) {
+        super(props);
+
+        const xmlfile = "http://bellman.wildsong.biz/wps_buffer_request.xml";
+        console.log("Load this xml file thing", xmlfile)
+        axios.get(xmlfile)
+        .then( (response) => {
+            console.log("Read your damn file for you", response);
+        } )
+        .catch( (error) => {
+            console.log("Sorry mate I could na read your file");
+        } )
+    }
 
     toggle = () => {
        this.setState({
