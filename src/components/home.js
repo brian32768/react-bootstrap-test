@@ -20,6 +20,8 @@ const wgs84 = "EPSG:4326";
 const wm = "EPSG:3857";
 const defaultPosition = transform([-123,46], wgs84, wm);
 
+console.log("home.js=", process.env.SAMPLE_PASSWORD);
+
 class Home extends React.Component {
     static propTypes = {
         theme: PropTypes.object,
@@ -39,15 +41,29 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
 
-        const xmlfile = "http://bellman.wildsong.biz/wps_buffer_request.xml";
+        const xmlfile = "https://maps.wildsong.biz/wps_buffer_request.xml";
+        const wps_service_url = "https://geoserver.wildsong.biz/"
+
         console.log("Load this xml file thing", xmlfile)
         axios.get(xmlfile)
         .then( (response) => {
-            console.log("Read your damn file for you", response);
-        } )
+            console.log("I read your file for you", response);
+            // Now send it right on back to the WPS server
+            axios({
+                method: 'post',
+                url: wps_service_url,
+                data: xmlfile
+            })
+            .then ( (response) => {
+                console.log("Binky", response);
+            })
+            .catch ( (error) => {
+                console.log("Sorry POST failed");
+            })
+        })
         .catch( (error) => {
-            console.log("Sorry mate I could na read your file");
-        } )
+            console.log("Sorry I could not read your file");
+        })
     }
 
     toggle = () => {
