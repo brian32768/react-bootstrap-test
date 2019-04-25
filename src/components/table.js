@@ -1,14 +1,29 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Container, Row, Col } from 'reactstrap'
+
+// Examples with two different widgets, react-table and react-bootstrap-table2.
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
-import VerticalNavbar from './verticalnavbar'
+
+import BootstrapTable from 'react-bootstrap-table-next';
 
 // see https://react-select.com/
 import Select from 'react-select'
 
-let items = [
+const rt_columns = [{
+        Header: 'src',
+        accessor: 'src'
+    }, {
+        Header: 'label',
+        accessor: 'label'
+    }, {
+        Header: 'text',
+        accessor: 'text'
+}]
+
+const rt_data = [
     {
         src: '/assets/Proud.jpg',
         label: 'Pigeon', text: ""
@@ -31,9 +46,29 @@ let items = [
     }
 ];
 
-const columns = [{
-    Header: 'src',
-}]
+const rbn_columns = [{
+  dataField: 'id',
+  text: 'Product ID'
+}, {
+  dataField: 'name',
+  text: 'Product Name'
+}, {
+  dataField: 'price',
+  text: 'Product Price'
+}];
+
+const rbn_data  = [
+    {id: '1', name: 'squirrel', price:  1.98},
+    {id: '2', name: 'moose',    price:  1.98},
+    {id: '3', name: 'boris',    price: 17.98},
+    {id: '4', name: 'natasha',  price: 34.98},
+];
+
+const defaultSorted = [{
+  dataField: 'name',
+  order: 'desc'
+}];
+
 
 class Table extends React.Component {
     static propTypes = {
@@ -42,32 +77,44 @@ class Table extends React.Component {
     render() {
         let onChange = () => {};
         let theme = this.props.theme;
-        const columns = [{
-                Header: 'src',
-                accessor: 'src'
-            }, {
-                Header: 'label',
-                accessor: 'label'
-            }, {
-                Header: 'text',
-                accessor: 'text'
-        }]
+
+        console.log("rbn_data", rbn_data);
+
         return (
-            <>
-            <h2>Table</h2>
-            <h3>single select</h3>
-                <Select
-                    classNamePrefix="select"
-                    className="basic-single"
-                    defaultValue={items[0]}
-                    options={ items }
-                />
-                <VerticalNavbar />
-                <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
-                    data={items}
-                    columns={columns}
-                />
-          </>
+            <Container fluid={ true }><Row>
+                <Col sm="2">
+                    other stuff, a whole long
+                    list could go here
+                </Col>
+                <Col sm="10">
+                    <h3>single select pick list</h3>
+                        <Select
+                            classNamePrefix="select"
+                            className="basic-single"
+                            defaultValue={rt_data[0]}
+                            options={ rt_data }
+                        />
+                    <h2>react-table</h2>
+                        <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
+                            data={ rt_data }
+                            columns={ rt_columns }
+                        />
+                </Col></Row>
+
+                <Row><Col>
+                    <h2>react-bootstrap-table</h2>
+                    <BootstrapTable
+                      bootstrap4
+                      keyField="id"
+                      data={ rbn_data }
+                      columns={ rbn_columns }
+                      striped
+                      hover
+                      condensed
+                      defaultSorted={ defaultSorted }
+                    />
+                </Col></Row>
+            </Container>
         );
     }
 }

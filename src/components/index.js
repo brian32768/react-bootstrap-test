@@ -9,4 +9,3 @@ export {default as TasksPage} from './taskspage';
 export {default as TaskList} from './tasklist';
 
 export {default as MyNavbar} from './navbar';
-export {default as VerticalNavbar} from './verticalnavbar';
