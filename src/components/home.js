@@ -16,9 +16,14 @@ import Control from './control'
 
 import { Geolocation } from '../geolocation'
 
-const wgs84 = "EPSG:4326";
-const wm = "EPSG:3857";
-const defaultPosition = transform([-123,46], wgs84, wm);
+import { myGeoServer, wgs84, wm, astoria_ll, usngPrecision } from '../utils'
+
+const defaultPosition = transform(astoria_ll, wgs84, wm);
+
+const taxlotslayer = 'clatsop_wm%3Ataxlots'
+const taxlots_url = myGeoServer + '/gwc/service/tms/1.0.0/'
+        + taxlotslayer
+        + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
 
 console.log("home.js=", process.env.SAMPLE_PASSWORD);
 
@@ -212,7 +217,7 @@ class Home extends React.Component {
                             />
                     >
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
-
+	                <layer.VectorTile format="MVT" url={ taxlots_url } />
                         <layer.Vector
                             style={ pointMarker }
                             opacity={ 1 } >
