@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">
+  <ows:Identifier>JTS:buffer</ows:Identifier>
+  <wps:DataInputs>
+    <wps:Input>
+      <ows:Identifier>geom</ows:Identifier>
+      <wps:Data>
+        <wps:ComplexData mimeType="application/json"><![CDATA[{"type":"FeatureCollection","features":[{"type":"Feature","id":"web_markers.1","geometry":{"type":"Point","coordinates":[-1.37848313266E7,5810236.3638]},"geometry_name":"geom","properties":{"id":1,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848313266E7,5810236.3638,-1.37848313266E7,5810236.3638]}},{"type":"Feature","id":"web_markers.2","geometry":{"type":"Point","coordinates":[-1.37848089371E7,5810235.7994]},"geometry_name":"geom","properties":{"id":2,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848089371E7,5810235.7994,-1.37848089371E7,5810235.7994]}},{"type":"Feature","id":"web_markers.3","geometry":{"type":"Point","coordinates":[-1.37847880528E7,5810235.6113]},"geometry_name":"geom","properties":{"id":3,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37847880528E7,5810235.6113,-1.37847880528E7,5810235.6113]}},{"type":"Feature","id":"web_markers.4","geometry":{"type":"Point","coordinates":[-1.37848590677E7,5810245.2312]},"geometry_name":"geom","properties":{"id":4,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848590677E7,5810245.2312,-1.37848590677E7,5810245.2312]}},{"type":"Feature","id":"web_markers.5","geometry":{"type":"Point","coordinates":[-1.37848251601E7,5810245.9148]},"geometry_name":"geom","properties":{"id":5,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848251601E7,5810245.9148,-1.37848251601E7,5810245.9148]}},{"type":"Feature","id":"web_markers.6","geometry":{"type":"Point","coordinates":[-1.37848992647E7,5810246.325]},"geometry_name":"geom","properties":{"id":6,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848992647E7,5810246.325,-1.37848992647E7,5810246.325]}},{"type":"Feature","id":"web_markers.7","geometry":{"type":"Point","coordinates":[-1.37848905143E7,5810246.4617]},"geometry_name":"geom","properties":{"id":7,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848905143E7,5810246.4617,-1.37848905143E7,5810246.4617]}},{"type":"Feature","id":"web_markers.8","geometry":{"type":"Point","coordinates":[-1.3784881764E7,5810245.6414]},"geometry_name":"geom","properties":{"id":8,"label":null,"symbolid":null,"notes":null,"bbox":[-1.3784881764E7,5810245.6414,-1.3784881764E7,5810245.6414]}},{"type":"Feature","id":"web_markers.9","geometry":{"type":"Point","coordinates":[-1.37848752012E7,5810245.0945]},"geometry_name":"geom","properties":{"id":9,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848752012E7,5810245.0945,-1.37848752012E7,5810245.0945]}},{"type":"Feature","id":"web_markers.10","geometry":{"type":"Point","coordinates":[-1.37848678181E7,5810244.2741]},"geometry_name":"geom","properties":{"id":10,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848678181E7,5810244.2741,-1.37848678181E7,5810244.2741]}},{"type":"Feature","id":"web_markers.11","geometry":{"type":"Point","coordinates":[-1.3784852505E7,5810244.9577]},"geometry_name":"geom","properties":{"id":11,"label":null,"symbolid":null,"notes":null,"bbox":[-1.3784852505E7,5810244.9577,-1.3784852505E7,5810244.9577]}},{"type":"Feature","id":"web_markers.12","geometry":{"type":"Point","coordinates":[-1.37848456688E7,5810244.6843]},"geometry_name":"geom","properties":{"id":12,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848456688E7,5810244.6843,-1.37848456688E7,5810244.6843]}},{"type":"Feature","id":"web_markers.13","geometry":{"type":"Point","coordinates":[-1.37848384224E7,5810244.821]},"geometry_name":"geom","properties":{"id":13,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848384224E7,5810244.821,-1.37848384224E7,5810244.821]}},{"type":"Feature","id":"web_markers.14","geometry":{"type":"Point","coordinates":[-1.37848314494E7,5810246.1883]},"geometry_name":"geom","properties":{"id":14,"label":null,"symbolid":null,"notes":null,"bbox":[-1.37848314494E7,5810246.1883,-1.37848314494E7,5810246.1883]}}],"totalFeatures":14,"numberMatched":14,"numberReturned":14,"timeStamp":"2019-03-30T03:35:37.920Z","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:EPSG::3857"}},"bbox":[-1.37848992647E7,5810235.6113,-1.37847880528E7,5810246.4617]}]]></wps:ComplexData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>distance</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>100</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>quadrantSegments</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>0</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+    <wps:Input>
+      <ows:Identifier>capStyle</ows:Identifier>
+      <wps:Data>
+        <wps:LiteralData>Flat</wps:LiteralData>
+      </wps:Data>
+    </wps:Input>
+  </wps:DataInputs>
+  <wps:ResponseForm>
+    <wps:RawDataOutput mimeType="application/json">
+      <ows:Identifier>result</ows:Identifier>
+    </wps:RawDataOutput>
+  </wps:ResponseForm>
+</wps:Execute>

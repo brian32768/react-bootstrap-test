@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from './reducers'
-
+import { loggerMiddleware, errorMiddleware } from './middleware'
 const history = createBrowserHistory();
 
 // This object defines where the storage takes place,
@@ -14,6 +14,7 @@ const persistConfig = {
     storage,
 }
 
+const enhancedCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const pReducer = persistReducer(persistConfig, rootReducer)
 
 // I think the routerMiddleware thing is what makes
@@ -23,7 +24,13 @@ const pReducer = persistReducer(persistConfig, rootReducer)
 export default () => {
     let store = createStore(
         connectRouter(history)(pReducer),
-        compose(applyMiddleware(routerMiddleware(history)))
+        enhancedCompose(
+            applyMiddleware(
+                routerMiddleware(history),
+                loggerMiddleware,
+                errorMiddleware
+            )
+        )
     );
     let persistor = persistStore(store)
     return { store, persistor }

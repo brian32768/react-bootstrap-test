@@ -4,6 +4,8 @@
   "description": "Test of React-Bootstrap",
   "main": "index.html",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@map46/ol-react": "^0.2.19",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
@@ -29,7 +31,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^5.10.0",
     "redux-starter-kit": "^0.4.3",
-    "src": "^1.1.2"
+    "usng": "^0.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

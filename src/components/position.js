@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'reactstrap'
+import { Converter } from 'usng/usng';
 
-const lut_accuracy = [
+const lut_precision = [
     0, // 0
     0, // 1
     0, // 2
@@ -25,7 +26,6 @@ const lut_accuracy = [
     6, // 19
     6, // 20
 ];
-
 // This component only displays a posiion passed in as props.
 // It does not care about the position stored in redux state.
 
@@ -39,7 +39,7 @@ class Position extends React.Component {
     }
     render() {
         console.log("Position.render props = ", this.props);
-        const d = lut_accuracy[this.props.zoom];
+        const d = lut_precision[this.props.zoom];
         let x = this.props.coord[0];
         let y = this.props.coord[1];
         if (typeof x === 'string')
@@ -48,11 +48,12 @@ class Position extends React.Component {
             y = parseFloat(y)
         x = x.toFixed(d)
         y = y.toFixed(d)
+        const usngConverter = new Converter
+        let hash = usngConverter.LLtoUSNG(y,x,d);
         return (
             <Card>
-                <input name="x" value={ x } onChange={ this.onChange }/>
-                <input name="y" value={ y } onChange={ this.onChange }/>
-                Zoom { this.props.zoom }
+                { x } { y } { this.props.zoom } <br />
+                { hash }
             </Card>
         );
     }
