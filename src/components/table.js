@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'reactstrap'
+import axios from 'axios'
 
 // Examples with two different widgets, react-table and react-bootstrap-table2.
 import ReactTable from 'react-table'
@@ -46,6 +47,7 @@ const rt_data = [
     }
 ];
 
+
 const rbn_columns = [{
   dataField: 'id',
   text: 'Product ID'
@@ -74,6 +76,19 @@ class Table extends React.Component {
     static propTypes = {
         theme: PropTypes.object
     }
+
+
+const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
+        axios.get(solrQ)
+        .then( (response) => {
+            console.log("I have data", response);
+        } )
+        .catch( (error) => {
+            console.log("WhatsamattaU");
+        } )
+
+
+
     render() {
         let onChange = () => {};
         let theme = this.props.theme;
