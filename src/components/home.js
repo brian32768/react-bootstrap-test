@@ -12,10 +12,7 @@ import SpecialDay from './specialday'
 import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import usng from 'usng/usng'
-import Control from './control'
-
 import { Geolocation } from '../geolocation'
-
 import { myGeoServer, wgs84, wm, astoria_ll, usngPrecision } from '../utils'
 
 const defaultPosition = transform(astoria_ll, wgs84, wm);
@@ -192,6 +189,7 @@ class Home extends React.Component {
             <Container>
                 <Row>
                     <SpecialDay />
+                    <span id="mouseposition">mouse position</span>
                 </Row>
                 <Row>
                     <Position coord={ this.state.displayPoint } zoom={ this.state.displayZoom }/>
@@ -216,8 +214,11 @@ class Home extends React.Component {
                             minZoom={ 9 } maxZoom={ 19 }
                             />
                     >
+                        <control.MousePosition
+                            target="mouseposition"
+                        />
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
-	                <layer.VectorTile format="MVT" url={ taxlots_url } />
+	                    <layer.VectorTile format="MVT" url={ taxlots_url } />
                         <layer.Vector
                             style={ pointMarker }
                             opacity={ 1 } >

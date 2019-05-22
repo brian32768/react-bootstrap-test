@@ -77,8 +77,8 @@ class Table extends React.Component {
         theme: PropTypes.object
     }
 
-
-const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
+/*
+    const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
         axios.get(solrQ)
         .then( (response) => {
             console.log("I have data", response);
@@ -87,7 +87,7 @@ const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
             console.log("WhatsamattaU");
         } )
 
-
+*/
 
     render() {
         let onChange = () => {};
