@@ -81,9 +81,7 @@ class Home extends React.Component {
     gotoXY = (coord,zoom) => {
         if (coord[0]==0 || coord[1]==0 || zoom==0) return;
         console.log('Home.gotoXY', coord, zoom);
-        this.props.dispatch(
-            setMapCenter(coord, zoom)
-        );
+        this.props.setMapCenter(coord, zoom);
     }
 
     gotoBookmark = (e) => {
@@ -139,16 +137,14 @@ class Home extends React.Component {
         if (new_center_wgs84[0] == 0 || new_center_wgs84[1] == 0 || new_zoom == 0)
             return;
 
-        // does map actually nned to change?
+        // does map actually need to change?
         if (this.props.mapExtent.center[0] == new_center_wm[0]
         &&  this.props.mapExtent.center[1] == new_center_wm[1]
         &&  this.props.mapExtent.zoom == new_zoom)
             return;
 
         console.log("MAP CENTER CHANGED");
-        this.props.dispatch(
-            setMapCenter(new_center_wm, new_zoom)
-        );
+        this.props.setMapCenter(new_center_wm, new_zoom);
     }
 
     componentDidUpdate(oldProps) {
@@ -196,12 +192,6 @@ class Home extends React.Component {
                 </Row>
                 <Row>
                     <div className="sliders">
-                        <Control
-                            onChange={ this.changeOpacity }
-                            title="Layer 1"
-                            value={ this.state.mapOpacity }
-                        />
-
                         Range slider test
                         <Range />
                     </div>
@@ -245,9 +235,12 @@ class Home extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => (Object.assign({},
+const mapStateToProps = (state) => (Object.assign({},
     state.theme,
     state.bookmarks,
     state.mapExtent,
 ));
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+    setMapCenter
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
