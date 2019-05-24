@@ -1,8 +1,9 @@
 import { actions } from '../actions'
+import { fromLonLat } from 'ol/proj'
 
 const initialState = {
     mapExtent: {
-        center: [0,0],
+        center: fromLonLat([-123,46]),
         zoom: 0
     }
 }
@@ -16,7 +17,6 @@ const reducer = (state=initialState, action) => {
                     zoom: action.payload.zoom,
                 }
             };
-            console.log("State changed from ",state, ' to', newstate);
             return newstate;
     }
     return state;

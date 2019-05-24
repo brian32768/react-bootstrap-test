@@ -6,16 +6,14 @@ import { Container, Row, Col, Button, Tooltip,
     ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { transform } from 'ol/proj'
+import { toLonLat, fromLonLat } from 'ol/proj'
 import axios from 'axios'
 import SpecialDay from './specialday'
 import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import usng from 'usng/usng'
 import { Geolocation } from '../geolocation'
-import { myGeoServer, wgs84, wm, astoria_ll, usngPrecision } from '../utils'
-
-const defaultPosition = transform(astoria_ll, wgs84, wm);
+import { myGeoServer, usngPrecision } from '../utils'
 
 const taxlotslayer = 'clatsop_wm%3Ataxlots'
 const taxlots_url = myGeoServer + '/gwc/service/tms/1.0.0/'
@@ -89,7 +87,7 @@ class Home extends React.Component {
 
         // Bookmarks are stored in lat,lon
         const bookmark_wgs84 = this.props.bookmarks[bookmarkId]
-        const coord = transform(bookmark_wgs84.location, wgs84, wm)
+        const coord = fromLonLat(bookmark_wgs84.location)
 
         this.setState({
             displayPoint: bookmark_wgs84.location,
@@ -99,7 +97,7 @@ class Home extends React.Component {
     }
 
     gotoGeolocation = (e) => {
-        const defaultZoom = 15;
+        const defaultZoom = 17;
         console.log(this.geolocation)
         if (!this.geolocation.valid)
             return;
@@ -108,12 +106,12 @@ class Home extends React.Component {
             displayPoint: this.geolocation.coord,
             displayZoom: defaultZoom
         });
-        let coord_wm = transform(this.geolocation.coord, wgs84, wm);
+        let coord_wm = fromLonLat(this.geolocation.coord);
         this.gotoXY(coord_wm, defaultZoom);
     }
 
     onMapClick = (e) => {
-        const coord = transform(e.coordinate,wm,wgs84);
+        const coord = toLonLat(e.coordinate);
         const v = e.map.getView()
         const zoom = v.getZoom();
         console.log("Home.onMapClick", coord);
@@ -131,7 +129,7 @@ class Home extends React.Component {
         const v = e.map.getView()
         const new_center_wm = v.getCenter()
         const new_zoom = v.getZoom();
-        const new_center_wgs84 = transform(new_center_wm, wm,wgs84)
+        const new_center_wgs84 = toLonLat(new_center_wm)
         console.log("Home.onMapMove", this.props, new_center_wm, new_zoom);
 
         if (new_center_wgs84[0] == 0 || new_center_wgs84[1] == 0 || new_zoom == 0)
@@ -184,7 +182,7 @@ class Home extends React.Component {
         <>
             <Container>
                 <Row>
-                    <SpecialDay />
+                    <SpecialDay /> &nbsp;
                     <span id="mouseposition">mouse position</span>
                 </Row>
                 <Row>

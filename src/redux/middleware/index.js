@@ -1,4 +1,6 @@
-import loggerMiddleware from './logger'
 import errorMiddleware from './error'
 
-export { loggerMiddleware, errorMiddleware }
+export { errorMiddleware }
+
+// I switched to using redux-logger in configstore today but
+// left this around for the moment.
