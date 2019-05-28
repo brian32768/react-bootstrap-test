@@ -206,7 +206,7 @@ class Home extends React.Component {
                             target="mouseposition"
                         />
                         <layer.Tile name="OpenStreetMap" source="OSM"/>
-	                    <layer.VectorTile format="MVT" url={ taxlots_url } />
+	                    <layer.VectorTile source="MVT" url={ taxlots_url } />
                         <layer.Vector
                             style={ pointMarker }
                             opacity={ 1 } >
