@@ -7,20 +7,24 @@ import { Container, Row, Col, Button, Tooltip,
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import { toLonLat, fromLonLat } from 'ol/proj'
+import queryString from 'query-string'
 import axios from 'axios'
 import SpecialDay from './specialday'
 import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
-import usng from 'usng/usng'
 import { Geolocation } from '../geolocation'
 import { myGeoServer, usngPrecision } from '../utils'
+
+import { Converter } from 'usng/usng'
+const usngConverter = new Converter;
 
 const taxlotslayer = 'clatsop_wm%3Ataxlots'
 const taxlots_url = myGeoServer + '/gwc/service/tms/1.0.0/'
         + taxlotslayer
         + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
 
-console.log("home.js=", process.env.SAMPLE_PASSWORD);
+//console.log("home.js=", process.env.SAMPLE_PASSWORD);
+
 
 class Home extends React.Component {
     static propTypes = {
@@ -143,12 +147,28 @@ class Home extends React.Component {
 
         console.log("MAP CENTER CHANGED");
         this.props.setMapCenter(new_center_wm, new_zoom);
+        this.props.history.push(this.props.location.pathname + '?'
+        + 'x=' + new_center_wgs84[0] + '&y=' + new_center_wgs84[1] + '&z=' + new_zoom)
     }
 
     componentDidUpdate(oldProps) {
         console.log("This location:", this.props.location);
         if (oldProps.location != this.props.location) {
             console.log("Home location changed", oldProps.location);
+            const q = queryString.parse(this.props.location.search);
+            if (typeof q.x !== 'undefined') {
+                const coord = [Number(q.x), Number(q.y)]
+                const z = Number(q.z);
+                if (isNaN(coord[0]) || isNaN(coord[0]) || isNaN(z)) {
+                    console.error("bad data in URL", q)
+                    return;
+                }
+                const wm = fromLonLat(coord);
+
+                // FIXME I need to make sure the numbers are okay here
+
+                this.props.setMapCenter(wm, z);
+            }
         }
     }
 
