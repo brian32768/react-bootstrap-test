@@ -14,6 +14,7 @@ import Position from './position'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import { Geolocation } from '../geolocation'
 import { myGeoServer, usngPrecision } from '../utils'
+import Geohash from '@geonet/geohash'
 
 import { Converter } from 'usng/usng'
 const usngConverter = new Converter;
@@ -147,8 +148,11 @@ class Home extends React.Component {
 
         console.log("MAP CENTER CHANGED");
         this.props.setMapCenter(new_center_wm, new_zoom);
+        const hash = Geohash.encode(new_center_wgs84[0], new_center_wgs84[1])
         this.props.history.push(this.props.location.pathname + '?'
-        + 'x=' + new_center_wgs84[0] + '&y=' + new_center_wgs84[1] + '&z=' + new_zoom)
+        + 'x=' + new_center_wgs84[0] + '&y=' + new_center_wgs84[1]
+        + '&g=' + hash
+        + '&z=' + new_zoom)
     }
 
     componentDidUpdate(oldProps) {
@@ -156,19 +160,20 @@ class Home extends React.Component {
         if (oldProps.location != this.props.location) {
             console.log("Home location changed", oldProps.location);
             const q = queryString.parse(this.props.location.search);
-            if (typeof q.x !== 'undefined') {
-                const coord = [Number(q.x), Number(q.y)]
+            if (q.g !== 'undefined') {
                 const z = Number(q.z);
-                if (isNaN(coord[0]) || isNaN(coord[0]) || isNaN(z)) {
-                    console.error("bad data in URL", q)
+                const ll = Geohash.decode(q.g);
+                const coord = [ ll.lng, ll.lat ]
+                if (isNaN(coord[0]) || isNaN(coord[1]) || isNaN(z)) {
+                    console.error("bad data in URL", q, coord)
                     return;
                 }
-                const wm = fromLonLat(coord);
-
+                console.log('decode', coord)
                 // FIXME I need to make sure the numbers are okay here
-
+                const wm = fromLonLat(coord);
                 this.props.setMapCenter(wm, z);
-            }
+            } else
+                console.log('fail!', q);
         }
     }
 

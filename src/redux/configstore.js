@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux'
 import logger from 'redux-logger'
-import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory } from 'history'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { routerMiddleware } from 'connected-react-router'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import rootReducer from './reducers'
+import createRootReducer from './reducers'
 import { loggerMiddleware, errorMiddleware } from './middleware'
-const history = createBrowserHistory();
 
 // This object defines where the storage takes place,
 // in this case, it's in local storage in your browser.
@@ -16,23 +15,22 @@ const persistConfig = {
 }
 
 const enhancedCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const pReducer = persistReducer(persistConfig, rootReducer)
+const pReducer = persistReducer(persistConfig, createRootReducer)
 
-// I think the routerMiddleware thing is what makes
-// the standard history thing work.
-// I probably need to implement my own middleware for OL
+export const history = createBrowserHistory()
 
-export default () => {
-    let store = createStore(
-        connectRouter(history)(pReducer),
+export default (preloadedState) => {
+    const store = createStore(
+        createRootReducer(history), // root reducer with router state
+        preloadedState,
         enhancedCompose(
             applyMiddleware(
-                routerMiddleware(history),
+                routerMiddleware(history), // for dispatching history actions
                 errorMiddleware,
                 logger
             )
         )
     );
-    let persistor = persistStore(store)
+    const persistor = persistStore(store)
     return { store, persistor }
 }
