@@ -6,6 +6,7 @@ import mapExtent  from './mapextent'
 import tasks from './tasks'
 import theme from './theme'
 
+// this is for connected-react-router v5/6
 export default (history) => combineReducers({
     router: connectRouter(history),
     bookmarks,

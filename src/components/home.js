@@ -150,8 +150,8 @@ class Home extends React.Component {
         this.props.setMapCenter(new_center_wm, new_zoom);
         const hash = Geohash.encode(new_center_wgs84[0], new_center_wgs84[1])
         this.props.history.push(this.props.location.pathname + '?'
-        + 'x=' + new_center_wgs84[0] + '&y=' + new_center_wgs84[1]
-        + '&g=' + hash
+        //+ 'x=' + new_center_wgs84[0] + '&y=' + new_center_wgs84[1]
+        + 'g=' + hash
         + '&z=' + new_zoom)
     }
 
@@ -160,20 +160,20 @@ class Home extends React.Component {
         if (oldProps.location != this.props.location) {
             console.log("Home location changed", oldProps.location);
             const q = queryString.parse(this.props.location.search);
-            if (q.g !== 'undefined') {
-                const z = Number(q.z);
-                const ll = Geohash.decode(q.g);
-                const coord = [ ll.lng, ll.lat ]
-                if (isNaN(coord[0]) || isNaN(coord[1]) || isNaN(z)) {
+            if (typeof q.g === 'string') {
+                try {
+                    const z = Number(q.z);
+                    console.log("Q= ",q);
+                    const ll = Geohash.decode(q.g);
+                    const coord = [ ll.lng, ll.lat ]
+                    console.log('decode', coord)
+                    // FIXME I need to make sure the numbers are okay here
+                    const wm = fromLonLat(coord);
+                    this.props.setMapCenter(wm, z);
+                } catch {
                     console.error("bad data in URL", q, coord)
-                    return;
                 }
-                console.log('decode', coord)
-                // FIXME I need to make sure the numbers are okay here
-                const wm = fromLonLat(coord);
-                this.props.setMapCenter(wm, z);
-            } else
-                console.log('fail!', q);
+            }
         }
     }
 
