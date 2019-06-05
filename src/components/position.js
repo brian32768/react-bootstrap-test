@@ -38,7 +38,7 @@ class Position extends React.Component {
         console.log("Position.onChange", e);
     }
     render() {
-        console.log("Position.render props = ", this.props);
+        //console.log("Position.render props = ", this.props);
         const d = lut_precision[this.props.zoom];
         let x = this.props.coord[0];
         let y = this.props.coord[1];

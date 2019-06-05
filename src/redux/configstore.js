@@ -5,7 +5,7 @@ import { routerMiddleware } from 'connected-react-router'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import createRootReducer from './reducers'
-import { loggerMiddleware, errorMiddleware } from './middleware'
+import { queryMiddleware, errorMiddleware } from './middleware'
 
 // This object defines where the storage takes place,
 // in this case, it's in local storage in your browser.
@@ -23,13 +23,12 @@ export default (preloadedState) => {
     const store = createStore(
         createRootReducer(history), // root reducer with router state
         preloadedState,
-        enhancedCompose(
-            applyMiddleware(
-                routerMiddleware(history), // for dispatching history actions
-                errorMiddleware,
-                logger
-            )
-        )
+        enhancedCompose( applyMiddleware(
+            routerMiddleware(history), // for dispatching history actions
+            queryMiddleware({}),       // parse query strings right here
+            errorMiddleware,
+            logger
+        ) )
     );
     const persistor = persistStore(store)
     return { store, persistor }

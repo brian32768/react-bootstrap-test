@@ -34,7 +34,7 @@ class Home extends React.Component {
         mapExtent: PropTypes.object,
     }
 
-    geolocation = new Geolocation();
+//    geolocation = new Geolocation();
 
     state = {
         displayPoint: [0,0], displayZoom: 0,
@@ -46,13 +46,14 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
 
+/*
         const xmlfile = "https://maps.wildsong.biz/wps_buffer_request.xml";
         const wps_service_url = "https://geoserver.wildsong.biz/"
 
-        console.log("Load this xml file thing", xmlfile)
+//        console.log("Load this xml file thing", xmlfile)
         axios.get(xmlfile)
         .then( (response) => {
-            console.log("I read your file for you", response);
+//            console.log("I read your file for you", response);
             // Now send it right on back to the WPS server
             axios({
                 method: 'post',
@@ -67,8 +68,10 @@ class Home extends React.Component {
             })
         })
         .catch( (error) => {
-            console.log("Sorry I could not read your file");
+//            console.log("Sorry I could not read your file");
         })
+        */
+
     }
 
     toggle = () => {
@@ -135,7 +138,6 @@ class Home extends React.Component {
         const new_center_wm = v.getCenter()
         const new_zoom = v.getZoom();
         const new_center_wgs84 = toLonLat(new_center_wm)
-        console.log("Home.onMapMove", this.props, new_center_wm, new_zoom);
 
         if (new_center_wgs84[0] == 0 || new_center_wgs84[1] == 0 || new_zoom == 0)
             return;
@@ -146,32 +148,37 @@ class Home extends React.Component {
         &&  this.props.mapExtent.zoom == new_zoom)
             return;
 
-        console.log("MAP CENTER CHANGED");
+        console.log("Home.onMapMove", this.props, new_center_wgs84, new_zoom);
         this.props.setMapCenter(new_center_wm, new_zoom);
-        const hash = Geohash.encode(new_center_wgs84[0], new_center_wgs84[1])
-        this.props.history.push(this.props.location.pathname + '?'
-        //+ 'x=' + new_center_wgs84[0] + '&y=' + new_center_wgs84[1]
-        + 'g=' + hash
-        + '&z=' + new_zoom)
+        try {
+            const hash = Geohash.encode(new_center_wgs84[0], new_center_wgs84[1], 7)
+//            this.props.history.push(this.props.location.pathname + '?'
+//            + 'g=' + hash
+//            + '&z=' + new_zoom)
+        } catch(err) {
+            console.log("Encode failed.", err.message, new_center_wgs84);
+        }
     }
 
     componentDidUpdate(oldProps) {
-        console.log("This location:", this.props.location);
+        return;
+
+        const q = queryString.parse(this.props.location.search);
+        console.log("Home.componentDidUpdate location:", this.props.location, ' q=', q);
         if (oldProps.location != this.props.location) {
-            console.log("Home location changed", oldProps.location);
-            const q = queryString.parse(this.props.location.search);
             if (typeof q.g === 'string') {
+                let coord = [];
                 try {
                     const z = Number(q.z);
                     console.log("Q= ",q);
                     const ll = Geohash.decode(q.g);
-                    const coord = [ ll.lng, ll.lat ]
+                    coord = [ ll.lng, ll.lat ]
                     console.log('decode', coord)
                     // FIXME I need to make sure the numbers are okay here
                     const wm = fromLonLat(coord);
                     this.props.setMapCenter(wm, z);
-                } catch {
-                    console.error("bad data in URL", q, coord)
+                } catch(err) {
+                    console.error("Bad data in URL", err.message, q, coord)
                 }
             }
         }
@@ -201,7 +208,7 @@ class Home extends React.Component {
                 stroke: { color: 'blue', width: 1.5 }
             }
         };
-        console.log("Home.render props = ", this.props);
+        //console.log("Home.render props = ", this.props);
 
         return (
         <>

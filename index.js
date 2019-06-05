@@ -10,7 +10,7 @@ import './index.css'
 
 const { store, persistor } = configStore();
 
-console.log("index.js=", process.env.SAMPLE_PASSWORD);
+//console.log("index.js=", process.env.SAMPLE_PASSWORD);
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,6 +1,6 @@
 import errorMiddleware from './error'
-
 export { errorMiddleware }
 
-// I switched to using redux-logger in configstore today but
-// left this around for the moment.
+// Dragged this in from react-router-query-middleware
+import queryMiddleware from './query'
+export { queryMiddleware }
