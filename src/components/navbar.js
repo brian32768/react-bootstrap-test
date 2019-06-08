@@ -8,24 +8,12 @@ import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Button } from 'reactstrap'
 
-/*class MyNavbar extends React.Component {
-    state = {
-        isOpen: true
-    };
-
-    toggleCollapse = (e) => {
-        e.preventDefault();
-        this.setState({ isOpen: this.state.isOpen });
-    }
-
-    render() {
-        */
-
 const MyNavbar = ({ theme, toggleTheme }) => {
     const toggleCollapse = (e) => {
         e.preventDefault();
         console.log("toggleCollapse");
     }
+    console.log("MyNavbar");
     return (
         <>
             <Navbar color={ theme.name } expand="md">

@@ -4,17 +4,16 @@ import { connect } from 'react-redux'
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
 
 const About = ({ theme }) => (
-    <>
-        <Card inverse={ (theme.name == "dark") } style={{backgroundColor: theme.background}}>
-          <CardTitle>
+    <Card inverse={ (theme.name == "dark") }
+            style={{backgroundColor: theme.background}} >
+        <CardTitle>
             About react-bootstrap-test
-          </CardTitle>
-          <CardText>
-              This app is a test of React and Bootstrap.<br/>
-              Can you tell this is using the "{theme.name}" theme?
-          </CardText>
-        </Card>
-    </>
+        </CardTitle>
+        <CardText>
+            This app is a test of React and Bootstrap.<br/>
+            Can you tell this is using the "{theme.name}" theme?
+        </CardText>
+    </Card>
 );
 
 About.propTypes = {

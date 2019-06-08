@@ -6,9 +6,6 @@ import {Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg,
     Button} from 'reactstrap'
 
 class NewTask extends React.Component {
-    static propTypes = {
-        theme: PropTypes.object
-    }
     state = {
         showForm: false,
         title: '',
@@ -55,15 +52,18 @@ class NewTask extends React.Component {
         );
     }
 }
+NewTask.propTypes = {
+    theme: PropTypes.object
+}
 
 const mapStateToProps = (state) => {
     console.log(state);
     return {
-        theme: state.theme.theme,
-        tasks: state.tasks.tasks
+        theme: state.theme,
+        tasks: state.tasks
     };
 }
-//const mapDispatchToProps = {
+const mapDispatchToProps = {
 //    createTask,
-//};
-export default connect(mapStateToProps)(NewTask);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(NewTask);

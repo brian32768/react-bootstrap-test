@@ -5,7 +5,7 @@ import TaskList from './tasklist'
 //<NewTask onCreateTask={ this.props.onCreateTask }/>
 //<TaskList tasks={ this.props.tasks }/>
 
-const TasksPage = (props) => (
+const TasksPage = () => (
     <>
         <NewTask />
         <TaskList />

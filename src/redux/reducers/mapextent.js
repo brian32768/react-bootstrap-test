@@ -12,7 +12,7 @@ const DEFAULT_LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
 
 export const mapextentReducer = (state=initialState, action) => {
     switch(action.type) {
-        case DEFAULT_LOCATION_CHANGE:
+        /*case DEFAULT_LOCATION_CHANGE:
             let q = {}
             let coord = []
             let wm = []
@@ -29,7 +29,7 @@ export const mapextentReducer = (state=initialState, action) => {
                 //wm = Geohash.encode(coord[0], coord[1]);
                 console.log('RESTORED CENTER SHALL BE', coord)
             }
-            break;
+            break;*/
 
         case actions.SET_MAP_CENTER:
             const newstate = {

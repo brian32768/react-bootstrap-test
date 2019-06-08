@@ -77,17 +77,17 @@ class Table extends React.Component {
         theme: PropTypes.object
     }
 
-/*
-    const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
+    constructor(props) {
+        super(props);
+        const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
         axios.get(solrQ)
         .then( (response) => {
-            console.log("I have data", response);
+            console.log("I have data from solr", response);
         } )
         .catch( (error) => {
-            console.log("WhatsamattaU");
+            console.log("WhatsamattaU", error);
         } )
-
-*/
+    }
 
     render() {
         let onChange = () => {};

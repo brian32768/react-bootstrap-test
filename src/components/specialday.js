@@ -14,14 +14,9 @@ const TooltipContent = () => (
 );
 
 const SpecialDay = () => {
-    if (nday == 5) {
-        return (
-            <b>Happy {day}!!!</b>
-        );
-    }
-    return (
-        <span>It's {day}.</span>
-    );
+    return (nday == 5)?
+        (<b>Happy {day}!!!</b>) :
+        (<span>It's {day}.</span>)
 }
 
 SpecialDay.TooltipContent = TooltipContent;

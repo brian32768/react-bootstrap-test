@@ -29,34 +29,32 @@ const lut_precision = [
 // This component only displays a posiion passed in as props.
 // It does not care about the position stored in redux state.
 
-class Position extends React.Component {
-    static propTypes = {
-        coord: PropTypes.array,
-        zoom: PropTypes.number.isRequired,
-    }
-    onChange = (e) => {
+const Position = ({ coord, zoom }) => {
+    const onChange = (e) => {
         console.log("Position.onChange", e);
     }
-    render() {
-        //console.log("Position.render props = ", this.props);
-        const d = lut_precision[this.props.zoom];
-        let x = this.props.coord[0];
-        let y = this.props.coord[1];
-        if (typeof x === 'string')
-            x = parseFloat(x)
-        if (typeof y === 'string')
-            y = parseFloat(y)
-        x = x.toFixed(d)
-        y = y.toFixed(d)
-        const usngConverter = new Converter
-        let hash = usngConverter.LLtoUSNG(y,x,d);
-        return (
-            <Card>
-                { x } { y } { this.props.zoom } <br />
-                { hash }
-            </Card>
-        );
-    }
+    const d = lut_precision[zoom];
+    let x = coord[0];
+    let y = coord[1];
+    if (typeof x === 'string')
+        x = parseFloat(x)
+    if (typeof y === 'string')
+        y = parseFloat(y)
+    x = x.toFixed(d)
+    y = y.toFixed(d)
+    const usngConverter = new Converter
+    const hash = usngConverter.LLtoUSNG(y,x,d);
+    return (
+        <Card>
+            { x } { y } { zoom } <br />
+            { hash }
+        </Card>
+    );
+}
+
+Position.propTypes = {
+    coord: PropTypes.array,
+    zoom: PropTypes.number.isRequired,
 }
 
 export default Position;
