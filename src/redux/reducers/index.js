@@ -5,7 +5,7 @@ import { devToolsEnhancer } from 'redux-devtools-extension'
 import { bookmarksReducer } from './bookmarks'
 import { mapextentReducer }  from './mapextent'
 import { tasksReducer } from './tasks'
-import { themesReducer } from './theme'
+import { themeReducer } from './theme'
 
 // this is for connected-react-router v5/6
 export default (history) => combineReducers({
@@ -13,6 +13,6 @@ export default (history) => combineReducers({
     bookmarks : bookmarksReducer,
     mapExtent : mapextentReducer,
     tasks : tasksReducer,
-    themes : themesReducer,
+    theme : themeReducer,
     //devToolsEnhancer({ trace: true, traceLimit: 25 })
 });

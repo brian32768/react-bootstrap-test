@@ -18,10 +18,10 @@ const persistConfig = {
 
 export default function configureStore(preloadedState) {
     const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    const persistedReducer = persistReducer(persistConfig, combinedReducer);
+    const persistedReducer = persistReducer(persistConfig, combinedReducer(history));
 
     const store = createStore(
-        persistedReducer()
+        persistedReducer,
         preloadedState,
         composeEnhancer( applyMiddleware(
             routerMiddleware(history), // for dispatching history actions

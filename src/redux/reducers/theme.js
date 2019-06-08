@@ -5,7 +5,7 @@ const initialState = {
     theme: themes.dark,
 }
 
-export const themesReducer = (state=initialState, action) => {
+export const themeReducer = (state=initialState, action) => {
     switch(action.type) {
         case actions.TOGGLE_THEME:
             const theme = state.theme;
