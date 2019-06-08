@@ -18,12 +18,10 @@ const initialState = {
     ]
 };
 
-const reducer = (state=initialState, action) => {
+export const tasksReducer = (state=initialState, action) => {
     switch(action.type) {
         case actions.ADD_TASK:
             return { tasks: state.tasks.concat(action.payload) };
     }
     return state;
 }
-
-export default reducer

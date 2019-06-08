@@ -1,11 +1,13 @@
 import logger from 'redux-logger'
-import { createBrowserHistory } from 'history'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import createRootReducer from './reducers'
 import { queryMiddleware, errorMiddleware } from './middleware'
+import { createBrowserHistory } from 'history'
+import combinedReducer from './reducers'
+
+export const history = createBrowserHistory();
 
 // This object defines where the storage takes place,
 // in this case, it's in local storage in your browser.
@@ -14,22 +16,22 @@ const persistConfig = {
     storage,
 }
 
-const enhancedCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const pReducer = persistReducer(persistConfig, createRootReducer)
+export default function configureStore(preloadedState) {
+    const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const persistedReducer = persistReducer(persistConfig, combinedReducer);
 
-export const history = createBrowserHistory()
-
-export default (preloadedState) => {
     const store = createStore(
-        createRootReducer(history), // root reducer with router state
+        persistedReducer()
         preloadedState,
-        enhancedCompose( applyMiddleware(
+        composeEnhancer( applyMiddleware(
             routerMiddleware(history), // for dispatching history actions
             queryMiddleware({}),       // parse query strings right here
             errorMiddleware,
             logger
-        ) )
+    )));
+    const persistor = persistStore(store, null,
+        () => {console.log("rehydrationComplete")}
     );
-    const persistor = persistStore(store)
+
     return { store, persistor }
 }

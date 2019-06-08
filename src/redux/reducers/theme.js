@@ -5,7 +5,7 @@ const initialState = {
     theme: themes.dark,
 }
 
-const reducer = (state=initialState, action) => {
+export const themesReducer = (state=initialState, action) => {
     switch(action.type) {
         case actions.TOGGLE_THEME:
             const theme = state.theme;
@@ -14,5 +14,3 @@ const reducer = (state=initialState, action) => {
     }
     return state;
 }
-
-export default reducer

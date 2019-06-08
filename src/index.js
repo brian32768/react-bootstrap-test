@@ -1,36 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
 import { PersistGate } from 'redux-persist/integration/react'
 import configStore from './redux/configstore'
-import { connect } from 'react-redux'
-import { Container, Row, Col } from 'reactstrap'
-import { MyNavbar } from './components'
-import { About, Contact, Home, NotFound, Pictures, Table, TasksPage } from './components'
-import { createTask } from './redux/actions'
-import { themes } from './themes'
-import 'bootstrap/dist/css/bootstrap.css'
-import './index.css'
+import { history } from './redux/reducers'
+import Routes from './routes'
+import { TickTock } from './components'
 
 const { store, persistor } = configStore();
 
+//console.log("index.js=", process.env.SAMPLE_PASSWORD);
+
 ReactDOM.render(
-    <Provider store={ store }>
-        <PersistGate loading={ null } persistor={ persistor }>
-            <MyNavbar />
-            <BrowserRouter>
-            <Switch>
-            <Route exact path="/" component={ Home } />
-            <Route path="/table" component={ Table } />
-            <Route path="/pictures" component={ Pictures } />
-            <Route path="/about" component={ About } />
-            <Route path="/contact" component={ Contact } />
-            <Route path="/tasks" component={ TasksPage } />
-            <Route render={() => <NotFound/> } />
-            </Switch>
-            </BrowserRouter>
-        </PersistGate>
+    <Provider store={store}>
+    <PersistGate loading={ <TickTock/> } persistor={ persistor }>
+        <ConnectedRouter history={ history }>
+            <Routes />
+        </ConnectedRouter>
+    </PersistGate>
     </Provider>,
     document.getElementById("app")
 );

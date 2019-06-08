@@ -10,7 +10,7 @@ const initialState = {
 }
 const DEFAULT_LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
 
-const reducer = (state=initialState, action) => {
+export const mapextentReducer = (state=initialState, action) => {
     switch(action.type) {
         case DEFAULT_LOCATION_CHANGE:
             let q = {}
@@ -45,5 +45,3 @@ const reducer = (state=initialState, action) => {
     }
     return state;
 }
-
-export default reducer
