@@ -8,49 +8,45 @@ import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
     Button } from 'reactstrap'
 
-const MyNavbar = ({ theme, toggleTheme }) => {
-    const toggleCollapse = (e) => {
-        e.preventDefault();
-        console.log("toggleCollapse");
-    }
-    console.log("MyNavbar");
-    return (
-        <>
-            <Navbar color={ theme.name } expand="md">
-                <NavbarBrand href="/">
-                    <span id="sitelogo"></span>
-                    <span id="sitename"></span>
-                </NavbarBrand>
-                <NavbarToggler onClick={ toggleCollapse } />
-                <Collapse isOpen={ true } navbar>
-                    <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        <Button onClick={ toggleTheme }>Toggle theme</Button>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/"><FontAwesomeIcon icon={ faCoffee } /> Home</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/tasks"><FontAwesomeIcon icon={ faListOl } /> Tasks</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="/contact">Contact us</NavLink>
-                    </NavItem>
-                    </Nav>
-                </Collapse>
-            </Navbar>
-        </>
-    );
-}
+const MyNavbar = ({ theme, toggleTheme }) => (
+    <>
+        <Navbar color={ theme.name } expand="md">
+            <NavbarBrand href="/">
+                <span id="sitelogo"></span>
+                <span id="sitename"></span>
+            </NavbarBrand>
+            <NavbarToggler onClick={ (e) => {
+                    console.log("toggle collapse");
+                    e.preventDefault();
+                } } />
+            <Collapse isOpen={ true } navbar>
+                <Nav className="ml-auto" navbar>
+                <NavItem>
+                    <Button onClick={ toggleTheme }>Toggle theme</Button>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/"><FontAwesomeIcon icon={ faCoffee } /> Home</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/tasks"><FontAwesomeIcon icon={ faListOl } /> Tasks</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/contact">Contact us</NavLink>
+                </NavItem>
+                </Nav>
+            </Collapse>
+        </Navbar>
+    </>
+)
 
 const mapStateToProps = (state) => (
     state.theme
