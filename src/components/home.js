@@ -265,11 +265,13 @@ class Home extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => (Object.assign({},
-    state.theme,
-    state.bookmarks,
-    state.mapExtent,
-));
+const mapStateToProps = (state) => {
+    return {
+        theme: state.theme,
+        bookmarks: state.bookmarks,
+        mapExtent: state.mapExtent,
+    }
+};
 const mapDispatchToProps = {
     setMapCenter
 };
