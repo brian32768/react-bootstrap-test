@@ -13,8 +13,7 @@ export default function queryMiddleware({
 } = {}) {
   return store => next => action => {
     switch (action.type) {
-        /*
-      case actionName: {
+      case actionName:
           // This will parse the query string and then add it to the location object
           // so that you can see it later on.
         const newLocation = {
@@ -24,13 +23,11 @@ export default function queryMiddleware({
 
         const newAction = { ...action };
         set(newAction, actionLocationPath, newLocation);
-
-        //console.log("PARSEY TIME NOW HERE", newAction);
+        console.log("PARSEY TIME NOW HERE", newAction);
         return next(newAction);
-    }*/
-      default: {
+
+      default:
         return next(action);
-      }
     }
   };
 }

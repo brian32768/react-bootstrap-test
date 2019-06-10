@@ -5,8 +5,9 @@ import { faCoffee, faCamera, faTable, faInfoCircle, faListOl } from '@fortawesom
 import { connect } from 'react-redux'
 import { toggleTheme } from '../redux/actions'
 import { Collapse,
-    Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
+    Navbar, NavbarToggler, NavbarBrand, Nav, NavItem,
     Button } from 'reactstrap'
+import { NavLink } from 'react-router-dom'
 
 const MyNavbar = ({ theme, toggleTheme }) => (
     <>
@@ -25,22 +26,22 @@ const MyNavbar = ({ theme, toggleTheme }) => (
                     <Button onClick={ toggleTheme }>Toggle theme</Button>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/"><FontAwesomeIcon icon={ faCoffee } /> Home</NavLink>
+                    <NavLink to="/"><FontAwesomeIcon icon={ faCoffee } /> Home</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink>
+                    <NavLink to="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/tasks"><FontAwesomeIcon icon={ faListOl } /> Tasks</NavLink>
+                    <NavLink to="/tasks"><FontAwesomeIcon icon={ faListOl } /> Tasks</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink>
+                    <NavLink to="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink>
+                    <NavLink to="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/contact">Contact us</NavLink>
+                    <NavLink to="/contact">Contact us</NavLink>
                 </NavItem>
                 </Nav>
             </Collapse>
