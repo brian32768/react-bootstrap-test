@@ -4,7 +4,7 @@ const errorReporter = store => {
         try {
             return next(action)
         } catch(err) {
-            console.error('error', err)
+            console.error('Middleware Error', err)
             throw err
         }
     }

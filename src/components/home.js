@@ -2,44 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setMapCenter } from '../redux/actions'
-import { Container, Row, Col, Button, Tooltip,
-    ListGroup, ListGroupItem } from 'reactstrap'
+import { Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import { toLonLat, fromLonLat } from 'ol/proj'
 import queryString from 'query-string'
 import axios from 'axios'
+import MyMap from './Map'
 import SpecialDay from './specialday'
 import Position from './position'
-import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import { Geolocation } from '../geolocation'
-import { myGeoServer, usngPrecision } from '../utils'
 import Geohash from '@geonet/geohash'
-
-import { Converter } from 'usng/usng'
-const usngConverter = new Converter;
-
-const taxlotslayer = 'clatsop_wm%3Ataxlots'
-const taxlots_url = myGeoServer + '/gwc/service/tms/1.0.0/'
-        + taxlotslayer
-        + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
-
-//console.log("home.js=", process.env.SAMPLE_PASSWORD);
-
+import { push, replace } from 'connected-react-router'
 
 class Home extends React.Component {
     static propTypes = {
         theme: PropTypes.object,
         bookmarks: PropTypes.object,
-        mapExtent: PropTypes.object,
     }
 
-//    geolocation = new Geolocation();
+    geolocation = new Geolocation();
 
     state = {
         displayPoint: [0,0], displayZoom: 0,
-        tooltipOpen: false,
-        mapOpacity: 100,
         markerId: 1,
     };
 
@@ -74,20 +59,33 @@ class Home extends React.Component {
 
     }
 
-    toggle = () => {
-       this.setState({
-         tooltipOpen: !this.state.tooltipOpen
-       });
-    }
-
-    changeOpacity = (value) => {
-        this.setState({mapOpacity : value});
-    }
-
-    gotoXY = (coord,zoom) => {
-        if (coord[0]==0 || coord[1]==0 || zoom==0) return;
+    gotoXY = (coord,zoom,replace=false) => {
         console.log('Home.gotoXY', coord, zoom);
-        this.props.setMapCenter(coord, zoom);
+        if (coord[0]==0 || coord[1]==0 || zoom==0) return;
+
+        try {
+            const ll = toLonLat(coord)
+            // Do a little bound check here, don't push a bad URL.
+            const nLat = ll[1]
+            const nLng = ll[0]
+            const hash = Geohash.encode(ll[0], ll[1], 7) // 7 digits=about 150m
+            const baseurl = '/'
+            const query = baseurl +
+                        '?' +
+                        //'lat=' + nLat + '&lng=' + nLng + '&' +
+                        'g=' + hash + '&' +
+                        'z=' + zoom
+            if ((nLat >= 44 && nLat <= 48) && (nLng >= -126 && nLng <= -123)) {
+                replace?
+                this.props.replace(query) :
+                this.props.push(query)
+            } else {
+                console.log("Outside county", coord)
+            }
+        } catch (err) {
+            console.log("Bad input", err)
+        }
+        //        this.props.setMapCenter(coord, zoom);
     }
 
     gotoBookmark = (e) => {
@@ -105,83 +103,19 @@ class Home extends React.Component {
     }
 
     gotoGeolocation = (e) => {
-        const defaultZoom = 17;
-        console.log(this.geolocation)
         if (!this.geolocation.valid)
             return;
+        console.log(this.geolocation)
 
+        // Put a marker on the map at our supposed geolocation.
         this.setState({
             displayPoint: this.geolocation.coord,
             displayZoom: defaultZoom
         });
-        let coord_wm = fromLonLat(this.geolocation.coord);
-        this.gotoXY(coord_wm, defaultZoom);
-    }
 
-    onMapClick = (e) => {
-        const coord = toLonLat(e.coordinate);
-        const v = e.map.getView()
-        const zoom = v.getZoom();
-        console.log("Home.onMapClick", coord);
-
-        this.setState({
-            markerId: ++this.state.markerId,
-            displayPoint: coord,
-            displayZoom : zoom
-        })
-    }
-
-    // If you don't catch this event and then you click on the map,
-    // the click handler will cause the map to pan back to its starting point
-    onMapMove = (e) => {
-        const v = e.map.getView()
-        const new_center_wm = v.getCenter()
-        const new_zoom = v.getZoom();
-        const new_center_wgs84 = toLonLat(new_center_wm)
-
-        if (new_center_wgs84[0] == 0 || new_center_wgs84[1] == 0 || new_zoom == 0)
-            return;
-
-        // does map actually need to change?
-        if (this.props.mapExtent.center[0] == new_center_wm[0]
-        &&  this.props.mapExtent.center[1] == new_center_wm[1]
-        &&  this.props.mapExtent.zoom == new_zoom)
-            return;
-
-        console.log("Home.onMapMove", this.props, new_center_wgs84, new_zoom);
-        this.props.setMapCenter(new_center_wm, new_zoom);
-        try {
-            const hash = Geohash.encode(new_center_wgs84[0], new_center_wgs84[1], 7)
-//            this.props.history.push(this.props.location.pathname + '?'
-//            + 'g=' + hash
-//            + '&z=' + new_zoom)
-        } catch(err) {
-            console.log("Encode failed.", err.message, new_center_wgs84);
-        }
-    }
-
-    componentDidUpdate(oldProps) {
-        return;
-
-        const q = queryString.parse(this.props.location.search);
-        console.log("Home.componentDidUpdate location:", this.props.location, ' q=', q);
-        if (oldProps.location != this.props.location) {
-            if (typeof q.g === 'string') {
-                let coord = [];
-                try {
-                    const z = Number(q.z);
-                    console.log("Q= ",q);
-                    const ll = Geohash.decode(q.g);
-                    coord = [ ll.lng, ll.lat ]
-                    console.log('decode', coord)
-                    // FIXME I need to make sure the numbers are okay here
-                    const wm = fromLonLat(coord);
-                    this.props.setMapCenter(wm, z);
-                } catch(err) {
-                    console.error("Bad data in URL", err.message, q, coord)
-                }
-            }
-        }
+        const defaultZoom = 17;
+        const coord = fromLonLat(this.geolocation.coord);
+        this.gotoXY(coord, defaultZoom);
     }
 
     render() {
@@ -227,24 +161,7 @@ class Home extends React.Component {
                     </div>
                 </Row>
                 <Row><Col>
-                    <Map useDefaultControls={true}
-                        onSingleClick={ this.onMapClick } onMoveEnd={ this.onMapMove }
-                        view=<View zoom={ this.props.mapExtent.zoom }
-                            center={ this.props.mapExtent.center }
-                            minZoom={ 9 } maxZoom={ 19 }
-                            />
-                    >
-                        <control.MousePosition
-                            target="mouseposition"
-                        />
-                        <layer.Tile name="OpenStreetMap" source="OSM"/>
-	                    <layer.VectorTile source="MVT" url={ taxlots_url } />
-                        <layer.Vector
-                            style={ pointMarker }
-                            opacity={ 1 } >
-                            <interaction.Draw type="Point" />
-                        </layer.Vector>
-                    </Map>
+                    <MyMap center={this.props.mapExtent.center} zoom={this.props.mapExtent.zoom} />
                 </Col><Col>
                     <ListGroup>
                     { list.map(item =>
@@ -269,10 +186,11 @@ const mapStateToProps = (state) => {
     return {
         theme: state.theme,
         bookmarks: state.bookmarks,
-        mapExtent: state.mapExtent,
+        mapExtent: state.mapExtent
     }
 };
 const mapDispatchToProps = {
-    setMapCenter
+    setMapCenter,
+    replace,  push
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

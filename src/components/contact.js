@@ -7,7 +7,7 @@ import { Card, CardImg, CardText, CardBody,
 const img = require('/assets/Proud.jpg');
 const alt = 'This is a pigeon';
 
-const Contact = ({ theme }) => (
+const Contact = ({ theme, match }) => (
     <>
       <Card inverse={ (theme.name == "dark") }
                 style={{backgroundColor: theme.background}} >
@@ -15,6 +15,7 @@ const Contact = ({ theme }) => (
         <CardBody>
           <CardTitle>Contact us</CardTitle>
           <CardText>
+          My path ({ match.path }) is { match.isExact? "exact" : "not exact"}. 
           Tie a message to this pigeon's leg or alternatively,
             send me email at <a href="mailto:brian@wildsong.biz">brian@wildsong.biz</a>
           </CardText>
@@ -23,7 +24,8 @@ const Contact = ({ theme }) => (
     </>
 );
 Contact.propTypes = {
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    match: PropTypes.object
 }
 const mapStateToProps = (state) => ( state.theme );
 export default connect(mapStateToProps)(Contact);

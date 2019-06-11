@@ -53,7 +53,7 @@ const Position = ({ coord, zoom }) => {
 }
 
 Position.propTypes = {
-    coord: PropTypes.array,
+    coord: PropTypes.array.isRequired,
     zoom: PropTypes.number.isRequired,
 }
 
