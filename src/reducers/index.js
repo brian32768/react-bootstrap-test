@@ -3,7 +3,7 @@ import { devToolsEnhancer } from 'redux-devtools-extension'
 
 import { routerReducer } from './router'
 import { bookmarksReducer } from './bookmarks'
-import { mapReducer }  from './map'
+import { mapReducer, getGeohash, setMapQuery }  from './map'
 import { tasksReducer } from './tasks'
 import { themeReducer } from './theme'
 

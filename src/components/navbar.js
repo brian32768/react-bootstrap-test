@@ -2,17 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl } from '@fortawesome/free-solid-svg-icons'
+import { NavLink } from 'redux-first-router-link'
 import { connect } from 'react-redux'
-import { toggleTheme } from '../redux/actions'
+import { toggleTheme } from '../actions'
+import { setMapQuery } from '../reducers'
 import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem,
     Button } from 'reactstrap'
-import { NavLink } from 'react-first-router-link'
 
 // Import everything as an object so that we can look up a component using its name.
-import * as components from './components'
+import * as components from '../components'
 
-const MyNavbar = ({ theme, toggleTheme }) => (
+const MyNavbar = ({ page, center, zoom, theme, toggleTheme }) => (
     <>
         <Navbar color={ theme.name } expand="md">
             <NavbarBrand href="/">
@@ -29,7 +30,8 @@ const MyNavbar = ({ theme, toggleTheme }) => (
                     <Button onClick={ toggleTheme }>Toggle theme</Button>
                 </NavItem>
                 <NavItem>
-                    <NavLink to={{ type: "MAP", query: setMapQuery(center,zoom) }}
+                {/*
+                    <NavLink to={{ type: "MAP", query: {g:"12345"} }}
                         activeClassName='active'
                         activeStyle={{ color: 'pink' }}
                         exact={true}
@@ -50,24 +52,24 @@ const MyNavbar = ({ theme, toggleTheme }) => (
                 </NavItem>
                 <NavItem>
                     <NavLink to="/contact">Contact us</NavLink>
-                </NavItem>
+                */} </NavItem>
                 </Nav>
             </Collapse>
         </Navbar>
     </>
 )
-App.propTypes = {
+MyNavbar.propTypes = {
     page: PropTypes.string,
-    center: PropTypes.string,
-    zoom: PropTypes.string,
-    changeUser: PropTypes.func
+    center: PropTypes.arrayOf(PropTypes.number),
+    zoom: PropTypes.number
 };
 const mapStateToProps = (state) => ({
-    theme: state.theme,
     page: state.page,
 
     center: state.map.center,
-    zoom: state.map.zoom
+    zoom: state.map.zoom,
+
+    theme: state.theme,
 });
 const mapDispatchToProps = {
     toggleTheme,

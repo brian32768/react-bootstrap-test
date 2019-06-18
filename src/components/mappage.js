@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setMapCenter } from '../redux/actions'
+import { setMapCenter } from '../actions'
 import { Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
@@ -11,7 +11,6 @@ import MyMap from './Map'
 import SpecialDay from './specialday'
 import Position from './position'
 import { Geolocation } from '../geolocation'
-import Geohash from '@geonet/geohash'
 
 class MapPage extends React.Component {
     geolocation = new Geolocation();
@@ -55,7 +54,7 @@ class MapPage extends React.Component {
     gotoXY = (coord,zoom,replace=false) => {
         console.log('Home.gotoXY', coord, zoom);
         if (coord[0]==0 || coord[1]==0 || zoom==0) return;
-
+/*
         try {
             const ll = toLonLat(coord)
             // Do a little bound check here, don't push a bad URL.
@@ -78,6 +77,7 @@ class MapPage extends React.Component {
         } catch (err) {
             console.log("Bad input", err)
         }
+        */
         //        this.props.setMapCenter(coord, zoom);
     }
 

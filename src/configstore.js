@@ -17,10 +17,11 @@ const persistConfig = {
 
 export default function configureStore(preloadedState) {
     const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    const persistedReducer = persistReducer(persistConfig, combinedReducer(history));
+    //const reducer = persistReducer(persistConfig, combinedReducer(history));
+    const reducer = combinedReducer(history);
 
     const store = createStore(
-        persistedReducer,
+        reducer,
         preloadedState,
         composeEnhancer( applyMiddleware(
             //routerMiddleware,
@@ -28,9 +29,10 @@ export default function configureStore(preloadedState) {
             errorMiddleware,
             logger
     )));
-    const persistor = persistStore(store, null,
-        () => {console.log("rehydrationComplete")}
-    );
+//    const persistor = persistStore(store, null,
+//        () => {console.log("rehydrationComplete")}
+//    );
+    const persistor = null;
 
     return { store, persistor }
 }

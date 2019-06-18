@@ -10,17 +10,23 @@ const initialState = {
 function getMapQuery(query) {
     // Unpack my query object into an object that I can understand.
     // In real life, I'd convert the geohash from query to center coord here.
+    const ll = Geohash.decode(query.g)
+    const coord = fromLonLat(ll)
     return {
-        center: query.g,
+        center: coord,
         zoom:   query.z
     }
+}
+export function getGeohash(ll) {
+    return Geohash.encode(ll[0], ll[1], 7) // 7 digits=about 150m
 }
 export function setMapQuery(center, zoom) {
     // Pack the reasonably named state settings into a compact querystring format
     const query = {}
     // In real life, I'd convert center coord to geohash here.
-    if (typeof center !== 'undefined' && center) query["g"] = center
-    if (typeof zoom !== 'undefined' && zoom)     query["z"] = zoom
+    if (center[0] && center[1])
+        query["g"] = getGeohash(toLonLat(center));
+    if (typeof zoom !== 'undefined' && zoom) query["z"] = zoom.toString()
     return query
 }
 
