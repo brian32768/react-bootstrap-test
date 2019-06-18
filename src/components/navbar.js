@@ -29,8 +29,8 @@ const MyNavbar = ({ page, center, zoom, theme, toggleTheme }) => (
                 <NavItem>
                     <Button onClick={ toggleTheme }>Toggle theme</Button>
                 </NavItem>
-                <NavItem>
                 {/*
+                <NavItem>
                     <NavLink to={{ type: "MAP", query: {g:"12345"} }}
                         activeClassName='active'
                         activeStyle={{ color: 'pink' }}
@@ -52,7 +52,8 @@ const MyNavbar = ({ page, center, zoom, theme, toggleTheme }) => (
                 </NavItem>
                 <NavItem>
                     <NavLink to="/contact">Contact us</NavLink>
-                */} </NavItem>
+                </NavItem>
+                */}
                 </Nav>
             </Collapse>
         </Navbar>
