@@ -1,27 +1,26 @@
 import deepmerge from 'deepmerge'
 import { uniqueId, actions } from '../actions'
 
-const initialState = {
-    tasks: [
-        {
-            id: uniqueId(),
-            title: 'Learn Redux',
-            description: 'The store, actions, and reducers, oh my!',
-            status: 'In Progress',
-        },
-        {
-            id: uniqueId(),
-            title: 'Peace on Earth',
-            description: 'No big deal.',
-            status: 'In Progress',
-        },
-    ]
-};
+const initialState = [
+    {
+        id: uniqueId(),
+        title: 'Rescue the hostages from the northern raiders.',
+        description: 'The store, actions, and reducers, oh my!',
+        status: 'In Progress',
+    },
+    {
+        id: uniqueId(),
+        title: 'Learn to be a Master Bladesmith',
+        description: 'No big deal.',
+        status: 'In Progress',
+    },
+];
 
-export const tasksReducer = (state=initialState, action) => {
+export const tasks = (state=initialState, action) => {
+    console.log("tasks reducer", action, state);
     switch(action.type) {
         case actions.ADD_TASK:
-            return { tasks: state.tasks.concat(action.payload) };
+            return state.tasks.concat(action.payload);
     }
     return state;
 }

@@ -6,7 +6,7 @@ import configStore, { history } from './configstore'
 import { TickTock } from './components'
 import App from './App'
 
-const { store, persistor } = configStore();
+const { store } = configStore();
 
 //console.log("index.js=", process.env.SAMPLE_PASSWORD);
 

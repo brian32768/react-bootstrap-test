@@ -44,7 +44,7 @@ const initialState = {
 	},
 };
 
-export const bookmarksReducer = (state=initialState, action) => {
+export const bookmarks = (state=initialState, action) => {
     switch(action.type)  {
 	case actions.ADD_BOOKMARK:
 	    return state.bookmarks.concat(action.payload);

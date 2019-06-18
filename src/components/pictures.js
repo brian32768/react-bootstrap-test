@@ -97,5 +97,7 @@ Pictures.propTypes = {
     theme: PropTypes.object
 }
 
-const mapStateToProps = (state) => ( state.theme );
+const mapStateToProps = (state) => ({
+    theme: state.theme
+});
 export default connect(mapStateToProps)(Pictures);

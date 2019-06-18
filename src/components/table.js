@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Container, Row, Col } from 'reactstrap'
-import axios from 'axios'
 
 // Examples with two different widgets, react-table and react-bootstrap-table2.
 import ReactTable from 'react-table'
@@ -47,7 +46,6 @@ const rt_data = [
     }
 ];
 
-
 const rbn_columns = [{
   dataField: 'id',
   text: 'Product ID'
@@ -71,16 +69,10 @@ const defaultSorted = [{
   order: 'desc'
 }];
 
-
-class Table extends React.Component {
-    static propTypes = {
-        theme: PropTypes.object
-    }
-
-    constructor(props) {
-        super(props);
-        const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
-        axios.get(solrQ)
+const Table = ({ theme}) => {
+    const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
+    /* make a thunk
+    axios.get(solrQ)
         .then( (response) => {
             console.log("I have data from solr", response);
         } )
@@ -88,51 +80,49 @@ class Table extends React.Component {
             console.log("WhatsamattaU", error);
         } )
     }
-
-    render() {
-        let onChange = () => {};
-        let theme = this.props.theme;
-
-        console.log("rbn_data", rbn_data);
-
-        return (
-            <Container fluid={ true }><Row>
-                <Col sm="2">
-                    other stuff, a whole long
-                    list could go here
-                </Col>
-                <Col sm="10">
-                    <h3>single select pick list</h3>
-                        <Select
-                            classNamePrefix="select"
-                            className="basic-single"
-                            defaultValue={rt_data[0]}
-                            options={ rt_data }
-                        />
-                    <h2>react-table</h2>
-                        <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
-                            data={ rt_data }
-                            columns={ rt_columns }
-                        />
-                </Col></Row>
-
-                <Row><Col>
-                    <h2>react-bootstrap-table</h2>
-                    <BootstrapTable
-                      bootstrap4
-                      keyField="id"
-                      data={ rbn_data }
-                      columns={ rbn_columns }
-                      striped
-                      hover
-                      condensed
-                      defaultSorted={ defaultSorted }
+*/
+    const onChange = (e) => {};
+    return (
+        <Container fluid={ true }><Row>
+            <Col sm="2">
+                other stuff, a whole long
+                list could go here
+            </Col>
+            <Col sm="10">
+                <h3>single select pick list</h3>
+                    <Select
+                        classNamePrefix="select"
+                        className="basic-single"
+                        defaultValue={rt_data[0]}
+                        options={ rt_data }
                     />
-                </Col></Row>
-            </Container>
-        );
-    }
-}
+                <h2>react-table</h2>
+                    <ReactTable style={{color: theme.foreground, backgroundColor: theme.background}}
+                        data={ rt_data }
+                        columns={ rt_columns }
+                    />
+            </Col></Row>
 
-let mapStateToProps = (state) => ( state.theme );
+            <Row><Col>
+                <h2>react-bootstrap-table</h2>
+                <BootstrapTable
+                  bootstrap4
+                  keyField="id"
+                  data={ rbn_data }
+                  columns={ rbn_columns }
+                  striped
+                  hover
+                  condensed
+                  defaultSorted={ defaultSorted }
+                />
+            </Col></Row>
+        </Container>
+    );
+}
+Table.propTypes = {
+    theme: PropTypes.object
+}
+let mapStateToProps = (state) => ({
+    theme: state.theme
+});
 export default connect(mapStateToProps)(Table);

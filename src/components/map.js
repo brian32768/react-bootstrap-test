@@ -33,19 +33,19 @@ const pointMarker = {
     }
 };
 
-const MyMap = (props) => {
-
-    const gotoXY = (coord,zoom) => {
-        console.log('Map.gotoXY', coord, zoom);
-        if (coord[0]==0 || coord[1]==0 || zoom==0) return;
-        props.setMapCenter(coord,zoom)
+const MyMap = ({ center, zoom, setMapCenter }) => {
+    console.log("MyMap", center, zoom, setMapCenter);
+    const gotoXY = (center, zoom) => {
+        console.log('MyMap.gotoXY', center, zoom);
+        if (center[0]==0 || center[1]==0 || zoom==0) return;
+        setMapCenter(center, zoom)
     }
 
     const onMapClick = (e) => {
         const coord = toLonLat(e.coordinate);
         const v = e.map.getView()
         const zoom = v.getZoom();
-        console.log("Home.onMapClick", coord);
+        console.log("MyMap.onMapClick", coord);
 /*
         setState({
             markerId: ++this.state.markerId,
@@ -67,9 +67,9 @@ const MyMap = (props) => {
             return;
 
         // Does map actually need to change?
-        if (props.center[0] === new_center_wm[0]
-        &&  props.center[1] === new_center_wm[1]
-        &&  props.zoom === new_zoom)
+        if (center[0] === new_center_wm[0]
+        &&  center[1] === new_center_wm[1]
+        &&  zoom === new_zoom)
             return;
 
         gotoXY(new_center_wm, new_zoom, true)
@@ -78,8 +78,8 @@ const MyMap = (props) => {
     return (
         <Map useDefaultControls={true}
             onSingleClick={ onMapClick } onMoveEnd={ onMapMove }
-            view=<View zoom={ props.zoom }
-                center={ props.center }
+            view=<View zoom={ zoom }
+                center={ center }
                 minZoom={ 9 } maxZoom={ 19 }
                 />
         >
@@ -97,16 +97,13 @@ const MyMap = (props) => {
     );
 }
 Map.propTypes = {
-    center: PropTypes.array,
+    center: PropTypes.arrayOf(PropTypes.number),
     zoom: PropTypes.number
 }
-
-const mapStateToProps = (state) => {
-    return {
-        center: state.mapExtent.center,
-        zoom: state.mapExtent.zoom
-    }
-};
+const mapStateToProps = (state) => { console.log("state=",state); return ({
+    center: state.map.center,
+    zoom: state.map.zoom
+})};
 const mapDispatchToProps = {
     setMapCenter
 };

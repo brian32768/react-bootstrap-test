@@ -1,6 +1,6 @@
 import { router, setMapQuery } from '../reducers'
 
-const mapMiddleware = store => {
+export const mapMiddleware = store => {
     return next => action => {
         try {
             const state = store.getState()
@@ -23,5 +23,3 @@ const mapMiddleware = store => {
         }
     }
 }
-
-export default mapMiddleware

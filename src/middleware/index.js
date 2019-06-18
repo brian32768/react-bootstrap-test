@@ -1,5 +1,2 @@
-import errorMiddleware from './error'
-export { errorMiddleware }
-
-import mapMiddleware from './map'
-export { mapMiddleware }
+export { errorReporter } from './error'
+export { mapMiddleware } from './map'

@@ -1,16 +1,14 @@
 import { actions } from '../actions'
 import { themes } from '../themes'
 
-const initialState = {
-    theme: themes.dark,
-}
+const initialState = themes.dark;
 
-export const themeReducer = (state=initialState, action) => {
+export const theme = (state=initialState, action) => {
+    console.log("theme reducer", action, state);
     switch(action.type) {
         case actions.TOGGLE_THEME:
-            const theme = state.theme;
-            return { theme: (theme.name==='dark')?
-                                themes.light : themes.dark };
+            const oldTheme = state;
+            return (oldTheme.name==='dark')? themes.light : themes.dark;
     }
     return state;
 }

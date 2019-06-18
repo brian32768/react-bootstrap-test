@@ -11,7 +11,7 @@ function getMapQuery(query) {
     // Unpack my query object into an object that I can understand.
     // In real life, I'd convert the geohash from query to center coord here.
     const ll = Geohash.decode(query.g)
-    const coord = fromLonLat(ll)
+    const coord = fromLonLat([ll.lng, ll.lat])
     return {
         center: coord,
         zoom:   query.z
@@ -30,10 +30,11 @@ export function setMapQuery(center, zoom) {
     return query
 }
 
-export const mapReducer = (state=initialState, action={}) => {
+export const map = (state=initialState, action={}) => {
+    console.log("map reducer", action, state);
     switch(action.type) {
         case actions.MAP:
-    //          console.log("map reducer: MAP action", action, " state=", state);
+            console.log("map reducer: MAP action", action, " state=", state);
             try {
                 console.log("map reducer: Loading state from query", action.meta.query);
                 const newState = getMapQuery(action.meta.query)
@@ -42,6 +43,7 @@ export const mapReducer = (state=initialState, action={}) => {
             } catch(err) {
                 console.log("map reducer: No values to update right now.");
             }
+            break;
 
         case actions.SETCENTER: {
             const newState = action.payload

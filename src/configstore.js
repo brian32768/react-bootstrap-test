@@ -1,38 +1,48 @@
 import logger from 'redux-logger'
-import { createStore, applyMiddleware, compose } from 'redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import { mapMiddleware, errorMiddleware } from './middleware'
-import { createBrowserHistory } from 'history'
-import combinedReducer from './reducers'
+//import storage from 'redux-persist/lib/storage'
+//import { createBrowserHistory } from 'history'
+//import { devToolsEnhancer } from 'redux-devtools-extension'
 
-export const history = createBrowserHistory();
+import { page, bookmarks, map, tasks, theme } from './reducers'
+import { mapMiddleware, errorReporter } from './middleware'
+import routes from './routesMap'
+
+//export const history = createBrowserHistory();
 
 // This object defines where the storage takes place,
 // in this case, it's in local storage in your browser.
-const persistConfig = {
+/*const persistConfig = {
     key: "root",
     storage,
-}
+}*/
 
 export default function configureStore(preloadedState) {
-    const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     //const reducer = persistReducer(persistConfig, combinedReducer(history));
-    const reducer = combinedReducer(history);
-
+    const { reducer, middleware, enhancer } = routes;
+    const rootReducer = combineReducers({
+        page,
+        bookmarks,
+        map,
+        tasks,
+        theme,
+        location  : reducer
+        //devToolsEnhancer({ trace: true, traceLimit: 25 })
+    });
+    const middlewares = applyMiddleware(middleware, mapMiddleware, errorReporter, logger)
+    const composeEnhancers =
+        typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?
+            window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
+    const enhancers = composeEnhancers(enhancer, middlewares)
     const store = createStore(
-        reducer,
+        rootReducer,
         preloadedState,
-        composeEnhancer( applyMiddleware(
-            //routerMiddleware,
-            mapMiddleware,
-            errorMiddleware,
-            logger
-    )));
+        enhancers
+    );
 //    const persistor = persistStore(store, null,
 //        () => {console.log("rehydrationComplete")}
 //    );
-    const persistor = null;
 
-    return { store, persistor }
+    return { store }
 }

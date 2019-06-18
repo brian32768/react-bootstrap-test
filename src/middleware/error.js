@@ -1,5 +1,4 @@
-const errorReporter = store => {
-    console.log('error reporting active')
+export const errorReporter = store => {
     return next => action => {
         try {
             return next(action)
@@ -9,4 +8,3 @@ const errorReporter = store => {
         }
     }
 }
-export default errorReporter

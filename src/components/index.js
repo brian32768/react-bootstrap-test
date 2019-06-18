@@ -6,7 +6,6 @@ export {default as NotFound} from './notfound';
 export {default as Pictures} from './pictures';
 export {default as Table} from './table';
 export {default as NewTask} from './newtask';
-export {default as TasksPage} from './taskspage';
+export {default as Tasks} from './tasks';
 export {default as TaskList} from './tasklist';
 export {default as TickTock} from './ticktock';
-export {default as MyNavbar} from './navbar';
