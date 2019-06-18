@@ -6,16 +6,17 @@ import configStore, { history } from './configstore'
 import { TickTock } from './components'
 import App from './App'
 
-const { store } = configStore();
+const { store, persistor } = configStore();
 
-//console.log("index.js=", process.env.SAMPLE_PASSWORD);
-
-//<PersistGate loading={ <TickTock/> } persistor={ persistor }>
-//</PersistGate>
+/*
+console.log("index.js=", process.env.SAMPLE_PASSWORD);
+<PersistGate loading={<TickTock/>} persistor={persistor}>
+</PersistGate>
+*/
 
 ReactDOM.render(
     <Provider store={store}>
-    <App />
+        <App />
     </Provider>,
     document.getElementById("app")
 );

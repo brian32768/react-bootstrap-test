@@ -17,7 +17,7 @@ const initialState = [
 ];
 
 export const tasks = (state=initialState, action) => {
-    console.log("tasks reducer", action, state);
+    //console.log("tasks reducer", action, state);
     switch(action.type) {
         case actions.ADD_TASK:
             return state.tasks.concat(action.payload);

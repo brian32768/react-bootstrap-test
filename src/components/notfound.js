@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap'
-//const img = require('/assets/lewis_and_clark.jpg');
-//const alt = 'Lewis and Clark';
 const img = require('/assets/pigeon_reading_map.jpg');
 const alt = 'Pigeon reading map';
 
@@ -20,5 +18,7 @@ const NotFound = ({ theme }) => (
     </Card>
 );
 
-const mapStateToProps = (state) => ( state.theme );
+const mapStateToProps = (state) => ({
+    theme: state.theme
+});
 export default connect(mapStateToProps)(NotFound);

@@ -4,7 +4,7 @@ export const mapMiddleware = store => {
     return next => action => {
         try {
             const state = store.getState()
-            console.log("mapMiddleware action=",action, " state=",state);
+            //console.log("mapMiddleware action=",action, " state=",state);
             switch (action.type) {
                 case 'SETCENTER':
                     // Calling "page" reducer will cause the URL address to update (and push to history).
