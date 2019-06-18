@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faCamera, faTable, faInfoCircle, faListOl } from '@fortawesome/free-solid-svg-icons'
+import { faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { toggleTheme } from '../redux/actions'
 import { Collapse,
     Navbar, NavbarToggler, NavbarBrand, Nav, NavItem,
     Button } from 'reactstrap'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-first-router-link'
+
+// Import everything as an object so that we can look up a component using its name.
+import * as components from './components'
 
 const MyNavbar = ({ theme, toggleTheme }) => (
     <>
@@ -26,7 +29,12 @@ const MyNavbar = ({ theme, toggleTheme }) => (
                     <Button onClick={ toggleTheme }>Toggle theme</Button>
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/"><FontAwesomeIcon icon={ faCoffee } /> Home</NavLink> &nbsp;
+                    <NavLink to={{ type: "MAP", query: setMapQuery(center,zoom) }}
+                        activeClassName='active'
+                        activeStyle={{ color: 'pink' }}
+                        exact={true}
+                        strict={true}
+                    ><FontAwesomeIcon icon={ faGlobe } /> Map</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
                     <NavLink to="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink> &nbsp;
@@ -48,10 +56,19 @@ const MyNavbar = ({ theme, toggleTheme }) => (
         </Navbar>
     </>
 )
+App.propTypes = {
+    page: PropTypes.string,
+    center: PropTypes.string,
+    zoom: PropTypes.string,
+    changeUser: PropTypes.func
+};
+const mapStateToProps = (state) => ({
+    theme: state.theme,
+    page: state.page,
 
-const mapStateToProps = (state) => (
-    state.theme
-);
+    center: state.map.center,
+    zoom: state.map.zoom
+});
 const mapDispatchToProps = {
     toggleTheme,
 }

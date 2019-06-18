@@ -1,12 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
-//import { BrowserRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import configStore, { history } from './redux/configstore'
-import Routes from './routes'
 import { TickTock } from './components'
+import App from './App'
 
 const { store, persistor } = configStore();
 
@@ -15,7 +13,7 @@ const { store, persistor } = configStore();
 ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={ <TickTock/> } persistor={ persistor }>
-        <ConnectedRouter history={ history }> <Routes /> </ConnectedRouter>
+        <App />
       </PersistGate>
     </Provider>,
     document.getElementById("app")

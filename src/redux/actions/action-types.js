@@ -1,10 +1,13 @@
 export const actions = {
+    // Pages
+    MAP: 'MAP',
+
     // Bookmarks
     ADD_BOOKMARK: 'ADD_BOOKMARK',
     DELETE_BOOKMARK: 'DELETE_BOOKMARK',
 
-    // Map extent
-    SET_MAP_CENTER: 'SET_MAP_CENTER',
+    // Map
+    SETCENTER: 'SETCENTER',
 
     // Tasks
     ADD_TASK: 'ADD_TASK',

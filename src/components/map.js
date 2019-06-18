@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import Reactfrom 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setMapCenter } from '../redux/actions'
@@ -6,7 +6,6 @@ import { toLonLat, fromLonLat } from 'ol/proj'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import { myGeoServer, usngPrecision } from '../utils'
 import Geohash from '@geonet/geohash'
-import { push, replace } from 'connected-react-router'
 import { Converter } from 'usng/usng'
 const usngConverter = new Converter;
 

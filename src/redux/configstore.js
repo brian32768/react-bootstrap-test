@@ -1,9 +1,8 @@
 import logger from 'redux-logger'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { routerMiddleware } from 'connected-react-router'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { mapExtentMiddleware, queryMiddleware, errorMiddleware } from './middleware'
+import { mapMiddleware, errorMiddleware } from './middleware'
 import { createBrowserHistory } from 'history'
 import combinedReducer from './reducers'
 
@@ -24,9 +23,8 @@ export default function configureStore(preloadedState) {
         persistedReducer,
         preloadedState,
         composeEnhancer( applyMiddleware(
-            routerMiddleware(history), // for dispatching history actions
-            queryMiddleware({}),       // parse query strings right here
-            mapExtentMiddleware,
+            //routerMiddleware,
+            mapMiddleware,
             errorMiddleware,
             logger
     )));

@@ -15,7 +15,6 @@ const About = ({ theme }) => (
         </CardText>
     </Card>
 );
-
 About.propTypes = {
     theme: PropTypes.object
 }
