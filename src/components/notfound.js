@@ -8,7 +8,7 @@ const NotFound = ({ theme }) => (
     <Card className="card" style={
         {color: theme.foreground,
         backgroundColor: theme.background}}>
-        <CardImg className="card_image" width="100%" src={img} alt={alt}></CardImg>
+        <CardImg className="card_image" width="320" src={img} alt={alt}></CardImg>
         <CardTitle>
           404 error; are you lost?
         </CardTitle>

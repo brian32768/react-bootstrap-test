@@ -11,7 +11,7 @@ const Contact = ({ theme }) => (
     <>
       <Card inverse={ (theme.name == "dark") }
                 style={{backgroundColor: theme.background}} >
-        <CardImg className="card_image" src={img} alt={alt}></CardImg>
+        <CardImg className="card_image" src={img} width="320" alt={alt}></CardImg>
         <CardBody>
           <CardTitle>Contact us</CardTitle>
           <CardText>

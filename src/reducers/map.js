@@ -18,7 +18,7 @@ function getMapQuery(query) {
     }
 }
 export function getGeohash(ll) {
-    return Geohash.encode(ll[0], ll[1], 7) // 7 digits=about 150m
+    return Geohash.encode(ll[0], ll[1], 8) // 7 digits=about 150m
 }
 export function setMapQuery(center, zoom) {
     // Pack the reasonably named state settings into a compact querystring format

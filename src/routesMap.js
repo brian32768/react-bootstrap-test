@@ -1,8 +1,5 @@
-import { createBrowserHistory } from 'history'
 import { connectRoutes } from 'redux-first-router'
 import queryString from 'query-string'
-
-const history = createBrowserHistory();
 
 const routesMap = {
     HOME:     '/',
@@ -44,7 +41,7 @@ const routesMap = {
             */
 
 }
-
-export default connectRoutes(history, routesMap, {
+export default connectRoutes(routesMap, {
     querySerializer: queryString // This is what puts your queries into the address bar.
+    //createHistory,  You can add "createHistory" here but it's not necessary
 })

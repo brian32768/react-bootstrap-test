@@ -37,35 +37,55 @@ const items = [
 
 const Pictures = ({ theme }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [animating, toggleAnimating] = useState(false);
+    const [animating, setAnimation] = useState(false);
 
-    const slides = items.map( (item) => (
-            <CarouselItem key={item.src}>
-              <img src={item.src} alt={item.label} />
-              <CarouselCaption captionText={item.text} captionHeader={item.label} />
-            </CarouselItem>
-        )
-    )
+    const onExiting = () => { setAnimation(true) }
+    const onExited =  () => { setAnimation(false) }
+
+    const toggleAnimation = () => {
+        setAnimation(!animating)
+        console.log("Animating", animating);
+    }
+
+    const goToIndex = (newIndex) => {
+        if (animating) return;
+        console.log("indicator clicked", newIndex);
+        setActiveIndex(newIndex)
+    }
 
     const onNext = () => {
        if (animating) return;
        const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
-       setActiveIndex( nextIndex );
+       setActiveIndex(nextIndex);
     }
 
     const onPrev = () => {
        if (animating) return;
        const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
-       setActiveIndex({ activeIndex: nextIndex });
+       setActiveIndex({activeIndex: nextIndex});
     }
 
     const select = (options) => {
+        console.log("index is ", activeIndex);
         setActiveIndex(options.value);
     }
+
+    const slides = items.map( (item) => (
+        <CarouselItem
+            onExiting={onExiting}
+            onExited={onExited}
+            key={item.src}
+        >
+            <img src={item.src} alt={item.label} />
+            <CarouselCaption captionText={item.text} captionHeader={item.label} />
+        </CarouselItem>
+    ));
 
     return (
         <>
             <h2>Pictures</h2>
+            FIXME theme does not work here, darn.<br />
+            FIXME The carousel arrow indicators dont appear either
             <Select
                 allowClear
                 placeholder="picture name"
@@ -77,19 +97,16 @@ const Pictures = ({ theme }) => {
                 options={ items }
             >
             </Select>
-                <Carousel
-                    activeIndex={activeIndex}
-                    next={onNext}
-                    previous={onPrev}
-                >
-                    <CarouselIndicators
-                        items={items}
-                        activeIndex={activeIndex}
-                    />
-                    {slides}
-                    <CarouselControl direction="prev" directionText="Previous" onClickHandler={onPrev} />
-                    <CarouselControl direction="next" directionText="Next" onClickHandler={onNext} />
-                </Carousel>
+            <Carousel
+                activeIndex={activeIndex}
+                next={onNext}
+                previous={onPrev}
+            >
+                <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+                {slides}
+                <CarouselControl direction="prev" directionText="Previous" onClickHandler={onPrev} />
+                <CarouselControl direction="next" directionText="Next" onClickHandler={onNext} />
+            </Carousel>
         </>
     );
 }

@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import configStore, { history } from './configstore'
 import { TickTock } from './components'
 import App from './App'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const { store, persistor } = configStore();
 
@@ -16,7 +17,7 @@ console.log("index.js=", process.env.SAMPLE_PASSWORD);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+            <App />
     </Provider>,
     document.getElementById("app")
 );

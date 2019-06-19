@@ -21,44 +21,17 @@ const MapPage = ({theme, bookmarks, center, zoom, setMapCenter}) => {
     const gotoXY = (coord, zoom) => {
         console.log('MapPage.gotoXY', coord, zoom);
         if (coord[0]==0 || coord[1]==0 || zoom==0) return;
-/*
-        try {
-            const ll = toLonLat(coord)
-            // Do a little bound check here, don't push a bad URL.
-            const nLat = ll[1]
-            const nLng = ll[0]
-            const hash = Geohash.encode(ll[0], ll[1], 7) // 7 digits=about 150m
-            const baseurl = '/map'
-            const query = baseurl +
-                        '?' +
-                        //'lat=' + nLat + '&lng=' + nLng + '&' +
-                        'g=' + hash + '&' +
-                        'z=' + zoom
-            if ((nLat >= 44 && nLat <= 48) && (nLng >= -126 && nLng <= -123)) {
-                replace?
-                this.props.replace(query) :
-                this.props.push(query)
-            } else {
-                console.log("Outside county", coord)
-            }
-        } catch (err) {
-            console.log("Bad input", err)
-        }
-        */
-        //        this.props.setMapCenter(coord, zoom);
+        setMapCenter(coord, zoom);
     }
 
     const gotoBookmark = (e) => {
         const bookmarkId = e.target.name;
 
-        // Bookmarks are stored in lat,lon
+        // Bookmarks are stored in WGS84
         const bookmark_wgs84 = bookmarks[bookmarkId]
         const coord = fromLonLat(bookmark_wgs84.location)
-
-        setState({
-            displayPoint: bookmark_wgs84.location,
-            displayZoom: bookmark_wgs84.zoom
-        });
+        updateDisplayPoint(bookmark_wgs84.location)
+        updateDisplayZoom(bookmark_wgs84.zoom);
         gotoXY(coord, bookmark_wgs84.zoom);
     }
 
@@ -66,14 +39,9 @@ const MapPage = ({theme, bookmarks, center, zoom, setMapCenter}) => {
         if (!geolocation.valid)
             return;
         console.log(geolocation)
-
-        // Put a marker on the map at our supposed geolocation.
-        setState({
-            displayPoint: geolocation.coord,
-            displayZoom: defaultZoom
-        });
-
         const defaultZoom = 17;
+        updateDisplayPoint(geolocation.coord);
+        updateDisplayZoom(defaultZoom);
         const coord = fromLonLat(geolocation.coord);
         gotoXY(coord, defaultZoom);
     }
@@ -152,6 +120,6 @@ const mapStateToProps = (state) => ({
     zoom:   state.map.zoom,
 });
 const mapDispatchToProps = {
-    setMapCenter: (center, zoom) => dispatch({ type: 'SETCENTER', payload: {center, zoom}})
+    setMapCenter
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MapPage);
