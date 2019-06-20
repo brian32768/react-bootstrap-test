@@ -3,7 +3,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import { page, bookmarks, map, tasks, theme } from './reducers'
+import { page, bookmarks, map, swapi, tasks, theme } from './reducers'
 import { mapMiddleware, errorReporter } from './middleware'
 import routes from './routesMap'
 
@@ -25,6 +25,7 @@ export default function configureStore(preloadedState) {
         combineReducers({
             map,
             bookmarks,
+            swapi,
             theme,
             tasks,
             page,

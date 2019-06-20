@@ -47,6 +47,9 @@ const App = ({ page, center, zoom, theme, toggleTheme }) => {
                     <NavLink to="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
+                    <NavLink to="/swapi"><FontAwesomeIcon icon={ faCamera } /> Swapi</NavLink> &nbsp;
+                </NavItem>
+                <NavItem>
                     <NavLink to="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
