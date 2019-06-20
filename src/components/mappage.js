@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { setMapCenter } from '../actions'
+import { setMapCenter, setDisplayPoint, setDisplayZoom } from '../actions'
 import { Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import MyMap from './Map'
 import SpecialDay from './specialday'
 import Position from './position'
-import { Geolocation } from '../geolocation'
+import { Geolocation, GEOLOCATIONZOOM } from '../geolocation'
 
 const geolocation = new Geolocation();
 
-const MapPage = ({theme, bookmarks, center, zoom, setMapCenter}) => {
-    const [displayPoint, updateDisplayPoint] = useState( [0,0] );
-    const [displayZoom, updateDisplayZoom]   = useState( 0 );
-    const [markerId, updateMarkerId]         = useState( 1 );
+const MapPage = ({theme, bookmarks,
+                  center, zoom, setMapCenter,
+                  displayPoint, displayZoom, setDisplayPoint,
+                 }) => {
+    const [markerId, setMarkerId]         = useState( 1 );
 
     const gotoLonLat = (center, zoom) => {
         console.log('MapPage.gotoLonLat', center, zoom);
@@ -28,18 +29,16 @@ const MapPage = ({theme, bookmarks, center, zoom, setMapCenter}) => {
 
         // Bookmarks are stored in WGS84
         const bookmark = bookmarks[bookmarkId]
-        updateDisplayPoint(bookmark.location)
-        updateDisplayZoom(bookmark.zoom);
+        setDisplayPoint(bookmark.location, bookmark.zoom);
         gotoLonLat(bookmark.location, bookmark.zoom);
     }
 
     const gotoGeolocation = (e) => {
         if (!geolocation.valid) return;
         console.log(geolocation)
-        const defaultZoom = 17;
-        updateDisplayPoint(geolocation.coord);
-        updateDisplayZoom(defaultZoom);
-        gotoLonLat(geolocation.coord, defaultZoom);
+        gotoLonLat(geolocation.coord, GEOLOCATIONZOOM);
+        setDisplayPoint(geolocation.coord);
+        setDisplayZoom(GEOLOCATIONZOOM);
     }
 
     // Show a list of bookmarks
@@ -108,14 +107,20 @@ MapPage.propTypes = {
     center: PropTypes.arrayOf(PropTypes.number),
     zoom: PropTypes.number,
     setMapCenter: PropTypes.func,
+    displayPoint: PropTypes.arrayOf(PropTypes.number),
+    displayZoom: PropTypes.number,
+    setDisplayPoint: PropTypes.func,
 }
 const mapStateToProps = (state) => ({
     theme: state.theme,
     bookmarks: state.bookmarks,
     center: state.map.lonlat,
     zoom:   state.map.zoom,
+    displayPoint: state.map.displayPoint,
+    displayZoom: state.map.displayZoom,
 });
 const mapDispatchToProps = {
-    setMapCenter
+    setMapCenter,
+    setDisplayPoint,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MapPage);

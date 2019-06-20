@@ -8,6 +8,7 @@ export const actions = {
 
     // Map
     SETCENTER: 'SETCENTER',
+    SETDISPLAYPOINT: 'SETDISPLAYPOINT',
 
     // Tasks
     ADD_TASK: 'ADD_TASK',

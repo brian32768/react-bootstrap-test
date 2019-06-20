@@ -1,3 +1,5 @@
+export const GEOLOCATIONZOOM = 17;
+
 export class Geolocation {
 
     get valid() {

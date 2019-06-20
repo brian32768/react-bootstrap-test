@@ -28,16 +28,11 @@ const initialState = {
 	    title: "Jewell",
     },
     6 : {
-	    location: [-123.9407,45.7297],
-        zoom: 13,
-	    title: "Neahkahnie Beach",
-	},
-    7 : {
 	    location: [-123.920,45.994],
         zoom: 12,
 	    title: "Seaside",
 	},
-    8 : {
+    7 : {
 	    location: [-123.924,46.165],
         zoom: 13,
 	    title: "Warrenton",

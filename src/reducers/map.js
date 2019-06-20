@@ -1,12 +1,13 @@
 import { actions } from '../actions'
 import Geohash from '@geonet/geohash'
 import { toLonLat, fromLonLat } from 'ol/proj'
-
-const DEFAULT_CENTER = [-123.5,46.3]
+import { DEFAULT_CENTER,MINZOOM } from '../constants'
 
 const initialState = {
     center: DEFAULT_CENTER,
-    zoom: 4
+    zoom: MINZOOM,
+    displayPoint: DEFAULT_CENTER,
+    displayZoom:  MINZOOM
 }
 
 // Queries that I can understand include
@@ -21,8 +22,7 @@ function getMapQuery(query) {
     // In real life, I'd convert the geohash from query to center coord here.
     const ll = Geohash.decode(query.g)
     return {
-        center: [ll.lng, ll.lat],
-        zoom:   Number(query.z)
+        center: [ll.lng, ll.lat], zoom:   Number(query.z),
     }
 }
 export function getGeohash(ll) {
@@ -31,6 +31,7 @@ export function getGeohash(ll) {
 export function setMapQuery(lonlat, zoom) {
     // Pack the reasonably named state settings into a compact querystring format
     const query = {}
+    console.log("setMapQuery", lonlat);
     if (lonlat[0] && lonlat[1])
         query["g"] = getGeohash(lonlat);
     if (typeof zoom !== 'undefined' && zoom)
@@ -39,25 +40,40 @@ export function setMapQuery(lonlat, zoom) {
 }
 
 export const map = (state=initialState, action={}) => {
-    console.log("map reducer", action, state);
+    let newState;
     switch(action.type) {
         case actions.MAP:
-            //console.log("map reducer: MAP action", action, " state=", state);
             try {
-                console.log("map reducer: Loading state from query", action.meta.query);
-                const newState = getMapQuery(action.meta.query)
-                console.log("map reducer: MAP", state, " ==>", newState);
-                return newState;
+                console.log("map reducer: Loading state from query: ", action.meta.query);
+                newState = {
+                    ...getMapQuery(action.meta.query),
+                    displayPoint: state.displayPoint
+                }
             } catch(err) {
-                console.log("map reducer: No values to update right now.");
+                console.log("map reducer: No values to update right now.", state);
+                return state;
             }
             break;
 
-        case actions.SETCENTER: {
-            const newState = action.payload
-            console.log("map reducer: SETCENTER", state, " =>", newState);
-            return newState;
-        }
+        case actions.SETCENTER:
+            newState = {
+                ...state,
+                ...action.payload,
+            }
+            break;
+
+        case actions.SETDISPLAYPOINT:
+            newState = {
+                ...state,
+                ...action.payload,
+            }
+            break;
+
+        default:
+            console.log("map reducer:", action.type, " (state not changed)", state);
+            return state;
     }
-    return state
+
+    console.log("map reducer:", action.type, state, " =>", newState);
+    return newState;
 }
