@@ -1,8 +1,11 @@
 import { actions } from './action-types'
 
-export function setMapCenter(center, zoom) {
+export function setMapCenter(lonlat, zoom) {
     return {
         type: actions.SETCENTER,
-        payload: { center, zoom }
+        payload: {
+            lonlat: lonlat,
+            zoom
+        }
     };
 }

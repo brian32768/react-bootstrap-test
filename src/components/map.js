@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setMapCenter } from '../actions'
-import { toLonLat, fromLonLat } from 'ol/proj'
+import { toLonLat } from 'ol/proj'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import { myGeoServer, usngPrecision } from '../utils'
 import Geohash from '@geonet/geohash'
@@ -13,7 +13,6 @@ const taxlotslayer = 'clatsop_wm%3Ataxlots'
 const taxlots_url = myGeoServer + '/gwc/service/tms/1.0.0/'
         + taxlotslayer
         + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
-
 /*
 let textMarker = {
     text: {
@@ -34,25 +33,24 @@ const pointMarker = {
 };
 
 const MyMap = ({ center, zoom, setMapCenter }) => {
-    console.log("MyMap", center, zoom, setMapCenter);
-    const gotoXY = (center, zoom) => {
-        console.log('MyMap.gotoXY', center, zoom);
+
+    const gotoLonLat = (center, zoom) => {
+        console.log('MyMap.gotoLonLat', center, zoom);
         if (center[0]==0 || center[1]==0 || zoom==0) return;
-        setMapCenter(center, zoom)
+        setMapCenter(center, zoom);
     }
 
     const onMapClick = (e) => {
-        const coord = toLonLat(e.coordinate);
+        const center = toLonLat(e.coordinate);
         const v = e.map.getView()
         const zoom = v.getZoom();
-        console.log("MyMap.onMapClick", coord);
-/*
+        console.log("MyMap.onMapClick", center);
+
         setState({
             markerId: ++this.state.markerId,
             displayPoint: coord,
             displayZoom : zoom
         })
-        */
     }
 
     // If you don't catch this event and then you click on the map,
@@ -61,18 +59,13 @@ const MyMap = ({ center, zoom, setMapCenter }) => {
         const v = e.map.getView()
         const new_center_wm = v.getCenter()
         const new_zoom = v.getZoom();
-//        const new_center_wgs84 = toLonLat(new_center_wm)
 
         if (isNaN(new_center_wm[0]) || isNaN(new_center_wm[1]) || isNaN(new_zoom))
             return;
 
-        // Does map actually need to change?
-        if (center[0] === new_center_wm[0]
-        &&  center[1] === new_center_wm[1]
-        &&  zoom === new_zoom)
-            return;
-
-        gotoXY(new_center_wm, new_zoom, true)
+        const new_center = toLonLat(new_center_wm);
+        console.log("onMapMove", new_center_wm, new_center);
+        gotoLonLat(new_center, new_zoom, true);
     }
 
     return (

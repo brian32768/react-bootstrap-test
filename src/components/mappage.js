@@ -5,7 +5,6 @@ import { setMapCenter } from '../actions'
 import { Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem } from 'reactstrap'
 import Slider, {Range} from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { toLonLat, fromLonLat } from 'ol/proj'
 import MyMap from './Map'
 import SpecialDay from './specialday'
 import Position from './position'
@@ -18,32 +17,29 @@ const MapPage = ({theme, bookmarks, center, zoom, setMapCenter}) => {
     const [displayZoom, updateDisplayZoom]   = useState( 0 );
     const [markerId, updateMarkerId]         = useState( 1 );
 
-    const gotoXY = (coord, zoom) => {
-        console.log('MapPage.gotoXY', coord, zoom);
-        if (coord[0]==0 || coord[1]==0 || zoom==0) return;
-        setMapCenter(coord, zoom);
+    const gotoLonLat = (center, zoom) => {
+        console.log('MapPage.gotoLonLat', center, zoom);
+        if (center[0]==0 || center[1]==0 || zoom==0) return;
+        setMapCenter(center, zoom);
     }
 
     const gotoBookmark = (e) => {
         const bookmarkId = e.target.name;
 
         // Bookmarks are stored in WGS84
-        const bookmark_wgs84 = bookmarks[bookmarkId]
-        const coord = fromLonLat(bookmark_wgs84.location)
-        updateDisplayPoint(bookmark_wgs84.location)
-        updateDisplayZoom(bookmark_wgs84.zoom);
-        gotoXY(coord, bookmark_wgs84.zoom);
+        const bookmark = bookmarks[bookmarkId]
+        updateDisplayPoint(bookmark.location)
+        updateDisplayZoom(bookmark.zoom);
+        gotoLonLat(bookmark.location, bookmark.zoom);
     }
 
     const gotoGeolocation = (e) => {
-        if (!geolocation.valid)
-            return;
+        if (!geolocation.valid) return;
         console.log(geolocation)
         const defaultZoom = 17;
         updateDisplayPoint(geolocation.coord);
         updateDisplayZoom(defaultZoom);
-        const coord = fromLonLat(geolocation.coord);
-        gotoXY(coord, defaultZoom);
+        gotoLonLat(geolocation.coord, defaultZoom);
     }
 
     // Show a list of bookmarks
@@ -87,7 +83,7 @@ const MapPage = ({theme, bookmarks, center, zoom, setMapCenter}) => {
                     </div>
                 </Row>
                 <Row><Col>
-                    <MyMap center={center} zoom={zoom} />
+                    <MyMap />
                 </Col><Col>
                     <ListGroup>
                     { list.map(item =>
@@ -116,7 +112,7 @@ MapPage.propTypes = {
 const mapStateToProps = (state) => ({
     theme: state.theme,
     bookmarks: state.bookmarks,
-    center: state.map.center,
+    center: state.map.lonlat,
     zoom:   state.map.zoom,
 });
 const mapDispatchToProps = {
