@@ -39,7 +39,7 @@ export function setMapQuery(lonlat, zoom) {
 }
 
 export const map = (state=initialState, action={}) => {
-    //console.log("map reducer", action, state);
+    console.log("map reducer", action, state);
     switch(action.type) {
         case actions.MAP:
             //console.log("map reducer: MAP action", action, " state=", state);

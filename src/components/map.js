@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setMapCenter } from '../actions'
-import { toLonLat } from 'ol/proj'
+import { fromLonLat } from 'ol/proj'
 import { Map, View, Feature, control, geom, interaction, layer, VERSION } from '@map46/ol-react'
 import { myGeoServer, usngPrecision } from '../utils'
 import Geohash from '@geonet/geohash'
@@ -41,7 +41,7 @@ const MyMap = ({ center, zoom, setMapCenter }) => {
     }
 
     const onMapClick = (e) => {
-        const center = toLonLat(e.coordinate);
+        const center = e.coordinate;
         const v = e.map.getView()
         const zoom = v.getZoom();
         console.log("MyMap.onMapClick", center);
@@ -57,14 +57,13 @@ const MyMap = ({ center, zoom, setMapCenter }) => {
     // the click handler will cause the map to pan back to its starting point
     const onMapMove = (e) => {
         const v = e.map.getView()
-        const new_center_wm = v.getCenter()
+        const new_center = v.getCenter()
         const new_zoom = v.getZoom();
+        console.log("onMapMove", new_center);
 
-        if (isNaN(new_center_wm[0]) || isNaN(new_center_wm[1]) || isNaN(new_zoom))
+        if (isNaN(new_center[0]) || isNaN(new_center[1]) || isNaN(new_zoom))
             return;
 
-        const new_center = toLonLat(new_center_wm);
-        console.log("onMapMove", new_center_wm, new_center);
         gotoLonLat(new_center, new_zoom, true);
     }
 
@@ -72,7 +71,7 @@ const MyMap = ({ center, zoom, setMapCenter }) => {
         <Map useDefaultControls={true}
             onSingleClick={ onMapClick } onMoveEnd={ onMapMove }
             view=<View zoom={ zoom }
-                center={ center }
+                center={ fromLonLat(center) }
                 minZoom={ 9 } maxZoom={ 19 }
                 />
         >

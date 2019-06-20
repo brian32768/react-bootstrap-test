@@ -1,10 +1,12 @@
 import { actions } from './action-types'
 
-export function setMapCenter(lonlat, zoom) {
+// center is an array of lon,lat numbers
+// zoom is a number
+export function setMapCenter(center, zoom) {
     return {
         type: actions.SETCENTER,
         payload: {
-            lonlat: lonlat,
+            center: center,
             zoom
         }
     };
