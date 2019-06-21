@@ -11,7 +11,6 @@ const ConnectedUser = connect(mapStateToProps)(User)
 
 const NotFound = () => <h3>404</h3>
 
-
 export { Home, ConnectedUser as User, NotFound }
 export { default as Swapi } from './swapi';
-
+export { default as Solr } from './solr';

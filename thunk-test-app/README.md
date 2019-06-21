@@ -1,8 +1,12 @@
-Try
+I took the basic code from redux-first-router examples and then changed it for Parcel
+
+I needed to test the async loading
+
+##Run it
 
 npm install
 npm start
 
-and goto
+and then go to
 
-http://localhost:3000/swapi/people/1/
+http://localhost:1234/

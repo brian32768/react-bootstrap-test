@@ -4,6 +4,7 @@ const components = {
   HOME: 'Home',
   USER: 'User',
   SWAPI: 'Swapi',
+  SOLR: 'Solr',
   [NOT_FOUND]: 'NotFound'
 }
 
