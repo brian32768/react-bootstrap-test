@@ -4,7 +4,7 @@ const components = {
     HOME:     'Home',
     MAP:      'MapPage',
     TABLE:    'Table',
-    SOLR:     'Solr',
+    SEARCH:   'Search',
     PICTURES: 'Pictures',
     ABOUT:    'About',
     CONTACT:  'Contact',

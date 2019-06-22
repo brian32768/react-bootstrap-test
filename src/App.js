@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl } from '@fortawesome/free-solid-svg-icons'
+// Font gallery: https://fontawesome.com/icons?d=gallery&s=solid
+import { faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'redux-first-router-link'
 import { connect } from 'react-redux'
 import { toggleTheme } from './actions'
@@ -47,7 +48,7 @@ const App = ({ page, center, zoom, theme, toggleTheme }) => {
                     <NavLink to="/pictures"><FontAwesomeIcon icon={ faCamera } /> Pictures</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
-                    <NavLink to="/solr"><FontAwesomeIcon icon={ faCamera } /> Search</NavLink> &nbsp;
+                    <NavLink to="/search"><FontAwesomeIcon icon={ faSearch } /> Search</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
                     <NavLink to="/about"><FontAwesomeIcon icon={ faInfoCircle } /> About</NavLink> &nbsp;

@@ -6,19 +6,21 @@ const routesMap = {
     MAP:      '/map',
     TABLE:    '/table',
     PICTURES: '/pictures',
+    SEARCH:   '/search',
     ABOUT:    '/about',
     CONTACT:  '/contact',
     TASKS:    '/tasks',
 
+/*
     // thunks can be added to routes to download remote data asynchronously
 
     // Will only match this route if type and id are set. For optional segments, use ".../:type?/:id?".
     SOLR: {
-        path: '/solr/:query',
+        path: '/solr/:query?',
         thunk: async (dispatch, getState) => {
             const { query } = getState().location.payload
             const url = `https://solr.wildsong.biz/solr/taxlots/select?${query}`
-            console.log("url = ", url);
+            console.log("query",query);
             try {
                 const response = await fetch(url)
                 if (response.ok) {
@@ -29,8 +31,8 @@ const routesMap = {
                 }
             } catch (_) {  }
             // Something went wrong, update the response data with the API's usage overview, without changing route.
-            //dispatch({ type: 'SOLR_HELP' })
-            console.log("solr help")
+            console.error("thunk failed");
+            dispatch({ type: 'SOLR_FETCHED', payload: { } })
         }
     },
     // Below is a _pathless_ route! Despite being defined in routesMap, it's not connected to the route,
@@ -48,7 +50,7 @@ const routesMap = {
             dispatch(action)
         }
     }
-
+*/
     /*
 
     I stuck this code here for the moment while it seeks a new Home
