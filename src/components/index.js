@@ -9,4 +9,4 @@ export {default as NewTask} from './newtask';
 export {default as Tasks} from './tasks';
 export {default as TaskList} from './tasklist';
 export {default as TickTock} from './ticktock';
-export {default as Swapi} from './swapi';
+export {default as Solr} from './solr';
