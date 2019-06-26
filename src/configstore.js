@@ -1,9 +1,8 @@
 import logger from 'redux-logger'
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose  } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-
-import { page, bookmarks, map, solr, tasks, theme } from './reducers'
+import { page, bookmarks, map, search, tasks, theme } from './reducers'
 import { mapMiddleware, errorReporter } from './middleware'
 import routes from './routesMap'
 
@@ -25,7 +24,7 @@ export default function configureStore(preloadedState) {
         combineReducers({
             map,
             bookmarks,
-            solr,
+            search,
             theme,
             tasks,
             page,

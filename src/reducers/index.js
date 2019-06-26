@@ -1,6 +1,6 @@
 export { page } from './page'
 export { bookmarks } from './bookmarks'
 export { map, getGeohash, setMapQuery }  from './map'
-export { solr } from './solr'
+export { search } from './search'
 export { tasks } from './tasks'
 export { theme } from './theme'

@@ -10,3 +10,4 @@ export {default as Tasks} from './tasks';
 export {default as TaskList} from './tasklist';
 export {default as TickTock} from './ticktock';
 export {default as Search} from './search';
+export {default as SearchTable} from './searchtable';

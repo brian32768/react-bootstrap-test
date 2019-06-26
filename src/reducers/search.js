@@ -1,5 +1,5 @@
-export const solr = (state = {}, action = {}) => {
-    if (action.type !== 'SOLR_FETCHED') {
+export const search = (state = {}, action = {}) => {
+    if (action.type !== 'SEARCH_FETCHED') {
         return state
     }
     const { data, hasError = false } = action.payload
