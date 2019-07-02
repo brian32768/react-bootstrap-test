@@ -12,7 +12,7 @@ export function setMapCenter(center, zoom) {
         throw("Center outside bounding box")
     }
     return {
-        type: actions.SETCENTER,
+        type: actions.SETMAPCENTER,
         payload: {
             center,
             zoom

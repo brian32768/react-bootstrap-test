@@ -7,7 +7,7 @@ export const actions = {
     DELETE_BOOKMARK: 'DELETE_BOOKMARK',
 
     // Map
-    SETCENTER: 'SETCENTER',
+    SETMAPCENTER: 'SETMAPCENTER',
     SETDISPLAYPOINT: 'SETDISPLAYPOINT',
 
     // Tasks

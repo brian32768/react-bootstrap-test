@@ -55,7 +55,7 @@ export const map = (state=initialState, action={}) => {
             }
             break;
 
-        case actions.SETCENTER:
+        case actions.SETMAPCENTER:
             newState = {
                 ...state,
                 ...action.payload,
