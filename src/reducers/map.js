@@ -4,6 +4,7 @@ import { toLonLat, fromLonLat } from 'ol/proj'
 import { DEFAULT_CENTER,MINZOOM } from '../constants'
 
 const initialState = {
+    title: "Default map title",
     center: DEFAULT_CENTER,
     zoom: MINZOOM,
     displayPoint: DEFAULT_CENTER,
@@ -54,7 +55,12 @@ export const map = (state=initialState, action={}) => {
                 return state;
             }
             break;
-
+        case actions:SETMAPTITLE:
+            newstate = {
+                ...state,
+                ...action.payload,
+            }
+            break;
         case actions.SETMAPCENTER:
             newState = {
                 ...state,

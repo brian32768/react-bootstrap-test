@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { toggleTheme } from './actions'
 import { setMapQuery } from './reducers'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap'
+import './App.css'
 
 // Import everything as an object so that we can look up a component using its name.
 import * as components from './components'

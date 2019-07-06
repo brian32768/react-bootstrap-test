@@ -90,18 +90,6 @@ footer {
     display: block;
 }
 
-#sitelogo {
-    content: url("/assets/Proud.jpg");
-    width: 60px;
-    height: 70px;
-    margin: 1px;
-}
-
-#sitename:before {
-    content: "Pigeon Messenger Service";
-    margin: 28px;
-}
-
 /* react-select */
 .basic-single {
     width: 250px;

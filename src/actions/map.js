@@ -1,6 +1,15 @@
 import { actions } from './action-types'
 import { XMIN,YMIN, XMAX,YMAX, MINZOOM,MAXZOOM } from '../constants'
 
+export function setMapTitle(title) {
+    return {
+        type: actions.SETMAPTITLE,
+        payload: {
+            title,
+        }
+    }
+}
+
 // center is an array of lon,lat numbers
 // zoom is a number
 export function setMapCenter(center, zoom) {
@@ -17,7 +26,7 @@ export function setMapCenter(center, zoom) {
             center,
             zoom
         }
-    };
+    }
 }
 
 export function setDisplayPoint(lonlat, zoom) {
