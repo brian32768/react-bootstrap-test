@@ -5,10 +5,10 @@ import { Card, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap'
 import SpecialDay from './specialday'
 import MyComponent from './mycomponent'
 
-const Home = ({theme, map}) => {
+
+const Home = ({theme, theMap}) => {
     return (
         <>
-        <div>{ map.title }</div>
         <Card inverse={(theme.name == "dark")} style={{backgroundColor: theme.background}} >
             <CardTitle>
                 The home page.
@@ -19,9 +19,9 @@ const Home = ({theme, map}) => {
             <CardText>
                 <SpecialDay /> <br />
                 Can you tell this is using the "{theme.name}" theme?<br />
-                <MyComponent />
             </CardText>
         </Card>
+        <MyComponent map={ theMap.map }/>
         </>
     );
 }
@@ -31,6 +31,6 @@ Home.propTypes = {
 }
 const mapStateToProps = (state) => ({
     theme: state.theme,
-    map: state.map
+    theMap: state.map.theMap
 });
 export default connect(mapStateToProps)(Home);

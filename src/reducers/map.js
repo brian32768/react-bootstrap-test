@@ -1,10 +1,19 @@
 import { actions } from '../actions'
 import Geohash from '@geonet/geohash'
+
+import {Map, View} from 'ol';
 import { toLonLat, fromLonLat } from 'ol/proj'
 import { DEFAULT_CENTER,MINZOOM } from '../constants'
 
+const olMap = {
+    title: "Berkeley, California",
+    map: new Map({
+        view: new View(fromLonLat(DEFAULT_CENTER),MINZOOM)
+    })
+}
+
 const initialState = {
-    title: "Default map title",
+    theMap: olMap,
     center: DEFAULT_CENTER,
     zoom: MINZOOM,
     displayPoint: DEFAULT_CENTER,
@@ -55,10 +64,10 @@ export const map = (state=initialState, action={}) => {
                 return state;
             }
             break;
-        case actions:SETMAPTITLE:
-            newstate = {
+        case actions.SETMAPTITLE:
+            newState = {
                 ...state,
-                ...action.payload,
+                map: {title: action.payload},
             }
             break;
         case actions.SETMAPCENTER:
