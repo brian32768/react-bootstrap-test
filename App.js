@@ -5,13 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'redux-first-router-link'
 import { connect } from 'react-redux'
-import { toggleTheme } from './actions'
-import { setMapQuery } from './reducers'
+import { toggleTheme } from './src/actions'
+import { setMapQuery } from './src/reducers'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap'
+import 'ol/ol.css'
 import './App.css'
 
 // Import everything as an object so that we can look up a component using its name.
-import * as components from './components'
+import * as components from './src/components'
 
 const App = ({ page, center, zoom, theme, toggleTheme }) => {
     const Component = components[page]

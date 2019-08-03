@@ -2,8 +2,8 @@ import logger from 'redux-logger'
 import { createStore, applyMiddleware, combineReducers, compose  } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { page, bookmarks, map, search, tasks, theme } from './reducers'
-import { mapMiddleware, errorReporter } from './middleware'
+import { page, bookmarks, map, search, tasks, theme } from './src/reducers'
+import { mapMiddleware, errorReporter } from './src/middleware'
 import routes from './routesMap'
 
 // FIXME -- persistence insists on restoring whatever path was loaded

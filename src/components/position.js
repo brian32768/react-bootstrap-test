@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'reactstrap'
-import { Converter } from 'usng/usng'
+import { Converter } from 'usng.js'
 import { usngPrecision } from '../constants'
 
 // This component only displays a position passed in as props.

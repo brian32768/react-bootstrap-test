@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Card, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap'
+import {connect} from 'react-redux'
+import {Card, CardText, CardTitle, CardSubtitle, Button} from 'reactstrap'
 import SpecialDay from './specialday'
-import MyComponent from './mycomponent'
 
-
-const Home = ({theme, theMap}) => {
+const Home = ({theme}) => {
     return (
         <>
         <Card inverse={(theme.name == "dark")} style={{backgroundColor: theme.background}} >
@@ -17,20 +15,17 @@ const Home = ({theme, theMap}) => {
                 A big disclaimer for you full of legalize goes here.
             </CardSubtitle>
             <CardText>
-                <SpecialDay /> <br />
+                <SpecialDay/> <br />
                 Can you tell this is using the "{theme.name}" theme?<br />
             </CardText>
         </Card>
-        <MyComponent map={ theMap.map }/>
         </>
     );
 }
 Home.propTypes = {
     theme: PropTypes.object,
-    map: PropTypes.object
 }
 const mapStateToProps = (state) => ({
     theme: state.theme,
-    theMap: state.map.theMap
 });
 export default connect(mapStateToProps)(Home);

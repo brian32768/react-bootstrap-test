@@ -5,15 +5,7 @@ import {Map, View} from 'ol';
 import { toLonLat, fromLonLat } from 'ol/proj'
 import { DEFAULT_CENTER,MINZOOM } from '../constants'
 
-const olMap = {
-    title: "Berkeley, California",
-    map: new Map({
-        view: new View(fromLonLat(DEFAULT_CENTER),MINZOOM)
-    })
-}
-
 const initialState = {
-    theMap: olMap,
     center: DEFAULT_CENTER,
     zoom: MINZOOM,
     displayPoint: DEFAULT_CENTER,
@@ -62,12 +54,6 @@ export const map = (state=initialState, action={}) => {
             } catch(err) {
                 console.log("map reducer: No values to update right now.", state);
                 return state;
-            }
-            break;
-        case actions.SETMAPTITLE:
-            newState = {
-                ...state,
-                map: {title: action.payload},
             }
             break;
         case actions.SETMAPCENTER:
