@@ -19,6 +19,7 @@ import {DataLoader} from '@map46/ol-react/source/dataloaders'
 
 import {MapProvider} from '@map46/ol-react/map-context'
 import {Map as olMap, View as olView} from 'ol'
+import {toStringXY, toStringHDMS} from 'ol/coordinate'
 import {toLonLat, fromLonLat} from 'ol/proj'
 import {defaultOverviewLayers as ovLayers} from '@map46/ol-react/map-layers'
 
@@ -31,6 +32,11 @@ import stylefunction from 'ol-mapbox-style/stylefunction'
 import {Style, Circle, Fill, Icon, Stroke, Text} from 'ol/style'
 import {Collection} from 'ol'
 import {click, platformModifierKeyOnly} from 'ol/events/condition'
+
+// Base layers
+const esriClarityUrl = 'https://clarity.maptiles.arcgis.com/arcgis/rest/services/' +
+                    'World_Imagery/MapServer/tile/{z}/{y}/{x}'
+
 
 /* MVT from Mapbox
 // This is only needed to show a fancy mapbox vector map
@@ -50,6 +56,7 @@ const taxlotsColumns  = [
     {dataField: 'situs_addr', text: 'Situs Address'},
 ]
 const taxlotPopupField = 'situs_addr';
+
 
 /* WFS
  To generate this WFS service URL, go into GeoServer Layer Preview,
@@ -109,10 +116,18 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
     // I need to look at this code to support adding AND removing features
     // in the current selection set.
 
+    // Returns true if the event should trigger a taxlot selection
     const myCondition = (e) => {
         switch(e.type) {
             case 'click':
+                console.log('CLICK!');
                 return true;
+            case 'pointerdown':
+            case 'pointerup':
+            case 'singleclick':
+            case 'wheel':
+                console.log('condition:', e.type);
+                return false;
 
             case 'pointermove':
                 // roll over - just show taxlot popup
@@ -131,7 +146,7 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
     //            case 'platformModifierKeyOnly':
     //                return false;
         }
-        console.log("mystery condition", e);
+        console.log("?? condition", e.type);
         return false; // pass event along I guess
     }
 
@@ -208,6 +223,10 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
         mapEvent.stopPropagation();
     }
 
+    const coordFormatter = (coord) => {
+		return toStringXY(coord, 4);
+	}
+
     return (
         <>
             <MapProvider map={theMap}>
@@ -232,8 +251,16 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
                         onMoveEnd={onMapEvent}
                         style={{backgroundColor:"black",width:460,height:265,position:'relative',left:15,top:5}}>
 
+                        <layer.Tile title="ESRI Clarity" baseLayer={true} visible={false}>
+                            <source.XYZ url={esriClarityUrl}/>
+                        </layer.Tile>
+
+                        {/* Alternatives for streets: conventional or MVT */}
+                        <layer.Tile title="OpenStreetMap" baseLayer={true} visible={true}>
+                            <source.OSM/>
+                        </layer.Tile>
                         {/* MVT
-                        <layer.VectorTile title="Mapbox Streets" style={mapboxStyle} declutter={true}>
+                        <layer.VectorTile title="Mapbox Streets" baseLayer={true} visible={true} style={mapboxStyle} declutter={true}>
                             <source.VectorTile url={mapboxStreetsUrl}/>
                         </layer.VectorTile>
 
@@ -246,7 +273,6 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
                         */}
 
                         {/* WFS */}
-                        <layer.Tile title="OpenStreetMap"><source.OSM/></layer.Tile>
                         <layer.Vector title="Taxlots" style={taxlotStyle} maxResolution={10}>
                             <source.JSON url={taxlotsUrl} loader={taxlotsFormat}>
                                 <interaction.Select features={selectedFeatures} style={selectedStyle} condition={myCondition} selected={onSelectEvent}/>
@@ -255,7 +281,7 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
                         </layer.Vector>
 
                         <control.GeoBookmark/>
-                        <control.MousePosition projection={wgs84}/>
+                        <control.MousePosition  projection={wgs84} coordinateFormat={coordFormatter}/>
                     </Map>
 {/*
                 </Col><Col>
@@ -270,13 +296,14 @@ const MapPage = ({theme, center, zoom, bookmarks}) => {
                 </Col>
                 </Row>
                 <Row>
-                    <control.LayerSwitcher show_progress={true} collapsed={false}/>
+                    <control.LayerSwitcher show_progress={true} collapsed={false} />
 
                     <Button tag="button" onClick={gotoGeolocation}>Geolocate</Button>
                     <Button tag="a" color="success" href="http://reactstrap.github.io" target="_blank">ReactStrap docs</Button>
                     <Button tag="a" href="/huhwhat">404 page</Button>
                 </Row>
                 <Row><Col>
+                {rows.length}
                     <BootstrapTable bootstrap4 striped condensed
                         keyField={taxlotsKey} columns={taxlotsColumns} data={rows}/>
                 </Col></Row>

@@ -63,13 +63,6 @@ export const map = (state=initialState, action={}) => {
             }
             break;
 
-        case actions.SETDISPLAYPOINT:
-            newState = {
-                ...state,
-                ...action.payload,
-            }
-            break;
-
         default:
             console.log("map reducer:", action.type, " (state not changed)", state);
             return state;
