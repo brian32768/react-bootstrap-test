@@ -9,7 +9,6 @@ const routesMap = {
     SEARCH:   '/search',
     ABOUT:    '/about',
     CONTACT:  '/contact',
-    TASKS:    '/tasks',
 
     // thunks can be added to routes to download remote data asynchronously
 /*

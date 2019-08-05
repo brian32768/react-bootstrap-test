@@ -13,7 +13,7 @@ import Position from './position'
 import {Geolocation, GEOLOCATIONZOOM} from '../geolocation'
 import {Map, Feature, Graticule, control, interaction, geom, layer, source} from '@map46/ol-react'
 import {OpenLayersVersion} from '@map46/ol-react'
-import Popup from 'ol-ext/overlay/Popup'
+//import Popup from 'ol-ext/overlay/Popup'
 import {DataLoader} from '@map46/ol-react/source/dataloaders'
 
 import {MapProvider} from '@map46/ol-react/map-context'
@@ -27,7 +27,6 @@ import {DEFAULT_CENTER, MINZOOM, astoria_wm, workspace, myGeoServer} from '../co
 
 const geolocation = new Geolocation();
 
-import stylefunction from 'ol-mapbox-style/stylefunction'
 import {Style, Circle, Fill, Icon, Stroke, Text} from 'ol/style'
 import {Collection} from 'ol'
 import {click, platformModifierKeyOnly} from 'ol/events/condition'
@@ -82,7 +81,9 @@ const selectedStyle = new Style({ // yellow
     fill:   new Fill({color: 'rgba(255, 255, 0, .001)'}),
 });
 
-const MyMap = ({center, zoom}) => {
+/* ========================================================================== */
+
+const MyMap = ({center, zoom, setMapCenter}) => {
     const [theMap, setTheMap] = useState(new olMap({
         view: new olView({
             center: fromLonLat(center),
@@ -93,22 +94,25 @@ const MyMap = ({center, zoom}) => {
     const [selectCount, setSelectCount] = useState(0);
     const [rows, setRows] = useState([]) // rows in table
     const [markerId, setMarkerId] = useState( 1 );
+/*
+Popups are not quite working yet -- it affects the selection of taxlots, makes it spotty
 
     const [popup, setPopup] = useState(new Popup());
     const [popupPosition, setPopupPosition] = useState([0,0]) // location on screen
     const [popupText, setPopupText] = useState("HERE") // text for popup
-
+*/
     let taxlotLayer = null;
 
     useEffect(() => {
-        theMap.addOverlay(popup);
-
+//        theMap.addOverlay(popup);
         const layers = theMap.getLayers();
         layers.forEach(layer => {
             if (layer.get("title") == 'Taxlots')
                 taxlotLayer = layer;
         })
     }, []);
+
+    useEffect(()=>{console.log("map center changed");},[center, zoom])
 
     // Returns true if the event should trigger a taxlot selection
     const myCondition = (e) => {
@@ -120,10 +124,12 @@ const MyMap = ({center, zoom}) => {
             case 'pointerup':
             case 'singleclick':
             case 'wheel':
+            case 'pointerdrag':
                 console.log('condition:', e.type);
                 return false;
 
             case 'pointermove':
+/*
                 // roll over - just show taxlot popup
                 const lonlat = toLonLat(e.coordinate)
                 const features = taxlotLayer.getSource().getFeaturesAtCoordinate(e.coordinate)
@@ -135,6 +141,7 @@ const MyMap = ({center, zoom}) => {
                     }
                 }
                 popup.hide();
+*/
                 return false; // don't do a selection!
 
     //            case 'platformModifierKeyOnly':
@@ -181,11 +188,13 @@ const MyMap = ({center, zoom}) => {
         console.log("onSelectEvent", e)
         const s = selectedFeatures.getLength();
         setSelectCount(s);
+/*
         if (s) {
             popup.show(e.mapBrowserEvent.coordinate, selectedFeatures.item(0).get("taxlot").trim());
         } else {
             popup.hide()
         }
+*/
         copyFeaturesToTable(selectedFeatures)
         e.stopPropagation(); // this stops draw interaction
     }

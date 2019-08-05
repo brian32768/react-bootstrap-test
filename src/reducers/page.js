@@ -8,7 +8,6 @@ const components = {
     PICTURES: 'Pictures',
     ABOUT:    'About',
     CONTACT:  'Contact',
-    TASKS:    'Tasks',
 
     [NOT_FOUND]: 'NotFound'
 }
