@@ -1,5 +1,6 @@
 import { NOT_FOUND } from 'redux-first-router'
 
+// This maps a page to a new state.
 const components = {
     HOME:     'Home',
     MAP:      'MapPage',
@@ -14,6 +15,7 @@ const components = {
 
 export const page = (state = 'Home', action = {}) => {
     const newState = components[action.type] || state
-    console.log("page reducer: ", action.type, " state=", state, " newState=", newState);
+    if (newState !== state)
+        console.log("page reducer: ", action.type, state, " --> ", newState);
     return newState
 }

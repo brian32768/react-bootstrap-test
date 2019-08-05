@@ -1,6 +1,4 @@
 export const actions = {
-    // Pages
-    MAP: 'MAP',
 
     // Bookmarks
     ADD_BOOKMARK: 'ADD_BOOKMARK',

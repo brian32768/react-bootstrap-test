@@ -93,7 +93,8 @@ const MyMap = ({center, zoom, setMapCenter}) => {
     const theView = theMap.getView();
     const [selectCount, setSelectCount] = useState(0);
     const [rows, setRows] = useState([]) // rows in table
-    const [markerId, setMarkerId] = useState( 1 );
+    const [pointer, setPointer] = useState(center);
+    const [markerId, setMarkerId] = useState(1);
 /*
 Popups are not quite working yet -- it affects the selection of taxlots, makes it spotty
 
@@ -111,8 +112,6 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                 taxlotLayer = layer;
         })
     }, []);
-
-    useEffect(()=>{console.log("map center changed");},[center, zoom])
 
     // Returns true if the event should trigger a taxlot selection
     const myCondition = (e) => {
@@ -223,7 +222,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
         <Container>
             <Row><Col>
                 <i>OpenLayers version <OpenLayersVersion/></i>
-                Position coord={center} zoom={zoom}
+                Map Center {center[0]} {center[1]} Zoom {zoom}
                 Selected = {selectCount}
             </Col></Row>
             <Row><Col>
@@ -269,7 +268,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                 <control.LayerSwitcher show_progress={true} collapsed={false} />
             </Col></Row>
             <Row><Col>
-            {rows.length}
+                {rows.length? (rows.length + ' taxlots selected') : ''}
                 <BootstrapTable bootstrap4 striped condensed
                     keyField={taxlotsKey} columns={taxlotsColumns} data={rows}/>
             </Col></Row>

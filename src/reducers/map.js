@@ -1,15 +1,10 @@
 import { actions } from '../actions'
 import Geohash from '@geonet/geohash'
-
-import {Map, View} from 'ol';
-import { toLonLat, fromLonLat } from 'ol/proj'
-import { DEFAULT_CENTER,MINZOOM } from '../constants'
+import {DEFAULT_CENTER, MINZOOM} from '../constants'
 
 const initialState = {
     center: DEFAULT_CENTER,
     zoom: MINZOOM,
-    displayPoint: DEFAULT_CENTER,
-    displayZoom:  MINZOOM
 }
 
 // Queries that I can understand include
@@ -24,7 +19,8 @@ function getMapQuery(query) {
     // In real life, I'd convert the geohash from query to center coord here.
     const ll = Geohash.decode(query.g)
     return {
-        center: [ll.lng, ll.lat], zoom:   Number(query.z),
+        center: [ll.lng, ll.lat],
+        zoom:   Number(query.z),
     }
 }
 export function getGeohash(ll) {
@@ -47,20 +43,15 @@ export const map = (state=initialState, action={}) => {
         case actions.MAP:
             try {
                 console.log("map reducer: Loading state from query: ", action.meta.query);
-                newState = {
-                    ...getMapQuery(action.meta.query),
-                    displayPoint: state.displayPoint
-                }
+                newState = getMapQuery(action.meta.query)
             } catch(err) {
                 console.log("map reducer: No values to update right now.", state);
                 return state;
             }
             break;
+
         case actions.SETMAPCENTER:
-            newState = {
-                ...state,
-                ...action.payload,
-            }
+            newState = action.payload;
             break;
 
         default:
@@ -68,6 +59,6 @@ export const map = (state=initialState, action={}) => {
             return state;
     }
 
-    console.log("map reducer:", action.type, state, " =>", newState);
+    console.log("map reducer:", action.type, state, " --->", newState);
     return newState;
 }
