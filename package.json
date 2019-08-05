@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-test",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Test of ol-react and react and bootstrap and redux...",
   "main": "index.html",
   "devDependencies": {
