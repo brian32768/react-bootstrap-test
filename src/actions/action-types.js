@@ -1,4 +1,8 @@
 export const actions = {
+    // Havoc will ensue if this does not exist, undefined action errors
+    // none of the other pages cause problems because none of them
+    // generate map events I guess
+    MAP:             'MAP',
 
     // Bookmarks
     ADD_BOOKMARK: 'ADD_BOOKMARK',

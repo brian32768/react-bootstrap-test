@@ -22,7 +22,7 @@ export const mapMiddleware = store => {
             return next(action)
         } catch(err) {
             console.error('mapMiddleware error', err)
-            throw err
+            throw err;
         }
     }
 }

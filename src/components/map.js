@@ -14,7 +14,6 @@ import {Geolocation, GEOLOCATIONZOOM} from '../geolocation'
 import {Map, Feature, Graticule, control, interaction, geom, layer, source} from '@map46/ol-react'
 import {OpenLayersVersion} from '@map46/ol-react'
 //import Popup from 'ol-ext/overlay/Popup'
-import {DataLoader} from '@map46/ol-react/source/dataloaders'
 
 import {MapProvider} from '@map46/ol-react/map-context'
 import {Map as olMap, View as olView} from 'ol'
@@ -35,7 +34,6 @@ import {click, platformModifierKeyOnly} from 'ol/events/condition'
 const esriClarityUrl = 'https://clarity.maptiles.arcgis.com/arcgis/rest/services/' +
                     'World_Imagery/MapServer/tile/{z}/{y}/{x}'
 
-
 /* MVT from Mapbox
 // This is only needed to show a fancy mapbox vector map
 import {createMapboxStreetsV6Style} from '@map46/ol-react/mapbox-streets-v6-style'
@@ -54,7 +52,6 @@ const taxlotsColumns  = [
     {dataField: 'situs_addr', text: 'Situs Address'},
 ]
 const taxlotPopupField = 'situs_addr';
-
 
 /* WFS
  To generate this WFS service URL, go into GeoServer Layer Preview,
@@ -88,6 +85,7 @@ const MyMap = ({center, zoom, setMapCenter}) => {
         view: new olView({
             center: fromLonLat(center),
             zoom: zoom}),
+            minZoom: MINZOOM, maxZoom: MAXZOOM,
         //controls: [],
     }));
     const theView = theMap.getView();
@@ -198,18 +196,18 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
         e.stopPropagation(); // this stops draw interaction
     }
 
-    const onMapEvent = (mapEvent) => {
+    const onPointerMove = (e) => {
+        const lonlat = toLonLat(e.coordinate)
+        setPointer(lonlat)
+        return false; // Stop event propagation
+    }
+
+    const onMapMove = (e) => {
         const newCenter = toLonLat(theView.getCenter());
         const newZoom = Math.round(theView.getZoom());
-        switch (mapEvent.type) {
-        case "moveend":
-            setMapCenter(newCenter, newZoom);
-            break;
-        default:
-            console.log("Random other map event", mapEvent, newCenter, newZoom);
-            break;
-        }
-        mapEvent.stopPropagation();
+        setMapCenter(newCenter, newZoom);
+        //e.stopPropagation();
+        return false; // stop event propagation
     }
 
     const coordFormatter = (coord) => {
@@ -221,14 +219,12 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
         <MapProvider map={theMap}>
         <Container>
             <Row><Col>
-                <i>OpenLayers version <OpenLayersVersion/></i>
-                Map Center {center[0]} {center[1]} Zoom {zoom}
-                Selected = {selectCount}
+                <i>OpenLayers version <OpenLayersVersion/></i> &nbsp;
+                <Position coord={pointer} zoom={zoom} /> &nbsp;
+                Selected={selectCount}
             </Col></Row>
             <Row><Col>
-                <Map center={center} zoom={zoom} animate={true}
-                    onPointerMove={(e) => {setPointer(e.coordinate);}}
-                    onMoveEnd={onMapEvent}
+                <Map onMoveEnd={onMapMove} onPointerMove={onPointerMove}
                     style={{backgroundColor:"black",width:460,height:265,position:'relative',left:15,top:5}}>
 
                     <layer.Tile title="ESRI Clarity" baseLayer={true} visible={false}>
