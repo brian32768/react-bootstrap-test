@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Card, CardText, CardTitle, CardSubtitle, Button} from 'reactstrap'
-import SpecialDay from './specialday'
+import {Card, CardText, CardTitle, CardSubtitle, Button} from 'reactstrap'; // eslint-disable-line no-unused-vars
+import SpecialDay from './specialday'; // eslint-disable-line no-unused-vars
 
 const Home = ({theme}) => {
     return (

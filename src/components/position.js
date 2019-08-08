@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 import {Converter} from 'usng.js'
 import {llPrecision, usngPrecision} from '@map46/ol-react/constants'
@@ -7,7 +7,6 @@ import {llPrecision, usngPrecision} from '@map46/ol-react/constants'
 // It does not care about any position stored in redux state.
 
 const usngConverter = new Converter
-let i = 0;
 
 const Position = ({coord, zoom}) => {
     const digits = llPrecision[zoom]
@@ -20,8 +19,6 @@ const Position = ({coord, zoom}) => {
     if (typeof y === 'string') y = parseFloat(y)
     y = y.toFixed(digits)
 
-//    console.log(i, coord, zoom);
-//    i += 1;
     const usng = usngConverter.LLtoUSNG(y,x,usngPrecision[zoom]);
 
     return (

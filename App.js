@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // eslint-disable-line no-unused-vars
 // Font gallery: https://fontawesome.com/icons?d=gallery&s=solid
-import { faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { NavLink } from 'redux-first-router-link'
-import { connect } from 'react-redux'
-import { toggleTheme } from './src/actions'
-import { setMapQuery } from './src/reducers'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap'
+import {faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl, faSearch} from '@fortawesome/free-solid-svg-icons'
+import {NavLink} from 'redux-first-router-link'; // eslint-disable-line no-unused-vars
+import {connect} from 'react-redux'
+import {toggleTheme} from './src/actions'
+import {setMapQuery} from './src/reducers'
+import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap'; // eslint-disable-line no-unused-vars
 import 'ol/ol.css'
 import './App.css'
 
@@ -15,7 +15,7 @@ import './App.css'
 import * as components from './src/components'
 
 const App = ({ page, center, zoom, theme, toggleTheme }) => {
-    const Component = components[page]
+    const Component = components[page]; // eslint-disable-line no-unused-vars
     return (
     <>
         <Navbar color={ theme.name } expand="md">
@@ -24,7 +24,6 @@ const App = ({ page, center, zoom, theme, toggleTheme }) => {
                 <span id="sitename"></span>
             </NavbarBrand>
             <NavbarToggler onClick={ (e) => {
-                    console.log("toggle collapse");
                     e.preventDefault();
                 } } />
             <Collapse isOpen={ true } navbar>

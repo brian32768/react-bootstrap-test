@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux'
-import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap'
+import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap'; // eslint-disable-line no-unused-vars
 const img = require('/assets/pigeon_reading_map.jpg');
 const alt = 'Pigeon reading map';
 

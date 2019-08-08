@@ -1,28 +1,27 @@
 //
 // This is the map.
 //
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {setMapCenter} from '../actions'
-import {Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem} from 'reactstrap'
-import BootstrapTable from 'react-bootstrap-table-next'
-import Slider, {Range} from 'rc-slider'
+import {Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem} from 'reactstrap'; // eslint-disable-line no-unused-vars
+import BootstrapTable from 'react-bootstrap-table-next'; // eslint-disable-line no-unused-vars
+import Slider, {Range} from 'rc-slider'; // eslint-disable-line no-unused-vars
 import 'rc-slider/assets/index.css'
-import Position from './position'
+import Position from './position'; // eslint-disable-line no-unused-vars
 import {Geolocation, GEOLOCATIONZOOM} from '../geolocation'
-import {Map, Feature, Graticule, control, interaction, geom, layer, source} from '@map46/ol-react'
-import {OpenLayersVersion} from '@map46/ol-react'
+import {Map, Feature, Graticule, control, interaction, geom, layer, source} from '@map46/ol-react'; // eslint-disable-line no-unused-vars
+import {OpenLayersVersion} from '@map46/ol-react'; // eslint-disable-line no-unused-vars
 //import Popup from 'ol-ext/overlay/Popup'
 
-import {MapProvider} from '@map46/ol-react/map-context'
+import {MapProvider} from '@map46/ol-react/map-context'; // eslint-disable-line no-unused-vars
 import {Map as olMap, View as olView} from 'ol'
-import {toStringXY, toStringHDMS} from 'ol/coordinate'
+import {toStringXY} from 'ol/coordinate'
 import {toLonLat, fromLonLat} from 'ol/proj'
-import {defaultOverviewLayers as ovLayers} from '@map46/ol-react/map-layers'
 
 import {wgs84} from '@map46/ol-react/constants'
-import {DEFAULT_CENTER, MINZOOM, astoria_wm, workspace, myGeoServer} from '../constants'
+import {DEFAULT_CENTER, MINZOOM, MAXZOOM, workspace, myGeoServer} from '../constants'
 
 const geolocation = new Geolocation();
 
@@ -81,7 +80,7 @@ const selectedStyle = new Style({ // yellow
 /* ========================================================================== */
 
 const MyMap = ({center, zoom, setMapCenter}) => {
-    const [theMap, setTheMap] = useState(new olMap({
+    const [theMap] = useState(new olMap({
         view: new olView({
             center: fromLonLat(center),
             zoom: zoom}),
@@ -92,7 +91,6 @@ const MyMap = ({center, zoom, setMapCenter}) => {
     const [selectCount, setSelectCount] = useState(0);
     const [rows, setRows] = useState([]) // rows in table
     const [pointer, setPointer] = useState(center);
-    const [markerId, setMarkerId] = useState(1);
 /*
 Popups are not quite working yet -- it affects the selection of taxlots, makes it spotty
 
@@ -100,7 +98,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
     const [popupPosition, setPopupPosition] = useState([0,0]) // location on screen
     const [popupText, setPopupText] = useState("HERE") // text for popup
 */
-    let taxlotLayer = null;
+    let taxlotLayer = useRef(null);
 
     useEffect(() => {
 //        theMap.addOverlay(popup);

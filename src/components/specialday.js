@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"; // eslint-disable-line no-unused-vars
 
 // I suspect this being declared statically means the day will never change
 // without a page reload, but at the moment I am not worried about this.

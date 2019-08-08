@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption
-} from 'reactstrap'
+import {connect} from 'react-redux'
+import {Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption} from 'reactstrap'; // eslint-disable-line no-unused-vars
 
 // see https://react-select.com/
-import Select, { components } from 'react-select'
+import Select from 'react-select'; // eslint-disable-line no-unused-vars
 
 const items = [
     {
@@ -41,11 +35,6 @@ const Pictures = ({ theme }) => {
 
     const onExiting = () => { setAnimation(true) }
     const onExited =  () => { setAnimation(false) }
-
-    const toggleAnimation = () => {
-        setAnimation(!animating)
-        console.log("Animating", animating);
-    }
 
     const goToIndex = (newIndex) => {
         if (animating) return;

@@ -1,8 +1,7 @@
-import React from 'react'
+import React from 'react'   // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Card, CardImg, CardText, CardBody,
-         CardTitle, CardSubtitle, Button } from 'reactstrap'
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap'  // eslint-disable-line no-unused-vars
 
 const img = require('/assets/Proud.jpg');
 const alt = 'This is a pigeon';

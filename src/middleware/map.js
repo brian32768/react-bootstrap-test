@@ -1,5 +1,5 @@
 import { actions } from '../actions'
-import { router, setMapQuery } from '../reducers'
+import { setMapQuery } from '../reducers'
 
 export const mapMiddleware = store => {
     return next => action => {

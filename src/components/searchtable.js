@@ -1,6 +1,5 @@
-import React from 'react'
+import React from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 const runQuery = () => {
     async (dispatch, getState) => {
@@ -15,7 +14,8 @@ const runQuery = () => {
                 dispatch({ type: 'SEARCH_FETCHED', payload: { data } })
                 return
             }
-        } catch (_) {  }
+        } catch (error) {
+        }
         // Something went wrong, update the response data with the API's usage overview, without changing route.
         console.error("thunk failed");
         dispatch({ type: 'SEARCH_FETCHED', payload: { } })

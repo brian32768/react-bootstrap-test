@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
 import {Map as olMap} from 'ol'
 import {Layer as olLayer} from 'ol/layer'
@@ -12,8 +12,7 @@ const overviewMap = (layers) => {
 }
 
 const MyOverview = ({map, layers}) => {
-    console.log("MyOverview");
-    const [oview, setOview] = useState(overviewMap(layers))
+    const [oview] = useState(overviewMap(layers))
     const setTarget = element => {
         console.log("MyOverview.setTarget");
         oview.setTarget(element);

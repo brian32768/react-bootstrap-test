@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react';   // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';
+import {connect} from 'react-redux'
+import {Card, CardTitle, CardText, CardImg, CardSubtitle} from 'reactstrap';   // eslint-disable-line no-unused-vars
 
 const About = ({ theme }) => (
     <Card inverse={ (theme.name == "dark") }

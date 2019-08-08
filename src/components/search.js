@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import SearchTable from './searchtable'
+import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
+import SearchTable from './searchtable'; // eslint-disable-line no-unused-vars
 
 const Search = () => {
     const [ query, setQuery ] = useState('')

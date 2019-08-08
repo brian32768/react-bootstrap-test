@@ -1,16 +1,16 @@
-import React from "react"
+import React from "react"; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'; // eslint-disable-line no-unused-vars
 
 // Examples with two different widgets, react-table and react-bootstrap-table2.
-import ReactTable from 'react-table'
+import ReactTable from 'react-table'; // eslint-disable-line no-unused-vars
 import 'react-table/react-table.css'
 
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-next'; // eslint-disable-line no-unused-vars
 
 // see https://react-select.com/
-import Select from 'react-select'
+import Select from 'react-select'; // eslint-disable-line no-unused-vars
 
 const rt_columns = [{
         Header: 'src',

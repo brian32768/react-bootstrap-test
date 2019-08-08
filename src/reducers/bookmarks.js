@@ -1,5 +1,4 @@
-import deepmerge from 'deepmerge'
-import { actions, uniqueId } from '../actions'
+import {actions} from '../actions'
 
 const initialState = {
     1 : { title: "Astoria", location: [-123.836,46.182], zoom: 13 },
@@ -13,8 +12,8 @@ const initialState = {
 
 export const bookmarks = (state=initialState, action) => {
     switch(action.type)  {
-	case actions.ADD_BOOKMARK:
-	    return state.bookmarks.concat(action.payload);
+        case actions.ADD_BOOKMARK:
+            return state.bookmarks.concat(action.payload);
     }
     return state;
 }

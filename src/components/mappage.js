@@ -1,18 +1,18 @@
 //
 // This is the map page with a map and all the decorations and controls around it.
 //
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem} from 'reactstrap'
-import SpecialDay from './specialday'
+import {Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem} from 'reactstrap'; // eslint-disable-line no-unused-vars
+import SpecialDay from './specialday'; // eslint-disable-line no-unused-vars
 import {Geolocation, GEOLOCATIONZOOM} from '../geolocation'
-import MyMap from './map'
+import MyMap from './map'; // eslint-disable-line no-unused-vars
 
 const geolocation = new Geolocation();
 
 const MapPage = ({theme}) => {
-    const gotoGeolocation = (e) => {
+    const gotoGeolocation = () => {
         if (!geolocation.valid) {
             console.log("can't get geolocation");
             return;

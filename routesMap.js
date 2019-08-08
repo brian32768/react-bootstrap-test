@@ -1,4 +1,4 @@
-import { connectRoutes } from 'redux-first-router'
+import {connectRoutes} from 'redux-first-router'
 import queryString from 'query-string'
 
 const routesMap = {
