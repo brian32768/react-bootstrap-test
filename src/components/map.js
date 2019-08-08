@@ -26,7 +26,7 @@ import {DEFAULT_CENTER, MINZOOM, MAXZOOM, workspace, myGeoServer} from '../const
 const geolocation = new Geolocation();
 
 import {Style, Circle, Fill, Icon, Stroke, Text} from 'ol/style'
-import {Collection} from 'ol'
+import Collection from 'ol/collection'
 import {click, platformModifierKeyOnly} from 'ol/events/condition'
 
 // Base layers
