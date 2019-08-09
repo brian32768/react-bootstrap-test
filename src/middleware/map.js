@@ -16,7 +16,7 @@ export const mapMiddleware = store => {
                     }, state)
                     break;
                 default:
-                    console.log('mapMiddleware action', action.type, action);
+                    //console.log('mapMiddleware action', action.type, action);
                     break;
             }
             return next(action)

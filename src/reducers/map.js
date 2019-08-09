@@ -23,9 +23,11 @@ function getMapQuery(query) {
         zoom:   Number(query.z),
     }
 }
+
 export function getGeohash(ll) {
     return Geohash.encode(ll[0], ll[1], 8) // 7 digits=about 150m
 }
+
 export function setMapQuery(lonlat, zoom) {
     // Pack the reasonably named state settings into a compact querystring format
     const query = {}
@@ -55,10 +57,10 @@ export const map = (state=initialState, action={}) => {
             break;
 
         default:
-            console.log("map reducer:", action.type, " (state not changed)", state);
+            //console.log("map reducer:", action.type, " (state not changed)", state);
             return state;
     }
 
-    console.log("map reducer:", action.type, state, " --->", newState);
+    console.log("map reducer:", action.type, state, " =>", newState);
     return newState;
 }
