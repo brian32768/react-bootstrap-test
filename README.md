@@ -37,19 +37,20 @@ Use case: Bookmark a map view
 The way to implement this seems to be via connected-react-router.
 Adding ````npm install connected-react-router```` pulls in the required dependencies (including "history").
 
-
 ### Maps
 
 Initially I added some mocked components to test passing values between parent and child components that simulated maps. Then I realized that my ol-react makes adding a real map so easy that I added it to this project and now I can use OpenStreetMap instead of mocking.
 
-Map Extent: I use Reduxt to store the map extent, and the extent is passed to the OpenLayers View. When you go to another page and then come back, the state of the extent from redux is passed to the OL view so the map does not go back to its initial extent.
+Map Extent: I use Redux to store the map extent, and the extent is passed to the OpenLayers View. When you go to another page and then come back, the state of the extent from redux is passed to the OL view so the map does not go back to its initial extent.
 
 Markers: You can add markers to the map by clicking on it. The markers go away if you reload the page.
+
+I am using OpenLayers 6 beta.
 
 ## Bootstrap 4 via Reactstrap
 
 To get Bootstrap 4 working I needed
-````npm install reactstrap bootstrap````
+```npm install reactstrap bootstrap```
 
 The bootstrap package is only needed for its CSS, so ignore warnings.
 
