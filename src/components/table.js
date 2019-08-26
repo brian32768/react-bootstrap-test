@@ -1,7 +1,14 @@
 import React from "react"; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Container, Row, Col } from 'reactstrap'; // eslint-disable-line no-unused-vars
+import {connect} from 'react-redux'
+import {Container, Row, Col} from 'reactstrap'; // eslint-disable-line no-unused-vars
+
+import Mark from 'markup-js'
+
+import shortid from 'shortid'
+for (let i=0; i<10; i++) {
+    console.log("shortid test", shortid.generate());
+}
 
 // Examples with two different widgets, react-table and react-bootstrap-table2.
 import ReactTable from 'react-table'; // eslint-disable-line no-unused-vars
@@ -82,7 +89,17 @@ const Table = ({ theme}) => {
     }
 */
     const onChange = (e) => {};
+
+
+    const template = "Product id {{id}} is described as \"{{name}}\" and costs ${{price}}";
+    const d = rbn_data[0];
+    const result = Mark.up(template, d);
+
     return (
+        <>
+        <h2>templated markup example</h2>
+        {result}
+        <h2>Two examples of tables, react-table and react-bootstrap-table</h2>
         <Container fluid={ true }><Row>
             <Col sm="2">
                 other stuff, a whole long
@@ -117,6 +134,7 @@ const Table = ({ theme}) => {
                 />
             </Col></Row>
         </Container>
+        </>
     );
 }
 Table.propTypes = {
