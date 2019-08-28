@@ -77,20 +77,7 @@ const defaultSorted = [{
 }];
 
 const Table = ({ theme}) => {
-    const solrQ="https://solr.wildsong.biz/solr/taxlots/select?q=*";
-    /* make a thunk
-    axios.get(solrQ)
-        .then( (response) => {
-            console.log("I have data from solr", response);
-        } )
-        .catch( (error) => {
-            console.log("WhatsamattaU", error);
-        } )
-    }
-*/
     const onChange = (e) => {};
-
-
     const template = "Product id {{id}} is described as \"{{name}}\" and costs ${{price}}";
     const d = rbn_data[0];
     const result = Mark.up(template, d);
