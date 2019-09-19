@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {setMapCenter} from '../actions'
 import {Container, Row, Col, Button, Tooltip, ListGroup, ListGroupItem} from 'reactstrap'; // eslint-disable-line no-unused-vars
-import BootstrapTable from 'react-bootstrap-table-next'; // eslint-disable-line no-unused-vars
 import Slider, {Range} from 'rc-slider'; // eslint-disable-line no-unused-vars
 import 'rc-slider/assets/index.css'
 import Position from './position'; // eslint-disable-line no-unused-vars
@@ -14,6 +13,9 @@ import {Geolocation, GEOLOCATIONZOOM} from '../geolocation'
 import {Map, Feature, Graticule, control, interaction, geom, layer, source} from '@map46/ol-react'; // eslint-disable-line no-unused-vars
 import {OpenLayersVersion} from '@map46/ol-react'; // eslint-disable-line no-unused-vars
 //import Popup from 'ol-ext/overlay/Popup'
+
+import BootstrapTable from 'react-bootstrap-table-next'; // eslint-disable-line no-unused-vars
+import ToolkitProvider, {CSVExport} from 'react-bootstrap-table2-toolkit'
 
 import {MapProvider} from '@map46/ol-react/map-context'; // eslint-disable-line no-unused-vars
 import {CollectionProvider} from '@map46/ol-react/collection-context'; // eslint-disable-line no-unused-vars
@@ -42,31 +44,52 @@ const mapboxStreetsUrl = 'https://{a-d}.tiles.mapbox.com/v4/mapbox.mapbox-street
 const mapboxStyle = createMapboxStreetsV6Style(Style, Fill, Stroke, Icon, Text);
 */
 
-const taxlotsKey      = 'taxlotkey';
-const taxlotsColumns  = [
-    {dataField: 'taxlotkey',  text: 'Taxlot Key'},
-    {dataField: 'account_id', text: 'Account'},
-    {dataField: 'taxlot',     text: 'Taxlot'},
-    {dataField: 'owner_line', text: 'Owner'},
-    {dataField: 'situs_addr', text: 'Situs Address'},
-]
-const taxlotPopupField = 'situs_addr';
 
 /* WFS
  To generate this WFS service URL, go into GeoServer Layer Preview,
  and in All Formats, select "WFS GeoJSON(JSONP)" then paste here and
  clip off the outputFormat and maxFeatures attributes (maxFeatures=50&outputFormat=text%2Fjavascript
-const taxlotsUrl = myGeoServer + '/ows?service=WFS&version=1.0.0&request=GetFeature'
+const taxlotUrl = myGeoServer + '/ows?service=WFS&version=1.0.0&request=GetFeature'
     + '&typeName=' + workspace + '%3Ataxlots'
-const taxlotsFormat = 'geojson'
+const taxlotFormat = 'geojson'
+const taxlotKey      = 'taxlotkey';
+const taxlotColumns  = [
+{dataField: 'taxlotkey',  text: 'Taxlot Key'},
+{dataField: 'account_id', text: 'Account'},
+{dataField: 'taxlot',     text: 'Taxlot'},
+{dataField: 'owner_line', text: 'Owner'},
+{dataField: 'situs_addr', text: 'Situs Address'},
+]
+const taxlotPopupField = 'situs_addr';
 */
+
 /* ArcGIS FeatureServer */
-const taxlotsUrl = myArcGISServer + '/Taxlots/FeatureServer/1'
-const taxlotsFormat = 'esrijson'
+const taxlotUrl = myArcGISServer + '/Taxlots/FeatureServer/1'
+const taxlotFormat = 'esrijson'
+const taxlotKey      = 'OBJECTID';
+const taxlotColumns  = [
+    {dataField: 'ACCOUNT_ID', text: 'Account', sort: true,   formatter: cell => {return (<a href="">{cell}</a>)}},
+    {dataField: 'TAXLOTKEY',  text: 'Taxlot Key', sort: true},
+    {dataField: 'TAXMAPNUM',  text: 'Tax Map', sort: true,   formatter: cell => {return (<a href="">{cell}</a>)}},
+    {dataField: 'Taxlot',     text: 'Taxlot', sort: true},
+    {dataField: 'TAXCODE',    text: 'Tax Code', sort: true},
+    {dataField: 'OWNER_LINE', text: 'Owner', sort: true},
+    {dataField: 'OWNER_LL_1', text: 'Owner 1', sort: true},
+    {dataField: 'OWNER_LL_2', text: 'Owner 2', sort: true},
+    {dataField: 'SITUS_ADDR', text: 'Situs Address', sort: true},
+    {dataField: 'SITUS_CITY', text: 'Situs City', sort: true},
+    {dataField: 'STREET_ADD', text: 'Mail Address', sort: true},
+    {dataField: 'PO_BOX',     text: 'PO Box', sort: true},
+    {dataField: 'CITY',       text: 'City', sort: true},
+    {dataField: 'STATE',      text: 'State', sort: true},
+    {dataField: 'ZIP_CODE',   text: 'Zip', sort: true},
+]
+const taxlotPopupField = 'situs_addr';
+
 /* VECTOR TILES
-const taxlotsLayer = 'clatsop_wm%3Ataxlots'
-const taxlotsUrl = myGeoServer + '/gwc/service/tms/1.0.0/'
-        + taxlotsLayer
+const taxlotLayer = 'clatsop_wm%3Ataxlots'
+const taxlotUrl = myGeoServer + '/gwc/service/tms/1.0.0/'
+        + taxlotLayer
         + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
 */
 
@@ -79,6 +102,38 @@ const selectedStyle = new Style({ // yellow
     stroke: new Stroke({color: 'rgba(255, 255, 0, 1.0)', width:2}),
     fill:   new Fill({color: 'rgba(255, 255, 0, .001)'}),
 });
+
+// FIXME I think it would be cool to hide columns that are empty here.
+
+const {ExportCSVButton} = CSVExport;
+
+const TaxlotTable = ({rows}) => {
+    return (rows.length>0)? (
+        <>
+        {rows.length>1? (rows.length + ' taxlots selected') : ''}
+
+        <ToolkitProvider
+            keyField={taxlotKey}
+            data={rows} columns={taxlotColumns}
+            exportCSV
+        >
+        {
+            props => (
+                <div>
+                    <ExportCSVButton {...props.csvProps}>CSV Export</ExportCSVButton>
+                    <BootstrapTable  {...props.baseProps} />
+                </div>
+            )
+        }
+        </ToolkitProvider>
+        </>
+    ) : (
+        <>
+        </>
+    );
+    //bootstrap4 striped condensed
+    //keyField={taxlotKey} columns={taxlotColumns} data={rows}/>
+}
 
 /* ========================================================================== */
 
@@ -172,7 +227,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
             features.forEach( (feature) => {
                 const attributes = {};
                 // Copy the data from each feature into a list
-                taxlotsColumns.forEach ( (column) => {
+                taxlotColumns.forEach ( (column) => {
                     attributes[column.dataField] = feature.get(column.dataField);
                 });
                 rows.push(attributes)
@@ -242,7 +297,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                         </layer.VectorTile>
 
                         <layer.VectorTile title="Taxlots" declutter={true} crossOrigin="anonymous" style={taxlotStyle}>
-                            <source.VectorTile url={taxlotsUrl}>
+                            <source.VectorTile url={taxlotUrl}>
                                 <interaction.Select features={selectedFeatures} style={selectedStyle} condition={click} selected={onSelectEvent}/>
                                 <interaction.SelectDragBox condition={platformModifierKeyOnly} selected={onSelectEvent}/>
                             </source.VectorTile>
@@ -250,7 +305,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                         */}
 
                         <layer.Vector title="Taxlots" style={taxlotStyle} maxResolution={10}>
-                            <source.JSON url={taxlotsUrl} loader={taxlotsFormat}>
+                            <source.JSON url={taxlotUrl} loader={taxlotFormat}>
                                 <interaction.Select features={selectedFeatures} style={selectedStyle} condition={myCondition} selected={onSelectEvent}/>
                                 <interaction.SelectDragBox features={selectedFeatures} style={selectedStyle} condition={platformModifierKeyOnly} selected={onSelectEvent}/>
                             </source.JSON>
@@ -265,9 +320,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                 <control.LayerSwitcher show_progress={true} collapsed={false} />
             </Col></Row>
             <Row><Col>
-                {rows.length? (rows.length + ' taxlots selected') : ''}
-                <BootstrapTable bootstrap4 striped condensed
-                    keyField={taxlotsKey} columns={taxlotsColumns} data={rows}/>
+                <TaxlotTable rows={rows}/>
             </Col></Row>
         </Container>
         </MapProvider>
