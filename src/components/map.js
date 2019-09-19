@@ -16,17 +16,17 @@ import {OpenLayersVersion} from '@map46/ol-react'; // eslint-disable-line no-unu
 //import Popup from 'ol-ext/overlay/Popup'
 
 import {MapProvider} from '@map46/ol-react/map-context'; // eslint-disable-line no-unused-vars
-import {Map as olMap, View as olView} from 'ol'
+import {CollectionProvider} from '@map46/ol-react/collection-context'; // eslint-disable-line no-unused-vars
+import {Map as olMap, View as olView, Collection} from 'ol'
 import {toStringXY} from 'ol/coordinate'
 import {toLonLat, fromLonLat} from 'ol/proj'
 
 import {wgs84} from '@map46/ol-react/constants'
-import {DEFAULT_CENTER, MINZOOM, MAXZOOM, workspace, myGeoServer} from '../constants'
+import {DEFAULT_CENTER, MINZOOM, MAXZOOM, workspace, myGeoServer, myArcGISServer} from '../constants'
 
 const geolocation = new Geolocation();
 
 import {Style, Circle, Fill, Icon, Stroke, Text} from 'ol/style'
-import Collection from 'ol/collection'
 import {click, platformModifierKeyOnly} from 'ol/events/condition'
 
 // Base layers
@@ -56,17 +56,20 @@ const taxlotPopupField = 'situs_addr';
  To generate this WFS service URL, go into GeoServer Layer Preview,
  and in All Formats, select "WFS GeoJSON(JSONP)" then paste here and
  clip off the outputFormat and maxFeatures attributes (maxFeatures=50&outputFormat=text%2Fjavascript
-*/
 const taxlotsUrl = myGeoServer + '/ows?service=WFS&version=1.0.0&request=GetFeature'
     + '&typeName=' + workspace + '%3Ataxlots'
 const taxlotsFormat = 'geojson'
-
+*/
+/* ArcGIS FeatureServer */
+const taxlotsUrl = myArcGISServer + '/Taxlots/FeatureServer/1'
+const taxlotsFormat = 'esrijson'
 /* VECTOR TILES
 const taxlotsLayer = 'clatsop_wm%3Ataxlots'
 const taxlotsUrl = myGeoServer + '/gwc/service/tms/1.0.0/'
         + taxlotsLayer
         + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
 */
+
 const taxlotStyle = new Style({
     fill: new Fill({color:"rgba(128,0,0,0.1)"}),
     stroke: new Stroke({color:"rgba(0,0,0,1.0)", width:1}),
@@ -80,11 +83,12 @@ const selectedStyle = new Style({ // yellow
 /* ========================================================================== */
 
 const MyMap = ({center, zoom, setMapCenter}) => {
+    const [mapLayers] = useState(new Collection());
     const [theMap] = useState(new olMap({
         view: new olView({
-            center: fromLonLat(center),
-            zoom: zoom}),
-            minZoom: MINZOOM, maxZoom: MAXZOOM,
+            center: fromLonLat(center), zoom: zoom, minZoom: MINZOOM, maxZoom: MAXZOOM,
+        }),
+        layers: mapLayers,
         //controls: [],
     }));
     const theView = theMap.getView();
@@ -102,8 +106,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
 
     useEffect(() => {
 //        theMap.addOverlay(popup);
-        const layers = theMap.getLayers();
-        layers.forEach(layer => {
+        mapLayers.forEach(layer => {
             if (layer.get("title") == 'Taxlots')
                 taxlotLayer = layer;
         })
@@ -224,35 +227,35 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
             <Row><Col>
                 <Map onMoveEnd={onMapMove} onPointerMove={onPointerMove}
                     style={{backgroundColor:"black",width:460,height:265,position:'relative',left:15,top:5}}>
+                    <CollectionProvider collection={mapLayers}>
+                        {/* Alternatives for streets: conventional or MVT */}
+                        <layer.Tile title="OpenStreetMap" baseLayer={true} visible={true}>
+                            <source.OSM/>
+                        </layer.Tile>
+                        {/* MVT
+                            <layer.Tile title="ESRI Clarity" baseLayer={true} visible={false}>
+                            <source.XYZ url={esriClarityUrl}/>
+                            </layer.Tile>
 
-                    <layer.Tile title="ESRI Clarity" baseLayer={true} visible={false}>
-                        <source.XYZ url={esriClarityUrl}/>
-                    </layer.Tile>
+                        <layer.VectorTile title="Mapbox Streets" baseLayer={true} visible={true} style={mapboxStyle} declutter={true}>
+                            <source.VectorTile url={mapboxStreetsUrl}/>
+                        </layer.VectorTile>
 
-                    {/* Alternatives for streets: conventional or MVT */}
-                    <layer.Tile title="OpenStreetMap" baseLayer={true} visible={true}>
-                        <source.OSM/>
-                    </layer.Tile>
-                    {/* MVT
-                    <layer.VectorTile title="Mapbox Streets" baseLayer={true} visible={true} style={mapboxStyle} declutter={true}>
-                        <source.VectorTile url={mapboxStreetsUrl}/>
-                    </layer.VectorTile>
+                        <layer.VectorTile title="Taxlots" declutter={true} crossOrigin="anonymous" style={taxlotStyle}>
+                            <source.VectorTile url={taxlotsUrl}>
+                                <interaction.Select features={selectedFeatures} style={selectedStyle} condition={click} selected={onSelectEvent}/>
+                                <interaction.SelectDragBox condition={platformModifierKeyOnly} selected={onSelectEvent}/>
+                            </source.VectorTile>
+                        </layer.VectorTile>
+                        */}
 
-                    <layer.VectorTile title="Taxlots" declutter={true} crossOrigin="anonymous" style={taxlotStyle}>
-                        <source.VectorTile url={taxlotsUrl}>
-                            <interaction.Select features={selectedFeatures} style={selectedStyle} condition={click} selected={onSelectEvent}/>
-                            <interaction.SelectDragBox condition={platformModifierKeyOnly} selected={onSelectEvent}/>
-                        </source.VectorTile>
-                    </layer.VectorTile>
-                    */}
-
-                    {/* WFS */}
-                    <layer.Vector title="Taxlots" style={taxlotStyle} maxResolution={10}>
-                        <source.JSON url={taxlotsUrl} loader={taxlotsFormat}>
-                            <interaction.Select features={selectedFeatures} style={selectedStyle} condition={myCondition} selected={onSelectEvent}/>
-                            <interaction.SelectDragBox features={selectedFeatures} style={selectedStyle} condition={platformModifierKeyOnly} selected={onSelectEvent}/>
-                        </source.JSON>
-                    </layer.Vector>
+                        <layer.Vector title="Taxlots" style={taxlotStyle} maxResolution={10}>
+                            <source.JSON url={taxlotsUrl} loader={taxlotsFormat}>
+                                <interaction.Select features={selectedFeatures} style={selectedStyle} condition={myCondition} selected={onSelectEvent}/>
+                                <interaction.SelectDragBox features={selectedFeatures} style={selectedStyle} condition={platformModifierKeyOnly} selected={onSelectEvent}/>
+                            </source.JSON>
+                        </layer.Vector>
+                    </CollectionProvider>
 
                     <control.GeoBookmark/>
                     <control.MousePosition  projection={wgs84} coordinateFormat={coordFormatter}/>

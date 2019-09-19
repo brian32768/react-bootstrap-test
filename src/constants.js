@@ -1,6 +1,8 @@
 // These are constants for use in the Clatsop county area.
 import {fromLonLat} from 'ol/proj'
 
+export const myArcGISServer = "https://delta.co.clatsop.or.us/server/rest/services";
+
 export const myGeoServer = "https://geoserver.wildsong.biz/geoserver";
 export const workspace = "clatsop";
 export const astoria_ll = [-123.834,46.187];

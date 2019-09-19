@@ -5,10 +5,12 @@ import {Container, Row, Col} from 'reactstrap'; // eslint-disable-line no-unused
 
 import Mark from 'markup-js'
 
+/*
 import shortid from 'shortid'
 for (let i=0; i<10; i++) {
     console.log("shortid test", shortid.generate());
 }
+*/
 
 // Examples with two different widgets, react-table and react-bootstrap-table2.
 import ReactTable from 'react-table'; // eslint-disable-line no-unused-vars
