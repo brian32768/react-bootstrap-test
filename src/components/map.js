@@ -23,17 +23,14 @@ import {Map as olMap, View as olView, Collection} from 'ol'
 import {toStringXY} from 'ol/coordinate'
 import {toLonLat, fromLonLat} from 'ol/proj'
 
-import {wgs84} from '@map46/ol-react/constants'
-import {DEFAULT_CENTER, MINZOOM, MAXZOOM, workspace, myGeoServer, myArcGISServer} from '../constants'
+import {WGS84, WM} from '@map46/ol-react/constants'
+import {DEFAULT_CENTER, MINZOOM, MAXZOOM, workspace, myGeoServer, myArcGISServer, ASTORIA_WM} from '../constants'
 
 const geolocation = new Geolocation();
 
 import {Style, Circle, Fill, Icon, Stroke, Text} from 'ol/style'
 import {click, platformModifierKeyOnly} from 'ol/events/condition'
-
-// Base layers
-const esriClarityUrl = 'https://clarity.maptiles.arcgis.com/arcgis/rest/services/' +
-                    'World_Imagery/MapServer/tile/{z}/{y}/{x}'
+import GeoJSON from 'ol/format/GeoJSON'
 
 /* MVT from Mapbox
 // This is only needed to show a fancy mapbox vector map
@@ -103,14 +100,44 @@ const selectedStyle = new Style({ // yellow
     fill:   new Fill({color: 'rgba(255, 255, 0, .001)'}),
 });
 
+/* ========================================================================== */
+
+// FIXME MOVE THIS COMPONENT TO ITS OWN FILE!!!
 // FIXME I think it would be cool to hide columns that are empty here.
+
+import Buffer from '@turf/buffer';
+
 
 const {ExportCSVButton} = CSVExport;
 
-const TaxlotTable = ({rows}) => {
+const transformfn = (coordinates) => {
+    for (let i = 0; i < coordinates.length; i+=2) {
+        coordinates[i]   += ASTORIA_WM[0];
+        coordinates[i+1] += ASTORIA_WM[1];
+    }
+    return coordinates
+}
+const multipointStyle = new Style({
+    image: new Circle({
+        radius: 10,
+        fill: new Fill({color: 'rgba(0,0,255, 0.8)'}),
+        stroke: new Stroke({color: 'red', width: 3})
+    })
+});
+const lineStyle = new Style({
+    stroke: new Stroke({color: 'rgba(255, 255, 0, 1)', width: 3})
+});
+const polyStyle = new Style({
+    stroke: new Stroke({color: 'rgba(0, 0, 0, 1)', width: 4}),
+    fill: new Fill({color: 'rgba(255, 0, 0, .250)'}),
+});
+
+const TaxlotTable = ({rows, bufferSelection}) => {
+
     return (rows.length>0)? (
         <>
         {rows.length>1? (rows.length + ' taxlots selected') : ''}
+        <br />
 
         <ToolkitProvider
             keyField={taxlotKey}
@@ -120,6 +147,7 @@ const TaxlotTable = ({rows}) => {
         {
             props => (
                 <div>
+                    <Button onClick={bufferSelection}>Buffer</Button>
                     <ExportCSVButton {...props.csvProps}>CSV Export</ExportCSVButton>
                     <BootstrapTable  {...props.baseProps} />
                 </div>
@@ -158,12 +186,16 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
     const [popupText, setPopupText] = useState("HERE") // text for popup
 */
     let taxlotLayer = useRef(null);
+    let bufferLayer = useRef(null);
+    const bufferFeatures = new Collection();
 
     useEffect(() => {
 //        theMap.addOverlay(popup);
         mapLayers.forEach(layer => {
             if (layer.get("title") == 'Taxlots')
-                taxlotLayer = layer;
+                taxlotLayer.current = layer;
+            if (layer.get("title") == 'Buffer')
+                bufferLayer.current = layer;
         })
     }, []);
 
@@ -226,10 +258,21 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
         if (features.getLength()) {
             features.forEach( (feature) => {
                 const attributes = {};
+                const geom = feature.getGeometry();
+                const format = new GeoJSON({
+                    geometry: 'geometry',
+                    dataProjection: WGS84,
+                    featureProjection: WM,
+                });
                 // Copy the data from each feature into a list
+//                const geojson = format.writeFeature(geom);
+                const f = feature
+                const geojson = format.writeFeatureObject(f);
+                console.log("geojson:", geojson);
                 taxlotColumns.forEach ( (column) => {
                     attributes[column.dataField] = feature.get(column.dataField);
                 });
+                attributes['geojson'] = geojson
                 rows.push(attributes)
             });
         }
@@ -269,6 +312,32 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
     const coordFormatter = (coord) => {
 		return toStringXY(coord, 4);
 	}
+
+    const bufferSelection = (e) => {
+
+        // convert the feature(s) selected into GeoJSON (and transform into WGS84)
+
+        const geojson =  rows[0].geojson;
+        console.log("Buffer this!", geojson, bufferLayer.current);
+
+        const turfBuffered = Buffer(geojson, 100, {units: 'feet'});
+        console.log("buffered=", turfBuffered);
+
+        const format = new GeoJSON({
+            geometry: 'geometry',
+            dataProjection: WGS84,
+            featureProjection: WM,
+        });
+
+        // convert turf shape into OL Shapes
+        const b = format.readFeature(turfBuffered);
+
+        // add the buffered features to the display feature class
+        bufferLayer.current.getSource().addFeature(b);
+
+        // expand the selection to include all the taxlots that are touching the new multipolygon
+        return;
+    }
 
     return (
         <>
@@ -310,17 +379,35 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                                 <interaction.SelectDragBox features={selectedFeatures} style={selectedStyle} condition={platformModifierKeyOnly} selected={onSelectEvent}/>
                             </source.JSON>
                         </layer.Vector>
+
+                        <layer.Vector title="Buffer" opacity={1}>
+                            <source.Vector features={bufferFeatures}>
+                                <Feature id="P2" style={polyStyle}>
+                                    <geom.Polygon transform={transformfn}>
+                                        {[
+                                            [[-3500, -2000], [3500, -2000], [0, 4000], [-3500, -2000]],
+                                            [[0, -1000], [1000, 1000], [-1000, 1000], [0, -1000]],
+                                        ]}
+                                    </geom.Polygon>
+                                </Feature>
+                                <Feature id="MP3" style={multipointStyle}>
+                                    <geom.MultiPoint transform={transformfn}>
+                                        { [[-6000, -4000], [6000, -3000], [0, 6400]] }
+                                    </geom.MultiPoint>
+                                </Feature>
+                            </source.Vector>
+                        </layer.Vector>
                     </CollectionProvider>
 
                     <control.GeoBookmark/>
-                    <control.MousePosition  projection={wgs84} coordinateFormat={coordFormatter}/>
+                    <control.MousePosition  projection={WGS84} coordinateFormat={coordFormatter}/>
                 </Map>
             </Col>
             <Col>
                 <control.LayerSwitcher show_progress={true} collapsed={false} />
             </Col></Row>
             <Row><Col>
-                <TaxlotTable rows={rows}/>
+                <TaxlotTable rows={rows} bufferSelection={bufferSelection}/>
             </Col></Row>
         </Container>
         </MapProvider>
