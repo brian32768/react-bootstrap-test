@@ -189,6 +189,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
     let taxlotLayer = useRef(null);
     let bufferLayer = useRef(null);
     const bufferFeatures = new Collection();
+    const [selectedFeatures] = useState(new Collection());
 
     useEffect(() => {
 //        theMap.addOverlay(popup);
@@ -266,8 +267,6 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
         });
         setRows(rows);
     }
-
-    const [selectedFeatures] = useState(new Collection());
 
     const onSelectEvent = (e) => {
         console.log("onSelectEvent", e)
