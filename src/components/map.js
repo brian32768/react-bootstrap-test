@@ -105,8 +105,9 @@ const selectedStyle = new Style({ // yellow
 // FIXME MOVE THIS COMPONENT TO ITS OWN FILE!!!
 // FIXME I think it would be cool to hide columns that are empty here.
 
-import Buffer from '@turf/buffer';
-
+import Dissolve from '@turf/dissolve'
+import Buffer from '@turf/buffer'
+import {featureCollection} from '@turf/helpers'
 
 const {ExportCSVButton} = CSVExport;
 
@@ -255,31 +256,19 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
 
     const copyFeaturesToTable = (features) => {
         const rows = [];
-        if (features.getLength()) {
-            features.forEach( (feature) => {
-                const attributes = {};
-                const geom = feature.getGeometry();
-                const format = new GeoJSON({
-                    geometry: 'geometry',
-                    dataProjection: WGS84,
-                    featureProjection: WM,
-                });
-                // Copy the data from each feature into a list
-//                const geojson = format.writeFeature(geom);
-                const f = feature
-                const geojson = format.writeFeatureObject(f);
-                console.log("geojson:", geojson);
-                taxlotColumns.forEach ( (column) => {
-                    attributes[column.dataField] = feature.get(column.dataField);
-                });
-                attributes['geojson'] = geojson
-                rows.push(attributes)
+        features.forEach( (feature) => {
+            const attributes = {};
+            // Copy the data from each feature into a list
+            taxlotColumns.forEach ( (column) => {
+                attributes[column.dataField] = feature.get(column.dataField);
             });
-        }
+            rows.push(attributes)
+        });
         setRows(rows);
     }
 
-    const selectedFeatures = new Collection();
+    const [selectedFeatures] = useState(new Collection());
+
     const onSelectEvent = (e) => {
         console.log("onSelectEvent", e)
         const s = selectedFeatures.getLength();
@@ -291,8 +280,51 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
             popup.hide()
         }
 */
-        copyFeaturesToTable(selectedFeatures)
+        if (selectedFeatures.getLength() > 0) {
+            bufferFeatures.clear();
+            copyFeaturesToTable(selectedFeatures)
+        }
         e.stopPropagation(); // this stops draw interaction
+    }
+
+    const bufferSelectedFeatures = (e) => {
+    // Buffer the currently selected Features
+
+        if (selectedFeatures.getLength() <= 0)
+            return
+
+        const format = new GeoJSON({
+            geometry: 'geometry',
+            dataProjection: WGS84,
+            featureProjection: WM,
+        });
+
+        // Add all the selected features to a turf Collection
+        // FIXME I can probably re-write this with a map function
+
+        const featureArray = [];
+        selectedFeatures.forEach( (feature) => {
+
+            // convert the feature into a GeoJSON object (and transform into WGS84)
+
+            //const geom = feature.getGeometry();
+            const geojson = format.writeFeatureObject(feature);
+            console.log("geojson:", geojson);
+
+            featureArray.push(geojson);
+        })
+
+        const turfSelectedFeatures = featureCollection(featureArray)
+        const buffered = Buffer(turfSelectedFeatures, 100, {units: 'feet'});
+        const dissolvedFeatures = Dissolve(buffered)
+        // convert the turf shapes into OL Shapes
+        const olShape = format.readFeatures(dissolvedFeatures);
+
+        // add the buffered and dissolved features to the display feature class
+        bufferLayer.current.getSource().addFeatures(olShape);
+
+        // find all the taxlots that are touching the buffered polygons
+        // select them
     }
 
     const onPointerMove = (e) => {
@@ -312,32 +344,6 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
     const coordFormatter = (coord) => {
 		return toStringXY(coord, 4);
 	}
-
-    const bufferSelection = (e) => {
-
-        // convert the feature(s) selected into GeoJSON (and transform into WGS84)
-
-        const geojson =  rows[0].geojson;
-        console.log("Buffer this!", geojson, bufferLayer.current);
-
-        const turfBuffered = Buffer(geojson, 100, {units: 'feet'});
-        console.log("buffered=", turfBuffered);
-
-        const format = new GeoJSON({
-            geometry: 'geometry',
-            dataProjection: WGS84,
-            featureProjection: WM,
-        });
-
-        // convert turf shape into OL Shapes
-        const b = format.readFeature(turfBuffered);
-
-        // add the buffered features to the display feature class
-        bufferLayer.current.getSource().addFeature(b);
-
-        // expand the selection to include all the taxlots that are touching the new multipolygon
-        return;
-    }
 
     return (
         <>
@@ -407,7 +413,7 @@ Popups are not quite working yet -- it affects the selection of taxlots, makes i
                 <control.LayerSwitcher show_progress={true} collapsed={false} />
             </Col></Row>
             <Row><Col>
-                <TaxlotTable rows={rows} bufferSelection={bufferSelection}/>
+                <TaxlotTable rows={rows} bufferSelection={bufferSelectedFeatures}/>
             </Col></Row>
         </Container>
         </MapProvider>
