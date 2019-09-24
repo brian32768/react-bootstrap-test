@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React, {useState,useEffect,useContext} from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'
 
 const runQuery = () => {
@@ -22,7 +22,14 @@ const runQuery = () => {
     }
 }
 
-const SearchTable = ({ results }) => {
+const SearchTable = ({query}) => {
+    const [results, setResults] = useState();
+
+    useEffect(() => {
+        if (query.length < 3) return;
+        setResults(query);
+    }, [query]);
+
     return (
         <>
             <h4>Search Results</h4>
@@ -34,6 +41,6 @@ const SearchTable = ({ results }) => {
     )
 }
 SearchTable.propTypes = {
-    results: PropTypes.string
+    query: PropTypes.string
 }
 export default SearchTable
