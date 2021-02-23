@@ -14,7 +14,6 @@ import {Map, Feature, Graticule, control, interaction, geom, layer, source} from
 import {OpenLayersVersion} from '@map46/ol-react'; // eslint-disable-line no-unused-vars
 //import Popup from 'ol-ext/overlay/Popup'
 
-import BootstrapTable from 'react-bootstrap-table-next'; // eslint-disable-line no-unused-vars
 import ToolkitProvider, {CSVExport} from 'react-bootstrap-table2-toolkit'
 
 import {MapProvider} from '@map46/ol-react/map-context'; // eslint-disable-line no-unused-vars
@@ -150,7 +149,7 @@ const TaxlotTable = ({rows, bufferSelection}) => {
                 <div>
                     <Button onClick={bufferSelection}>Buffer</Button>
                     <ExportCSVButton {...props.csvProps}>CSV Export</ExportCSVButton>
-                    <BootstrapTable  {...props.baseProps} />
+                    BootstrapTable
                 </div>
             )
         }

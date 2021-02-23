@@ -7,7 +7,9 @@ import {NavLink} from 'redux-first-router-link'; // eslint-disable-line no-unuse
 import {connect} from 'react-redux'
 import {toggleTheme} from './src/actions'
 import {setMapQuery} from './src/reducers'
-import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap'; // eslint-disable-line no-unused-vars
+
+import {Collapse, Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, Button} from 'reactstrap'
+
 import 'ol/ol.css'
 import './App.css'
 

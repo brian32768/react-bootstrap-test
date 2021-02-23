@@ -35,7 +35,7 @@ Use case: I want to set up a view, leave for the weekend, and come back to it on
 Use case: Bookmark a map view
 
 The way to implement this seems to be via connected-react-router.
-Adding ````npm install connected-react-router```` pulls in the required dependencies (including "history").
+Adding ````yarn add connected-react-router```` pulls in the required dependencies (including "history").
 
 ### Maps
 
@@ -50,22 +50,25 @@ I am using OpenLayers 6 beta.
 ## Bootstrap 4 via Reactstrap
 
 To get Bootstrap 4 working I needed
-```npm install reactstrap bootstrap```
+```yarn add reactstrap bootstrap```
 
-The bootstrap package is only needed for its CSS, so ignore warnings.
+The bootstrap package is only needed for its CSS, so ignore warnings. Eventually I got tired
+of it crying about missing its jquery, so "yarn add jquery" for now, but soonish we'll be
+getting a shiny new reactstrap built for Bootstrap 5 and when that happens we can kiss
+jquery goodbye forever.
 
 Refer to http://reactstrap.github.io/ for more information on reactstrap.
 
 Bootstrap React Component tests
+
 * about.js and contact.js test the Card container.
 * about.js and App.js demonstrate use of context (see ThemeContext)
 * home.js tests the Navbar
 * pictures.js tests the Carousel container.
 
-## Available Scripts
+## Development
 
-### Development
-In the project directory, `npm start`
+In the project directory, `yarn start`
 will run the app in the development mode.
 The page will reload as you make edits.
 It should open automatically in a browser; if not the URL is [http://localhost:1234](http://localhost:1234)
@@ -75,9 +78,10 @@ When you edit the files, the browser copy should update automatically too as lon
 You will also see any lint errors in the console; check for additional runtime errors in the browser debugger (opened with the F12 key).
 
 ## Learn More
+
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 As mentioned above, see the books "Beginning React".
 and "React and React Native", Chapter 11: Mobile-First React Components; it uses react-bootstrap not reactstrap but it's close.
 
-Neither book uses Parcel.
+Neither book uses Parcel. Boo!

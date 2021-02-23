@@ -31,7 +31,6 @@ const MapPage = ({theme}) => {
             </Col></Row>
             <Row><Col>
                 <Button tag="button" onClick={gotoGeolocation}>Geolocate</Button>
-                <Button tag="a" color="success" href="http://reactstrap.github.io" target="_blank">ReactStrap docs</Button>
                 <Button tag="a" href="/huhwhat">404 page</Button>
             </Col></Row>
         </Container>

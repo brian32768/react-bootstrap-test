@@ -12,7 +12,7 @@ for (let i=0; i<10; i++) {
 }
 */
 
-// Examples with two different widgets, react-table and react-bootstrap-table2.
+// Examples with two different table widget.
 import ReactTable from 'react-table'; // eslint-disable-line no-unused-vars
 import 'react-table/react-table.css'
 
@@ -88,7 +88,7 @@ const Table = ({ theme}) => {
         <>
         <h2>templated markup example</h2>
         {result}
-        <h2>Two examples of tables, react-table and react-bootstrap-table</h2>
+        <h2>Two examples of tables, react-table and bootstrap table</h2>
         <Container fluid={ true }><Row>
             <Col sm="2">
                 other stuff, a whole long
@@ -110,7 +110,7 @@ const Table = ({ theme}) => {
             </Col></Row>
 
             <Row><Col>
-                <h2>react-bootstrap-table</h2>
+                <h2>bootstrap table</h2>
                 <BootstrapTable
                   bootstrap4
                   keyField="id"
