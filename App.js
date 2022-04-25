@@ -6,17 +6,15 @@ import {faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl, faSearch} 
 import {NavLink} from 'redux-first-router-link'; // eslint-disable-line no-unused-vars
 import {connect} from 'react-redux'
 import {toggleTheme} from './src/actions'
-import {setMapQuery} from './src/reducers'
 
 import {Collapse, Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, Button} from 'reactstrap'
 
-import 'ol/ol.css'
 import './App.css'
 
 // Import everything as an object so that we can look up a component using its name.
 import * as components from './src/components'
 
-const App = ({ page, center, zoom, theme, toggleTheme }) => {
+const App = ({ page, theme, toggleTheme }) => {
     const Component = components[page]; // eslint-disable-line no-unused-vars
     return (
     <>
@@ -32,14 +30,6 @@ const App = ({ page, center, zoom, theme, toggleTheme }) => {
                 <Nav className="ml-auto" navbar>
                 <NavItem>
                     <Button onClick={ toggleTheme }>Toggle theme</Button>
-                </NavItem>
-                <NavItem>
-                    <NavLink to={{ type: "MAP", query: setMapQuery(center, zoom) }}
-                        activeClassName='active'
-                        activeStyle={{ color: 'pink' }}
-                        exact={true}
-                        strict={true}
-                    ><FontAwesomeIcon icon={ faGlobe } /> Map</NavLink> &nbsp;
                 </NavItem>
                 <NavItem>
                     <NavLink to="/table"><FontAwesomeIcon icon={ faTable } /> Table</NavLink> &nbsp;
@@ -66,13 +56,9 @@ const App = ({ page, center, zoom, theme, toggleTheme }) => {
 }
 App.propTypes = {
     page: PropTypes.string,
-    center: PropTypes.arrayOf(PropTypes.number),
-    zoom: PropTypes.number
 };
 const mapStateToProps = (state) => ({
     page:   state.page,
-    center: state.map.center,
-    zoom:   state.map.zoom,
     theme:  state.theme,
 });
 const mapDispatchToProps = {

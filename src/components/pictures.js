@@ -13,19 +13,14 @@ const items = [
         value: 0, label: "Pigeon"
     },
     {
-        src: require('/assets/walking_pigeons.gif'),
-        text: "Out for a stroll",
-        value: 1, label: "Walking pigeons"
-    },
-    {
         src: require('/assets/beaver.jpg'),
         text: "Oregon State University",
-        value: 2, label: "Beaver"
+        value: 1, label: "Beaver"
     },
     {
         src: require('/assets/lewis_and_clark.jpg'),
         text: "In 1804 it was hard to get decent maps of Clatsop County.",
-        value: 3, label: "Lewis and Clark, lost again."
+        value: 2, label: "Lewis and Clark, lost again."
     },
 ];
 

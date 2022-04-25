@@ -2,8 +2,8 @@ import logger from 'redux-logger'
 import { createStore, applyMiddleware, combineReducers, compose  } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { page, bookmarks, map, search, theme } from './src/reducers'
-import { mapMiddleware, errorReporter } from './src/middleware'
+import { page, search, theme } from './src/reducers'
+import { errorReporter } from './src/middleware'
 import routes from './routesMap'
 
 // FIXME -- persistence insists on restoring whatever path was loaded
@@ -22,15 +22,13 @@ export default function configureStore(preloadedState) {
     const rootReducer =
 //    persistReducer(persistConfig,
         combineReducers({
-            map,
-            bookmarks,
             search,
             theme,
             page,
             location  : reducer
         })
 //    )
-    const middlewares = applyMiddleware(middleware, mapMiddleware, errorReporter, logger)
+    const middlewares = applyMiddleware(middleware, errorReporter, logger)
     const composeEnhancers =
         typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?
             window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose

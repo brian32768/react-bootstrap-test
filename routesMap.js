@@ -3,7 +3,6 @@ import queryString from 'query-string'
 
 const routesMap = {
     HOME:     '/',
-    MAP:      '/map',
     TABLE:    '/table',
     PICTURES: '/pictures',
     SEARCH:   '/search',

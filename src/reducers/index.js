@@ -1,5 +1,3 @@
 export { page } from './page'
-export { bookmarks } from './bookmarks'
-export { map, getGeohash, setMapQuery }  from './map'
 export { search } from './search'
 export { theme } from './theme'

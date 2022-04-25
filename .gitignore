@@ -1,3 +1,4 @@
+.parcel-cache/
 dist/
 build/
 package-lock.json
