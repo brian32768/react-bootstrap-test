@@ -36,31 +36,17 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@popperjs/core": "^2.11.5",
     "bootstrap": "^5.1.3",
-    "html2canvas": "^1.0.0-rc.3",
-    "jspdf": "^2.5.1",
-    "modali": "^1.0.1",
-    "moment": "^2.24.0",
-    "query-string": "^6.14.0",
     "react": "18.0",
     "react-bootstrap": "^2.3.0",
-    "react-dom": "18.0",
-    "react-redux": "^7.2.2",
-    "redux": "^4.0.5",
-    "redux-first-router": "^2.1.3",
-    "redux-first-router-link": "^2.1.1",
-    "redux-logger": "^3.0.6",
-    "uuid": "^8.3.2"
+    "react-dom": "18.0"
   },
   "scripts": {
-    "start": "parcel serve index.html --host 0.0.0.0 --open",
-    "lint": "eslint .",
-    "build": "parcel build index.html --out-dir build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postversion": "git push && git push --tags"
+    "start": "parcel serve index.html --open",
+    "build": "parcel build index.html --out-dir build"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/brian32768/react-test.git"
+    "url": "git+ssh://git@github.com/brian32768/react-bootstrap-test.git"
   },
   "keywords": [
     "react"
