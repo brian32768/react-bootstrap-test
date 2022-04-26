@@ -6,8 +6,7 @@ import { Navbar } from 'react-bootstrap'
 import { SomeContent } from './components'
 
 const App = () => {
-    //let img = document.createElement('img');
-    let url = (new URL('../../babyturtle.png?width=128', import.meta.url)).toString();
+    let url = (new URL('../assets/babyturtle.png?width=256', import.meta.url)).toString();
     return (
         <>
             <Navbar>
