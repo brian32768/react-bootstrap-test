@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "..\\ol-react"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\react-test"
+		},
+		{
+			"path": "..\\react-simplemap"
+		},
+		{
+			"path": "..\\bootstrap-test"
+		}
+	],
+	"settings": {}
+}
