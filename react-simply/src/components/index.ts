@@ -1,1 +1,3 @@
-export { default as SomeContent } from './SomeContent';
+export { default as Act } from './Act';
+export { default as Home } from './Home';
+export { default as MyLink } from './MyLink';

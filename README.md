@@ -11,9 +11,14 @@ As the project became more complex, I started doing smaller apps here. I list th
 
 ## react-simply/
 
-This app is intentional simple. It has a navbar but no routing.
+This app is intentional simple. It has a navbar and uses simple React Routing and React Bootstrap.
 
-## thunk-test-app/
+See Chapter 12 in "Beginning ReactJS Foundations" and also
+https://www.freecodecamp.org/news/a-complete-beginners-guide-to-react-router-include-router-hooks/
+
+## react-redux-first/
+
+Uses react-first-router.
 ## pigeon-messenger-service/
 
 In this project, I started with my 'react-test' project and then
