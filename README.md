@@ -9,6 +9,10 @@ Today it's chapter 11 "Introducing Hooks" from "Beginning ReactJS Foundations".
 
 As the project became more complex, I started doing smaller apps here. I list them here in order of complexity.
 
+## react-simply/
+
+This app is intentional simple. It has a navbar but no routing.
+
 ## thunk-test-app/
 ## pigeon-messenger-service/
 
