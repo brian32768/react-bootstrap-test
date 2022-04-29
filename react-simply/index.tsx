@@ -1,6 +1,6 @@
 import React from 'react';
 import App from './src/App';
-import { createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client';
 
 // React 18 format
 

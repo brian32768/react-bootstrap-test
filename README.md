@@ -18,10 +18,13 @@ https://www.freecodecamp.org/news/a-complete-beginners-guide-to-react-router-inc
 
 ## react-redux-first/
 
-Uses react-first-router.
+This sample use react-first-router and react-bootstrap.
 ## pigeon-messenger-service/
 
-In this project, I started with my 'react-test' project and then
+FIXME - this sample is broken, stuck somewhere in an upgrade nightmare.
+The whole redux router thing is confusing and I am not convinced I need it right now.
+
+In this sample, I started with my 'react-test' project and then
 I added more React code, I added code to do a fetch from a remote server,
 and I added some glitzy Bootstrap components.
 
