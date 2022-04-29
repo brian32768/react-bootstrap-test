@@ -32,7 +32,7 @@ const App = () => {
             </Nav>
             </Navbar.Collapse>
         </Navbar>
-        I don't suppose a picture of a baby turtle makes a good logo for a navbar, yet here it is.
+        I don't suppose this picture of a baby turtle makes a good logo for a navbar, yet here it is.
                 <h2>react-simply</h2>
                 <Routes>
                     <Route path="/" element={<Home/>} />
