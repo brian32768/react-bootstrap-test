@@ -1,9 +1,8 @@
 {
-  "name": "react-simply",
-  "version": "2.0.1",
+  "name": "react-redux-first",
   "author": "Brian H Wilson",
   "license": "MIT",
-  "description": "Simple test of React",
+  "version": "0.1.0",
   "private": false,
   "devDependencies": {
     "@babel/cli": "^7.12.17",
@@ -34,11 +33,15 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.3.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0"
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.1",
+    "redux-first-router": "^2.1.5"
   },
   "scripts": {
-    "start": "parcel serve index.html",
-    "build": "parcel build index.html --out-dir build"
+    "start": "parcel serve index.html"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "repository": {
     "type": "git",
@@ -48,7 +51,7 @@
     "react"
   ],
   "bugs": {
-    "url": "https://github.com/brian32768/react-bootstrap-test/issues"
+    "url": "https://github.com/brian32768/react-boostrap-test/issues"
   },
   "homepage": "https://github.com/brian32768/react-bootstrap-test#readme",
   "babel": {

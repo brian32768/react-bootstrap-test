@@ -12,7 +12,7 @@ for (let i=0; i<10; i++) {
 }
 */
 import ReactTable from 'react-table'; // eslint-disable-line no-unused-vars
-import 'react-table/react-table.css'
+//import 'react-table/react-table.css'
 
 // see https://react-select.com/
 import Select from 'react-select'; // eslint-disable-line no-unused-vars
