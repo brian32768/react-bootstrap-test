@@ -8,13 +8,13 @@ import {faGlobe, faCoffee, faCamera, faTable, faInfoCircle, faListOl, faSearch} 
 
 import { NavLink } from 'redux-first-router-link'; // eslint-disable-line no-unused-vars
 import { toggleTheme } from './actions'
-import { createTask } from './redux/actions'
+//import { createTask } from './redux/actions'
 
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, Button} from 'react-bootstrap'  // eslint-disable-line no-unused-vars
+import { Collapse, Navbar, NavbarBrand, Nav, NavItem, Button} from 'react-bootstrap'  // eslint-disable-line no-unused-vars
 
 import './App.css'
 
-import { PersistGate } from 'redux-persist/integration/react'
+//import { PersistGate } from 'redux-persist/integration/react'
 import configStore from './redux/configstore'
 import { Container, Row, Col } from 'react-bootstrap'
 import { About, Contact, Home, NotFound, Pictures, Table, TasksPage } from './components'
@@ -61,7 +61,7 @@ const App = ({ page, theme, toggleTheme }) => {
             </Collapse>
         </Navbar>
 
-            <BrowserRouter>
+        <BrowserRouter>
             <Switch>
             <Route exact path="/" component={ Home } />
             <Route path="/table" component={ Table } />
@@ -71,9 +71,9 @@ const App = ({ page, theme, toggleTheme }) => {
             <Route path="/tasks" component={ TasksPage } />
             <Route render={() => <NotFound/> } />
             </Switch>
-            </BrowserRouter>
+        </BrowserRouter>
 
-            <CurrentPage />
+        <CurrentPage />
     </>
     );
 }

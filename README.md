@@ -47,20 +47,16 @@ There are actions and reducers in src/redux.
 
 Redux implements a finite state machine. You tell it you want it to do something by dispatching an action
 and that fires a reducer, which looks at the current state and possibly transitions to a new state. React components can watch the state and re-render if it changes. A store in redux is used to contain the entire state for your app.
+
 ## Bootstrap
 
 I initially used reactstrap, because it was running at Bootstrap 4 and react-bootstrap was version 3.
 I have switched back to react-bootstrap because it is now up to date at Bootstrap 5.1.
 
 To get Bootstrap working I needed
-```npm add react-bootstrap```
 
-The bootstrap package is only needed for its CSS, so ignore warnings. Eventually I got tired
-of it crying about missing its jquery, so "yarn add jquery" for now, but soonish we'll be
-getting a shiny new reactstrap built for Bootstrap 5 and when that happens we can kiss
-jquery goodbye forever.
+   npm add react-bootstrap
 
-Refer to http://reactstrap.github.io/ for more information on reactstrap.
 
 Bootstrap React Component tests
 
