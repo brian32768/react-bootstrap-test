@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
 import './App.scss'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { Home, MyLink, Act } from './components'
+import { Home, MyForm, MyLink, Act, Login } from './components'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
@@ -21,7 +21,8 @@ const App = () => {
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/link">A link</Nav.Link>
+                <Nav.Link href="/form">My form</Nav.Link>
+                <Nav.Link href="/link">My link</Nav.Link>
                 <NavDropdown title="More stuff" id="basic-nav-dropdown">
                     <NavDropdown.Item href="/action/3.1">act 1</NavDropdown.Item>
                     <NavDropdown.Item href="/action/3.2">act 2</NavDropdown.Item>
@@ -29,13 +30,14 @@ const App = () => {
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/action/3.4">epilogue</NavDropdown.Item>
                 </NavDropdown>
+                <Nav.Link><Login/></Nav.Link>
             </Nav>
             </Navbar.Collapse>
         </Navbar>
-        I don't suppose this picture of a baby turtle makes a good logo for a navbar, yet here it is.
                 <h2>react-simply</h2>
                 <Routes>
                     <Route path="/" element={<Home/>} />
+                    <Route path="/form" element={<MyForm />} />
                     <Route path="/link" element={<MyLink />} />
                     <Route path="/action/:act" element={<Act />} />
                 </Routes>
