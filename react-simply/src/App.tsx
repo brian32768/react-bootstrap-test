@@ -1,5 +1,6 @@
 // App.tsx react-simply
 import React from 'react'
+import {useState, useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
 import './App.scss'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
@@ -10,6 +11,7 @@ const App = () => {
     // Parcel will preprocess this image file and bundle only the thumbnail.
     let url = (new URL('../assets/babyturtle.png?width=256', import.meta.url)).toString();
     let SomeContent = Home;
+    const [ user, setUser ] = useState('Login');
     return (
         <>
         <Router>
@@ -30,7 +32,7 @@ const App = () => {
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/action/3.4">epilogue</NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link><Login/></Nav.Link>
+                <Nav.Link><Login username={user} /></Nav.Link>
             </Nav>
             </Navbar.Collapse>
         </Navbar>
