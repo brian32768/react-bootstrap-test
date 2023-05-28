@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "debug": "nodemon server.js",
-    "start": "nodemon server.js",
+    "debug": "nodemon main.js",
+    "start": "nodemon main.js",
     "build-package": "npm run clean && npm run transpile && node tasks/prepare-package && cp README.md build/@wildsong/mailbag-server",
     "clean": "rm -rf build/*",
     "transpile": "babel src --out-dir build/@map46/ol-react --source-maps",
