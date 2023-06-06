@@ -33,7 +33,8 @@
     "react-dom": "^18.2.0",
     "react-redux": "^7.1.0",
     "redux": "^4.0.1",
-    "redux-first-router": "^2.1.5"
+    "redux-first-router": "^2.1.5",
+    "redux-orm": "^0.16.2"
   },
   "scripts": {
     "start": "parcel serve index.html"

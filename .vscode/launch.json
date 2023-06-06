@@ -5,12 +5,11 @@
     "version": "0.3.0",
     "configurations": [
         {
-            "type": "chrome",
+            "type": "chrome", // I think firefox just does not work here
             "request": "launch",
-            "name": "Debug Redux Template",
+            "name": "Debug Redux in Chrome",
             "url": "http://localhost:1234",
             "webRoot": "${workspaceFolder}/react-redux-template",
-            "breakOnLoad": true,
             "sourceMapPathOverrides": {
                 "/__parcel_source_root/*": "${webRoot}/*"
             }
