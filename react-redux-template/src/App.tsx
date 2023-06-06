@@ -2,11 +2,11 @@
 import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import * as components from './tabs'
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import * as components from './components'
 
 const App = ({ page }) => {
   // Parcel will preprocess this image file and bundle only the thumbnail.

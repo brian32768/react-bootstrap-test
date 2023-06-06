@@ -7,6 +7,16 @@
         {
             "type": "chrome", // I think firefox just does not work here
             "request": "launch",
+            "name": "Debug react-simply",
+            "url": "http://localhost:1234",
+            "webRoot": "${workspaceFolder}/react-simply",
+            "sourceMapPathOverrides": {
+                "/__parcel_source_root/*": "${webRoot}/*"
+            }
+        },
+        {
+            "type": "chrome", // I think firefox just does not work here
+            "request": "launch",
             "name": "Debug Redux in Chrome",
             "url": "http://localhost:1234",
             "webRoot": "${workspaceFolder}/react-redux-template",
