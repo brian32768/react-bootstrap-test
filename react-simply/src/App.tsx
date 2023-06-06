@@ -2,7 +2,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
-import './App.scss'
+import './App.css'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Home, ControlledForm, UncontrolledForm, MyLink, Act, Login } from './components'
 import 'bootstrap/dist/css/bootstrap.min.css';

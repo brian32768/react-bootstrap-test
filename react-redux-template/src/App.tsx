@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
-import './App.scss'
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import * as components from './components'
