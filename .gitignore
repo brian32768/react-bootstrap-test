@@ -1,10 +1,17 @@
-.parcel-cache/
+# Parcel
 dist/
 build/
+public/
+.parcel-cache/
+
+# npm version locking, probably want this in production mode?
 package-lock.json
 
-# Visual Studio files that get created all the time annoyingly
-.vs/
+# emacs
+*~
+
+# dotenv environment variables file
+.env
 
 # Logs
 logs
@@ -32,6 +39,3 @@ node_modules/
 
 # Output of 'npm pack'
 *.tgz
-
-# dotenv environment variables file
-.env
