@@ -1,25 +1,31 @@
 //
 // Ping the API server to make sure it's alive.
 //
-import React, {useState, useContext, useEffect} from 'react';  // eslint-disable-line no-unused-vars
+import React, {useState, useEffect} from 'react';  // eslint-disable-line no-unused-vars
 import axios from "axios"
 
 import { AppSettings } from '../config'
 
 const Ping = () => {
     const [ status, setStatus ] = useState(1);
-    const [ pinged, setPinged ] = useState( "not ready") );
+    const [ pinged, setPinged ] = useState("not ready");
 
     useEffect( () => {  
         async function ping() {
+            const cmd = AppSettings.SERVER + "ping";
             try {
-                const response = await axios.get(AppSettings.SERVER + "ping");
-                setPinged("data server ready at " + response.data.response)
+                const response = await axios.get(cmd);
+                setPinged("data server ready " + response.data.response)
                 console.log(response);
                 setStatus(1);
             } catch (err) {
-                setPinged("server error: " + err.message)
+                setPinged(
+                    <>
+                    Ping failed. <b>{err.message}</b>
+                    </>
+                );
                 setStatus(0);                
+                console.log('Ping failed ' + cmd)
             }
         }
 /*
@@ -33,7 +39,7 @@ const Ping = () => {
  
     return (
         <>
-            <font color={status?"green":"red"}>{pinged}</font>
+            <font color={status?"purple":"red"}>{pinged}</font>
         </>
     )
 }

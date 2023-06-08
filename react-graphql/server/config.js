@@ -1,9 +1,9 @@
-// These environment settings should all be defined on a production server,
-// not in a .env file.
-//if (process.env.NODE_ENV !:: 'production') {
+// These environment settings should all be predefined on a production server,
+// not read from a .env file. I need a better way to test this.
 import dotenv from 'dotenv'
-dotenv.config();
-//}
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config();
+}
 
 export const Secrets = {
     DBHOST : process.env.DBHOST,
@@ -11,4 +11,3 @@ export const Secrets = {
     DBUSER : process.env.DBUSER,
     DBPASSWORD : process.env.DBPASSWORD
 };
-

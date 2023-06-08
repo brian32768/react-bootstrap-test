@@ -17,9 +17,9 @@
         {
             "type": "chrome", // I think firefox just does not work here
             "request": "launch",
-            "name": "Debug Redux in Chrome",
+            "name": "Debug react-graphql client",
             "url": "http://localhost:1234",
-            "webRoot": "${workspaceFolder}/react-redux-template",
+            "webRoot": "${workspaceFolder}/react-graphql/client",
             "sourceMapPathOverrides": {
                 "/__parcel_source_root/*": "${webRoot}/*"
             }

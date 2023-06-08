@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const domNode = document.getElementById("app");
 const root = createRoot(domNode);
+
 root.render(
     <>
         <App title="React GraphQL" />
