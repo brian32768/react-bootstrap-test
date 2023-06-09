@@ -10,14 +10,14 @@ Initially I tried making SQL relatively transparent and used REST calls.
 This example will use GraphQL and hopefully encapsulate the ugly SQL tables
 in the server side, passing only elegant data back to the client.
 
-On the client side I will need a GraphQL client but I am avoiding Redux so I will try Relay.
+On the client side I will need a GraphQL client but I am avoiding Redux so I will try Apollo. I tried Relay and fell flat on my face. 
 
 I have little experience with ORMs. I know they are an approach to this
 problem too, but I think would also be overkill here.
 
 So... summing up,
 
-* client side: React and Relay and Bootstrap and JavaScript (no TypeScript, no Redux)
+* client side: React and Apollo and Bootstrap and JavaScript (no TypeScript, no Redux)
 * server side: Node and JavaScript and GraphQL
 
 **TypeScript** I tried to get a handle on TypeScript and finally decided last night that I actually need
@@ -51,17 +51,14 @@ might return
 
 The shape of the data is determined by the client instead of the server, that's cool, that's what I want.
 The server still has to map the actual database column names but I will see how to do that soon.
-## Relay
+## Apollo
 
 I hope I am not heading down another dead end path here. I'll give it until lunchtime to see what it's about.
-I will examine this after I get the server going.
-
-Redux is a central data store for all the components. This is important when the app is big and data has to flow between components.
-Relay keeps the data scoped closer to the individual components. That's what I need here.
-
 ## Resources
 
-[React Quickly—Painless Web Apps with React, JSX, Redux, and GraphQL](https://acm.percipio.com/books/0466b36a-c7fc-4ebc-9722-b431012416fb#epubcfi(/6/234!/4/2%5Bepubmain%5D/2%5Bch15%5D/2/2/1:0)) especially Chapter 15: Working with Data using GraphQL This book covers "express-graphql" which has been superceded by "graphql-http".
+[Full Stack Graphql Applications: With React, Node.js, and Neo4J](https://acm.percipio.com/books/0827e186-d1c8-4a48-86a1-93e48ea0a3c3#epubcfi(/6/34!/4/2%5Bepubmain%5D/2%5Bch01lev1sec4%5D/2/2/1:0)) FYI "Neo4J" is a "graph database". Whatever that is.
+
+[React Quickly—Painless Web Apps with React, JSX, Redux, and GraphQL](https://acm.percipio.com/books/0466b36a-c7fc-4ebc-9722-b431012416fb#epubcfi(/6/234!/4/2%5Bepubmain%5D/2%5Bch15%5D/2/2/1:0)) especially Chapter 15: Working with Data using GraphQL This book covers "express-graphql" which has been superceded by "graphql-http". That broke it for this newbie.
 
 [GraphQL](https://github.com/graphql/graphql-js)
 

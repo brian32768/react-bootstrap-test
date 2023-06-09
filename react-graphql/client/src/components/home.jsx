@@ -1,69 +1,46 @@
-import React, {useState, useEffect}  from 'react';   // eslint-disable-line no-unused-vars
+import React, {useState, useEffect, Suspense}  from 'react';   // eslint-disable-line no-unused-vars
 
-/*
-import { GraphQLError } from 'graphql';
-import { Network, Observable, RequestParameters, Variables } from 'relay-runtime';
-import { createClient } from 'graphql-http';
+import {graphql, useQueryLoader, usePreloadedQuery } from 'react-relay'
 
-const client = createClient({
-  url: 'http://localhost:3000/q',
-  headers: async () => {
-    const session = await getSession();
-  },
-});
+const AppQuery = graphql`
+    query AppQuery($id: ID!) {
+        instrument(id: $id) {
+            firstname,
+            lastname
+        }
+}`;
 
-function fetch(operation, variables) {
-  return Observable.create((sink) => {
-    return client.subscribe(
-      {
-        query: "hello"
-      },
-      sink,
-    );
-  });
-}
+const queryReference = loadQuery(
+    myEnvironment,
+    query,
+    { id: '123'},
+    {fetchPolicy: 'store-or-network'}
+);
 
-export const network = Network.create(fetch);
-*/
 
 const Home = () => {
-    let [hello, setHello] = useState("");
-  /*
-    const client = createClient({url: 'http://localhost:3000/q'});
-    useEffect( () => {
-        async function getHello() {
-            let cancel = () => {
-                  // abort the request if it is in-flight
-            };
-              
-            const result = await new Promise((resolve, reject) => {
-                let result;
-                cancel = client.subscribe(
-                    {
-                        query: '{ hello }',
-                    },
-                    {
-                        next: (data) => (result = data),
-                        error: reject,
-                        complete: () => {
-                            console.log('response is ' + result)
-                            setHello("Brian");
-                            resolve(result);
-                        },
-                    },
-                );
-            });
-              
-            expect(result).toEqual({ hello: 'world' });
-        }
-        getHello();
-    })
-*/
     return (
         <>
         <h1>Home</h1>
-        Hello, {hello}
+        
+        <Button 
+            onCLick={() => loadQuery({id: '123'})}
+            disabled={queryReference != null}
+        >do query</Button>
+        <Suspense>
+            {queryReference != null?
+                <NameDisplay queryReference={queryReference} />
+                : null
+            }
+        </Suspense>
         </>
     );
+}
+
+const NameDisplay = ({queryReference}) => {
+    const hello = usePreloadedQuery(AppQuery, queryReference);
+    return (
+        <h1>Hello, {hello.instrument?.firstname}</h1>
+    )
 }
 export default Home;
