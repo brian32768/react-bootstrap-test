@@ -50,6 +50,7 @@
     "scripts": {
         "lint": "eslint .",
         "start": "nodemon main.js",
+        "apollo": "nodemon apollo.js",
         "clean": "rm -rf ./dist/*"
     },
     "babel": {

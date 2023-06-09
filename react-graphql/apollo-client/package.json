@@ -1,0 +1,62 @@
+{
+  "name": "@brian32768/apollo-client",
+  "version": "0.1.0",
+  "author": "Brian H Wilson",
+  "license": "MIT",
+  "description": "Test of GraphQL using Apollo",
+  "private": false,
+  "dependencies": {
+    "@apollo/client": "^3.7.15",
+    "bootstrap": "^5.3.0",
+    "graphql": "^16.6.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.13",
+    "@babel/plugin-transform-object-assign": "^7.12.13",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "eslint": "^8.42.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-config-standard-react": "^8.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-standard": "^4.1.0",
+    "parcel": "^2.9.2",
+    "process": "^0.11.10"
+  },
+  "scripts": {
+    "start": "parcel serve index.html"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  }
+}

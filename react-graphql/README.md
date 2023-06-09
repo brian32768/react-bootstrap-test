@@ -53,15 +53,25 @@ The shape of the data is determined by the client instead of the server, that's 
 The server still has to map the actual database column names but I will see how to do that soon.
 ## Apollo
 
-I hope I am not heading down another dead end path here. I'll give it until lunchtime to see what it's about.
+Beautiful out of box experience. I might switch to Apollo.
+when you set up an Apollo Server, an Apollo Sandbox will be running at root path.
+
+There is a server component and a client component. Better still there is
+Apollo Studio which lets you see what's going on and test the server.
+Studio should work with any GraphQL server, even the one I already have
+running using graphql-http. 
+
 ## Resources
 
 [Full Stack Graphql Applications: With React, Node.js, and Neo4J](https://acm.percipio.com/books/0827e186-d1c8-4a48-86a1-93e48ea0a3c3#epubcfi(/6/34!/4/2%5Bepubmain%5D/2%5Bch01lev1sec4%5D/2/2/1:0)) FYI "Neo4J" is a "graph database". Whatever that is.
+I don't care. I ignored the Neo4J chapters because I have to use MS SQL.
 
 [React Quickly—Painless Web Apps with React, JSX, Redux, and GraphQL](https://acm.percipio.com/books/0466b36a-c7fc-4ebc-9722-b431012416fb#epubcfi(/6/234!/4/2%5Bepubmain%5D/2%5Bch15%5D/2/2/1:0)) especially Chapter 15: Working with Data using GraphQL This book covers "express-graphql" which has been superceded by "graphql-http". That broke it for this newbie.
 
 [GraphQL](https://github.com/graphql/graphql-js)
 
 [GraphQL-HTTP](https://github.com/graphql/graphql-http)
+
+[Apollo](https://apollographql.com) a GraphQL developer platform.
 
 [Relay, a GraphQL client](https://relay.dev/)
