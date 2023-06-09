@@ -1,9 +1,9 @@
 {
   "name": "@brian32768/apollo-client",
   "version": "0.1.0",
-  "author": "Brian H Wilson",
-  "license": "MIT",
-  "description": "Test of GraphQL using Apollo",
+  "author": "Brian H Wilson <brian@wildsong.biz>",
+  "license": "GPL3",
+  "description": "Test of GraphQL using Apollo Client",
   "private": false,
   "dependencies": {
     "@apollo/client": "^3.7.15",
@@ -21,6 +21,7 @@
     "@babel/plugin-transform-object-assign": "^7.12.13",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
+    "@parcel/transformer-graphql": "^2.9.2",
     "eslint": "^8.42.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-config-standard-react": "^8.0.0",

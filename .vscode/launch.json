@@ -19,7 +19,7 @@
             "request": "launch",
             "name": "Debug react-graphql client",
             "url": "http://localhost:1234",
-            "webRoot": "${workspaceFolder}/react-graphql/client",
+            "webRoot": "${workspaceFolder}/react-graphql/apollo-client",
             "sourceMapPathOverrides": {
                 "/__parcel_source_root/*": "${webRoot}/*"
             }
