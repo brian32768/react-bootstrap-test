@@ -11,3 +11,8 @@ export const Secrets = {
     DBUSER : process.env.DBUSER,
     DBPASSWORD : process.env.DBPASSWORD
 };
+
+export const Data = {
+    //INSTRUMENTS : Secrets.DBNAME + '.ccuser.CLERK_V_PARTY_DIRECT',
+    INSTRUMENTS : Secrets.DBNAME + '.public.instruments',
+}

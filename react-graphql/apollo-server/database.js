@@ -22,14 +22,11 @@ export const dbConfig = {
 
 export const getInstruments = async (where) => {
     let result = {};
-    const select = 'SELECT TOP (10) [INSTRUMENT_ID] \
+    const select = `SELECT TOP (10) [ID] \
     ,[LAST_OR_ENTITY_NAME] ,[FIRST_NAME] \
-    ,[PARTY_ID] ,[PARTY_TYPE] \
-    ,[BOOK] ,[PAGE] ,[DESCRIPTION] \
-    ,[INSTRUMENT_TYPE_CODE] \
     ,[RECORDING_DATE] \
-    FROM [cc-main].[ccuser].[CLERK_V_PARTY_DIRECT] \
-    WHERE '
+    FROM ${Data.INSTRUMENTS} \
+    WHERE `
 
     console.log('where: ', where);
 
