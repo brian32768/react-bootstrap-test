@@ -22,18 +22,14 @@ export const dbConfig = {
 }
 
 export const getInstruments = async (where) => {
-    const select = `SELECT TOP (10) [INSTRUMENT_ID] \
-    ,[LAST_OR_ENTITY_NAME] ,[FIRST_NAME] \
-    ,[RECORDING_DATE] \
-    FROM ${Data.INSTRUMENTS} `
-//    WHERE `
+    const select = `SELECT TOP (10) * FROM ${Data.INSTRUMENTS} `
     try {
         let pool = await sql.connect(dbConfig);
-        let q = select + where
+        let q = select + ' WHERE ' + where
         console.log('getInstruments query: ', q);
         let data = await pool.request()
         .input('id', sql.Int, 1)
-        .query(`SELECT TOP(100) * FROM ${Data.INSTRUMENTS}`);
+        .query(q);
         await pool.close();
         return data.recordset; //results.recordsets;
     } catch(err) {
@@ -53,15 +49,16 @@ async function queryDb (queryParm) {
     try {
         let data = await pool.request()
             .input('id', sql.Int, queryParm)
-            .query(`SELECT TOP(2) * FROM ${Data.INSTRUMENTS}`);
+            .query(`SELECT * FROM ${Data.INSTRUMENTS} WHERE INSTRUMENT_ID=@id`);
         await pool.close();
-        return data.recordset;
+        return (data.recordset[0] === undefined)? {} : data.recordset[0]
     } catch (err) {
         return err;
     }
 }
 
-queryDb(1).then((res) => {
+queryDb(50201).then((res) => {
     console.log("Result is", res);
 });
+
 
