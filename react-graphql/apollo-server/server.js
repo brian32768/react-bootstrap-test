@@ -77,18 +77,44 @@ const resolvers = {
 
         instruments: async () => {
             const results = await getInstruments("[LAST_OR_ENTITY_NAME] = 'WILSON'");
-            console.log(results);
-            return results;
-        }, // return all of them
-
-        instrument: (parent,args) => { // return only matches
-            console.log(args);
-            for (let i = 0; i < instruments.length; i++) {
-                if (instruments[i].id == args.id) {
-                    return instruments[i];
+            console.log("record set", results);
+            // Basically I am doing an ORM thing here.
+            // I am sure there is some Apollo thing that would do this for me.
+            let rval = Array();
+            if (results != null) {
+                for (let i = 0; i < results.length; i++) {
+                    let item = results[i]
+                    let qitem = {
+                        id: item.INSTRUMENT_ID,
+                        firstname: item.FIRST_NAME,
+                        lastname: item.LAST_OR_ENTITY_NAME,
+                        recording_date: item.RECORDING_DATE
+                    }
+                    rval.push(qitem);
                 }
             }
-            return null;
+            return rval;
+        }, // return all
+
+        instrument: async (parent,args) => { // return only matches
+            console.log(args);
+            const results = await getInstruments("[INSTRUMENT_ID] = 50201");
+            let qitem = {
+                id: 0,
+                firstname: '',
+                lastname: '',
+                recording_date: ''
+            }
+            if (results != null) {
+                let item = results[0]
+                qitem = {
+                    id: item.INSTRUMENT_ID,
+                    firstname: item.FIRST_NAME,
+                    lastname: item.LAST_OR_ENTITY_NAME,
+                    recording_date: item.RECORDING_DATE
+                }
+            }
+            return qitem;
         }
     },
 };
@@ -104,11 +130,12 @@ const server = new ApolloServer({
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
-const { url } = startStandaloneServer(server, {
+startStandaloneServer(server, {
     listen: { port: 4000 },
     context: ({req}) => {
         return {connection: dbConfig}; 
     }
+}).then( s => {
+    console.log('Server ready',s.url);
 });
   
-console.log(`🚀  Server ready at: ${url}`);
