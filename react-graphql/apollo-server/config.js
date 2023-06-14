@@ -13,6 +13,6 @@ export const Secrets = {
 };
 
 export const Data = {
-    //INSTRUMENTS : Secrets.DBNAME + '.ccuser.CLERK_V_PARTY_DIRECT',
-    INSTRUMENTS : Secrets.DBNAME + '.public.instruments',
+    INSTRUMENTS : '[' + Secrets.DBNAME + '].[ccuser].[CLERK_V_PARTY_DIRECT]',
+    //INSTRUMENTS : Secrets.DBNAME + '.public.instruments',
 }

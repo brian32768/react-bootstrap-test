@@ -1,7 +1,8 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
-import { instruments } from './mock_data.js';
+//import {} from './promises.js';
+//import { dbConfig, getInstruments } from './mock_data.js';
 import { dbConfig, getInstruments } from './database.js';
 
 import fs from 'fs'
@@ -74,10 +75,10 @@ const resolvers = {
             }
         },
 
-        instruments: () => {
-            const results = getInstruments("[LAST_OR_ENTITY_NAME] = 'WILSON'");
+        instruments: async () => {
+            const results = await getInstruments("[LAST_OR_ENTITY_NAME] = 'WILSON'");
             console.log(results);
-            return instruments;
+            return results;
         }, // return all of them
 
         instrument: (parent,args) => { // return only matches
@@ -103,9 +104,9 @@ const server = new ApolloServer({
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
-const { url } = await startStandaloneServer(server, {
+const { url } = startStandaloneServer(server, {
     listen: { port: 4000 },
-    context: async ({req}) => {
+    context: ({req}) => {
         return {connection: dbConfig}; 
     }
 });

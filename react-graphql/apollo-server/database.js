@@ -2,7 +2,7 @@
     Microsoft SQL Server database access
 */
 import sql from "mssql"
-import { Secrets } from './config.js'
+import { Data, Secrets } from './config.js'
 
 export const dbConfig = {
     server: Secrets.DBHOST,
@@ -27,19 +27,25 @@ export const getInstruments = async (where) => {
     ,[RECORDING_DATE] \
     FROM ${Data.INSTRUMENTS} \
     WHERE `
-
+    
     console.log('where: ', where);
-
-    try {
-        await sql.connect(dbConfig);
-        const results = await sql.query(select + where)
-//        console.log(results)
-        return results.recordsets;
-        
-    } catch (err) {
-        const msg = err.message;
-        console.log(msg);
-        return null;
-    }
+    let pool = await sql.connect(dbConfig);
+    let q = select + where
+    const data = await pool.request().query(q);
+    console.log(data)
+    return data; //results.recordsets;
+     
 }
+
+async function queryDb (queryParm) {
+    console.log('qp ', queryParm);
+    let pool = await sql.connect(dbConfig);
+ 
+    let data = await pool.request()
+        .input('id', sql.Int, queryParm)
+        .query(`SELECT TOP(10) LAST_OR_ENTITY_NAME FROM ${Data.INSTRUMENTS}`);
+    console.log('data ', data.recordset);
+}
+
+queryDb(1);
 

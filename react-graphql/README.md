@@ -53,8 +53,9 @@ The shape of the data is determined by the client instead of the server, that's 
 The server still has to map the actual database column names but I will see how to do that soon.
 ## Apollo
 
-Beautiful out of box experience. I might switch to Apollo.
+Beautiful out of box experience. I might switch to Apollo for everything.
 when you set up an Apollo Server, an Apollo Sandbox will be running at root path.
+The sandbox lets you test queries against the server. 
 
 There is a server component and a client component. Better still there is
 Apollo Studio which lets you see what's going on and test the server.
