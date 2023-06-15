@@ -1,9 +1,9 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 
 const GET_INSTRUMENTS = gql`
-    query GetInstruments {
-        instruments {
+    query GetInstruments($searchtype: Enum, $lastname: String!) {
+        instruments(searchtype: $searchtype, lastname: $lastname) {
             id
             firstname
             lastname
@@ -17,8 +17,10 @@ const PING = gql`
     }
 `;
 
-const DisplayInstruments = () => {
-    const { loading, error, data } = useQuery(GET_INSTRUMENTS);
+const DisplayInstruments = ({ searchtype, lastname }) => {
+    const { loading, error, data } = useQuery(GET_INSTRUMENTS,
+        {variables: searchtype, lastname}
+    );
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
@@ -45,7 +47,7 @@ const Apollo = () => {
     return (
         <div>
             <h1>Apollo</h1>
-            <DisplayInstruments />
+            <DisplayInstruments lastname="WILSON" />
             <Ping /><br />
         </div>
     )

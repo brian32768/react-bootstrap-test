@@ -1,10 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
-//import {} from './promises.js';
-//import { dbConfig, getInstruments } from './mock_data.js';
-import { dbConfig, getInstruments } from './database.js';
-
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -12,7 +8,12 @@ import { GraphQLError } from 'graphql';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
 
-// A schema is a collection of type definitions (hence "typeDefs")
+//import {} from './promises.js';
+//import { dbConfig, getInstruments } from './mock_data.js';
+import DataSource from './datasource.js';
+
+
+// A GraphQL schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = `#graphql
@@ -119,23 +120,24 @@ const resolvers = {
     },
 };
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-});
+const server = new ApolloServer({typeDefs, resolvers});
+//const datasource = new DataSource({});
 
+// Test the database by creating a connection right now,
+// no point in starting the web server until we know we can get data.
+/*
+const appPool = new sql.ConnectionPool(dbConfig);
+appPool.connect().then( (pool) => {
+    server.locals.db = pool;
+})
+*/
+
+// https://www.apollographql.com/docs/apollo-server/api/standalone
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
-startStandaloneServer(server, {
-    listen: { port: 4000 },
-    context: ({req}) => {
-        return {connection: dbConfig}; 
-    }
-}).then( s => {
-    console.log('Server ready',s.url);
-});
+const {url} = await startStandaloneServer(server)
+console.log('Server ready: ', url);
+
   

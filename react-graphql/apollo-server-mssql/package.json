@@ -1,7 +1,7 @@
 {
   "name": "@brian32768/apollo-server",
   "version": "0.1.0",
-  "description": "Test of GraphQL using Apollo Server",
+  "description": "Test of GraphQL using Apollo Server and MSSQL",
   "main": "index.js",
   "keywords": [],
   "author": "Brian H Wilson <brian@wildsong.biz>",
@@ -9,7 +9,7 @@
   "license": "GPL3",
   "type": "module",
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0npm .22"
   },
   "dependencies": {
     "@apollo/server": "^4.7.3",

@@ -1,5 +1,8 @@
 /*
     Microsoft SQL Server database access
+
+    It's okay to issue sql.connect and use the pool that comes back,
+    it keeps track of the pool internally
 */
 import sql from "mssql"
 import { Data, Secrets } from './config.js'
@@ -22,14 +25,13 @@ export const dbConfig = {
 }
 
 export const getInstruments = async (where) => {
-    const select = `SELECT TOP (10) * FROM ${Data.INSTRUMENTS} `
+    const select = `SELECT TOP (100) * FROM ${Data.INSTRUMENTS} `
     try {
         let pool = await sql.connect(dbConfig);
         let q = select + ' WHERE ' + where
         console.log('getInstruments query: ', q);
         let data = await pool.request()
-        .input('id', sql.Int, 1)
-        .query(q);
+            .query(q);
         await pool.close();
         return data.recordset; //results.recordsets;
     } catch(err) {
@@ -48,7 +50,7 @@ async function queryDb (queryParm) {
     }
     try {
         let data = await pool.request()
-            .input('id', sql.Int, queryParm)
+            .input('id', sql.Int, queryParm) // Don't need this unless there's a parameter in the query
             .query(`SELECT * FROM ${Data.INSTRUMENTS} WHERE INSTRUMENT_ID=@id`);
         await pool.close();
         return (data.recordset[0] === undefined)? {} : data.recordset[0]
