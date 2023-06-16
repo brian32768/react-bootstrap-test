@@ -1,16 +1,19 @@
 # react-bootstrap-test/react-graphql
 
-I am thinking that my application is simple so it does not need Redux or complex routing.
+2023-06-16 This phase of my project is done, so I will be moving
+the work I have done here into my real project today.
+
+My application is simple so it does not need Redux or complex routing.
 Pretty much it's a single form, maybe with an advanced form... so 2 forms...
 
 On the data side, I have to access SQL Server and ugly tables.
 
 Initially I tried making SQL relatively transparent and used REST calls.
 
-This example will use GraphQL and hopefully encapsulate the ugly SQL tables
+This example uses GraphQL (via Apollo) to encapsulate the ugly SQL tables
 in the server side, passing only elegant data back to the client.
 
-On the client side I will need a GraphQL client but I am avoiding Redux so I will try Apollo. I tried Relay and fell flat on my face. 
+On the client side I will need a GraphQL client so I will try Apollo. I tried Relay and fell flat on my face. 
 
 I have little experience with ORMs. I know they are an approach to this
 problem too, but I think would also be overkill here.
@@ -18,11 +21,10 @@ problem too, but I think would also be overkill here.
 So... summing up,
 
 * client side: React and Apollo and Bootstrap and JavaScript (no TypeScript, no Redux)
-* server side: Node and JavaScript and GraphQL
+* server side: Node and JavaScript and Apollo GraphQL
 
-**TypeScript** I tried to get a handle on TypeScript and finally decided last night that I actually need
-to get my app working within the next 3 weeks, not 3 years. Ugh. Typed languages slow me down
-but I make just as many misteaks. C was okay and maybe C++, but C# and Java? PASS. #life2short
+**No TypeScript** I tried to get a handle on TypeScript and finally decided last night that I actually need to get my app working within the next 3 weeks, not 3 years. Typed languages slow me down
+and I can make just as many misteaks. C was okay and maybe C++, but C# and Java? PASS. #life2short
 
 ## Debug etc
 
@@ -70,18 +72,19 @@ might return
         }
     }
 
-The shape of the data is determined by the client instead of the server, that's cool, that's what I want.
-The server still has to map the actual database column names but I will see how to do that soon.
+The shape of the data is determined by the client instead of the server, that's cool, that's what I want. The server still has to map the actual database column names but I will see how to do that soon.
 ## Apollo
 
-Beautiful out of box experience. I might switch to Apollo for everything.
-when you set up an Apollo Server, an Apollo Sandbox will be running at root path.
-The sandbox lets you test queries against the server. 
+Beautiful out of box experience. I switched to Apollo for everything.
+When you set up an Apollo Server, an Apollo Sandbox (web page) will be running at root path. The sandbox lets you test queries against the server. 
 
-There is a server component and a client component. Better still there is
-Apollo Studio which lets you see what's going on and test the server.
-Studio should work with any GraphQL server, even the one I already have
-running using graphql-http. 
+There is a server component and a client component. 
+
+There is a thing called Apollo Studio but I think it's for the supported cloud based version not the self-hosted version.
+
+## SQL
+
+The database in use here is SQL Server, and for node that means node-mssql. I am at a loss as to the differences between node-mssql and tedious so I gave up and when with node-mssql. They seem to be two faces of the same coin.
 
 ## Resources
 

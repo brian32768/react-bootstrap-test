@@ -35,7 +35,8 @@
     "process": "^0.11.10"
   },
   "scripts": {
-    "start": "parcel serve index.html"
+    "start": "parcel serve index.html",
+    "clean": "rm -rf node_modules dist"
   },
   "eslintConfig": {
     "extends": [

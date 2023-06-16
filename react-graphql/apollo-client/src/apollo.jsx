@@ -1,22 +1,6 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
-
-const GET_INSTRUMENTS = gql`
-    query GetInstruments($querytype:QueryType!,$lastname:String!) {
-        instruments(querytype:$querytype, lastname:$lastname) {
-            id
-            firstname
-            lastname
-            recording_date
-        }
-    }
-`;
-
-const PING = gql`
-    query Ping {
-        ping
-    }
-`;
+import { gql,useQuery } from '@apollo/client';
+import { GET_INSTRUMENTS, PING } from './queries';
 
 const ShowInstruments = ({ querytype, lastname }) => {
     const { loading, error, data } = useQuery(GET_INSTRUMENTS, {
