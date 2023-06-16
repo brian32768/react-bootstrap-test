@@ -27,11 +27,6 @@ const typeDefs = `#graphql
         name: String
     }
 
-    enum SearchType {
-        EXACT
-        STARTSWITH
-        ANY
-    }
 
 # The "Query" type is special: it lists all of the available queries that
 # clients can execute, along with the return type for each. In this
@@ -40,7 +35,7 @@ type Query {
     help: String
     ping: String
     info: Info
-    instruments(searchtype: SearchType, lastname: String): [Instrument]
+    instruments(searchtype: String, lastname: String): [Instrument]
     instrument(id: ID!): Instrument
 }
 `;
@@ -81,7 +76,7 @@ const resolvers = {
         },
 
         instruments: async (parent,args) => {
-            const searchtype = args.searchtype
+            const searchtype = args.searchtype||'EXACT'
             const lastname = args.lastname
             let where = '[INSTRUMENT_ID]!=0'; // block invalid records
             if (lastname !== undefined) {
@@ -114,7 +109,7 @@ const resolvers = {
                 }
             }
             return rval;
-        }, // return all
+        },
 
         instrument: async (parent,args) => {
             console.log('args: ',args);

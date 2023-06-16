@@ -2,11 +2,12 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 const GET_INSTRUMENTS = gql`
-    query GetInstruments($searchtype: Enum, $lastname: String!) {
-        instruments(searchtype: $searchtype, lastname: $lastname) {
+    query GetInstruments($searchtype:String!,$lastname:String!) {
+        instruments(searchtype:$searchtype, lastname:$lastname) {
             id
             firstname
             lastname
+            recording_date
         }
     }
 `;
@@ -17,18 +18,16 @@ const PING = gql`
     }
 `;
 
-const DisplayInstruments = ({ searchtype, lastname }) => {
-    const { loading, error, data } = useQuery(GET_INSTRUMENTS,
-        {variables: searchtype, lastname}
-    );
-
-    if (loading) return <p>Loading...</p>;
+const ShowInstruments = ({ searchtype, lastname }) => {
+    const { loading, error, data } = useQuery(GET_INSTRUMENTS, {
+        variables: {searchtype,lastname}
+    });
     if (error) return <p>Error : {error.message}</p>;
+    if (loading) return <p>Loading...</p>;
   
-    return data.instruments.map(({ id, firstname, lastname }) => (
+    return data.instruments.map(({ id, firstname, lastname, recording_date }) => (
       <div key={id}>
-        <h3>{firstname} {lastname}</h3>
-        <br />
+        {id} {firstname} {lastname} {recording_date} <br />
       </div>
     ));
 }
@@ -46,8 +45,8 @@ const Ping = () => {
 const Apollo = () => {
     return (
         <div>
-            <h1>Apollo</h1>
-            <DisplayInstruments lastname="WILSON" />
+            <h1>Apollo Client</h1>
+            <ShowInstruments searchtype="EXACT" lastname="SMITH" />
             <Ping /><br />
         </div>
     )
