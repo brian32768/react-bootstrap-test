@@ -15,6 +15,13 @@ const datasource = new DataSource({});
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = `#graphql
+    enum QueryType {
+        STARTSWITH
+        EXACT
+        ALL
+        ANY
+    }
+
     type Instrument {
         id: Int
         firstname: String
@@ -35,7 +42,7 @@ type Query {
     help: String
     ping: String
     info: Info
-    instruments(searchtype: String, lastname: String): [Instrument]
+    instruments(querytype: QueryType, lastname: String): [Instrument]
     instrument(id: ID!): Instrument
 }
 `;
@@ -76,17 +83,18 @@ const resolvers = {
         },
 
         instruments: async (parent,args) => {
-            const searchtype = args.searchtype||'EXACT'
+            const querytype = args.querytype||'EXACT'
             const lastname = args.lastname
             let where = '[INSTRUMENT_ID]!=0'; // block invalid records
             if (lastname !== undefined) {
-                switch (searchtype) {
+                switch (querytype) {
                     case 'EXACT':
                         where = `[LAST_OR_ENTITY_NAME] = '${args.lastname}'`;
                         break;
                     case 'STARTSWITH':
                         where = `[LAST_OR_ENTITY_NAME] LIKE '${args.lastname}%'`;
                         break;
+                    case 'ALL':
                     case 'ANY':
                         where = `[LAST_OR_ENTITY_NAME] LIKE '%${args.lastname}%'`;
                         break;

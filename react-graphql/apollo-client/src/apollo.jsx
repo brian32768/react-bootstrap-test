@@ -2,8 +2,8 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 const GET_INSTRUMENTS = gql`
-    query GetInstruments($searchtype:String!,$lastname:String!) {
-        instruments(searchtype:$searchtype, lastname:$lastname) {
+    query GetInstruments($querytype:QueryType!,$lastname:String!) {
+        instruments(querytype:$querytype, lastname:$lastname) {
             id
             firstname
             lastname
@@ -18,9 +18,9 @@ const PING = gql`
     }
 `;
 
-const ShowInstruments = ({ searchtype, lastname }) => {
+const ShowInstruments = ({ querytype, lastname }) => {
     const { loading, error, data } = useQuery(GET_INSTRUMENTS, {
-        variables: {searchtype,lastname}
+        variables: {querytype,lastname}
     });
     if (error) return <p>Error : {error.message}</p>;
     if (loading) return <p>Loading...</p>;
@@ -46,7 +46,7 @@ const Apollo = () => {
     return (
         <div>
             <h1>Apollo Client</h1>
-            <ShowInstruments searchtype="EXACT" lastname="SMITH" />
+            <ShowInstruments querytype="ALL" lastname="WARRENTON" />
             <Ping /><br />
         </div>
     )
