@@ -27,6 +27,7 @@
     "eslint-plugin-standard": "^4.1.0",
     "parcel": "^2.8.3",
     "process": "^0.11.10",
+    "serve": "^14.2.0",
     "sharp": "^0.31.3"
   },
   "dependencies": {
@@ -38,7 +39,8 @@
   },
   "scripts": {
     "start": "parcel serve index.html",
-    "build": "parcel build index.html --out-dir build"
+    "build": "parcel build index.html --dist-dir public"
+    "serve": "serve public"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,22 @@
+{
+  "name": "vite-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bulma": "^0.9.4",
+    "preact": "^10.13.2",
+    "preact-bulma": "^2.0.0-next.3",
+    "preact-router": "^4.1.1"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.5.0",
+    "sass": "^1.63.6",
+    "vite": "^4.3.9"
+  }
+}
