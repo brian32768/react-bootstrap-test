@@ -13,10 +13,12 @@ As the project became more complex, I started doing smaller apps here. I list th
 
 This app is intentionally simple. It has a navbar and uses simple React Routing and React Bootstrap. It's getting more complex as I am adding a form to it!
 
-It whines about not liking versoin 18 of React but then it runs anyway? Weird.
-
 See Chapter 12 in "Beginning ReactJS Foundations" and also
 https://www.freecodecamp.org/news/a-complete-beginners-guide-to-react-router-include-router-hooks/
+
+## preact-simply
+
+This uses Bulma instead of Bootstrap. It uses Preact instead of React. It uses Vite instead of Parcel. Okay, whatever. So maybe I need to rename the project.
 
 ## react-redux-first/
 
