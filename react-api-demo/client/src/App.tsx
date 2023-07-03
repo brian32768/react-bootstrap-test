@@ -1,6 +1,5 @@
 // App.tsx react-simply
-import React from 'react'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
 import './App.scss'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'

@@ -31,6 +31,7 @@
     "sharp": "^0.31.3"
   },
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "bootstrap": "^5.1.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.3.0",
@@ -39,7 +40,7 @@
   },
   "scripts": {
     "start": "parcel serve index.html",
-    "build": "parcel build index.html --dist-dir public"
+    "build": "parcel build index.html --dist-dir public",
     "serve": "serve public"
   },
   "repository": {

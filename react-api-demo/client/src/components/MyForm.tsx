@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from 'react-bootstrap'
 
 const MyForm = (props: { onLogin: (arg0: any) => void; }) => {
