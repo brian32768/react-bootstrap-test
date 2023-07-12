@@ -16,6 +16,10 @@ const httpServer = http.createServer(app);
 const apolloserver = new ApolloServer({
     typeDefs,
     resolvers,
+    uploads: {
+        maxFiles: 1,
+        maxFileSize: 1000000,
+    },
     plugins: [
         // https://www.apollographql.com/docs/apollo-server/api/plugin/landing-pages/
         // Set embed to false to disable Sandbox in dev 

@@ -1,7 +1,8 @@
-import React from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_INSTRUMENTS, PING } from './queries'
-import DropZone from './dropzone'
+//import DropZone from './dropzone'
+import Counter from './counter'
+import UploadFile from './upload'
 
 const ShowInstruments = ({ querytype, lastname }) => {
     const { loading, error, data } = useQuery(GET_INSTRUMENTS, {
@@ -10,9 +11,9 @@ const ShowInstruments = ({ querytype, lastname }) => {
     if (error) return <p>Error : {error.message}</p>;
     if (loading) return <p>Loading...</p>;
   
-    return data.instruments.map(({ id, firstname, lastname, recording_date }) => (
-      <div key={id}>
-        {id} {firstname} {lastname} {recording_date} <br />
+    return data.instruments.map(({objectid, id, firstname, lastname, recording_date }) => (
+      <div key={objectid}>
+        {objectid} {id} {firstname} {lastname} {recording_date} <br />
       </div>
     ));
 }
@@ -21,9 +22,9 @@ const Ping = () => {
     const { loading, error, data } = useQuery(PING);
     if (loading) return <>Server starting up...</>;
     if (error) return <>Connect failed: {error.message}</>;
-    const ping = "Freddo";
+    const d = new Date(data.ping).toLocaleString('en-US',{timezone:'PST'});
     return (
-        <font color="lightgrey">{data.ping}</font>
+        <font color="lightgrey">{d}</font>
     );
 }
 
@@ -32,12 +33,15 @@ const Apollo = () => {
         <div>
             <h1>Apollo Client</h1>
             
-            <DropZone/>
+            <Counter /> <br />
 
-            Query the database:
-            <ShowInstruments querytype="EXACT" lastname="KEISTER" />
+            <UploadFile/> <br />
+
             Ping: <Ping /><br />
         </div>
     )
 }
 export default Apollo
+
+
+//             <ShowInstruments querytype="STARTSWITH" lastname="WARRENTON, CITY OF" />

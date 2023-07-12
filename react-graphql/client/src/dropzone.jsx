@@ -34,12 +34,12 @@ const rejectStyle = {
     
 
 const DropZone = () => {
-    const [mutate] = useMutation(UPLOAD_FILE);
+    const [uploadFile] = useMutation(UPLOAD_FILE);
 
     const onDrop = useCallback(acceptedFiles => {
         const fname = acceptedFiles[0].name;
         console.log("Uploading:", fname);
-        mutate({ variables: { fname } });
+        mutate( { variables: { filename: fname, mimetype: "image/png", encoding: 'utf-8' }});
     }, []);
 
     const { 

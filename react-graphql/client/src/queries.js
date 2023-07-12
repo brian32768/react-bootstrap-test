@@ -11,6 +11,7 @@ import { gql } from '@apollo/client'
 export const GET_INSTRUMENTS = gql`
     query GetInstruments($querytype:QueryType!,$lastname:String!) {
         instruments(querytype:$querytype, lastname:$lastname) {
+            objectid
             id
             firstname
             lastname
@@ -25,10 +26,16 @@ export const PING = gql`
     }
 `;
 
-export const UPLOAD_FILE = gql`
-  mutation ($file: Upload!) {
-    uploadFile(file: $file) {
-      success
+export const INCREMENT_COUNTER = gql`
+    # Increments a back-end counter and gets the result.
+    mutation IncrementCounter {
+        incrementCounter
     }
+`;
+
+export const UPLOAD_FILE = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file)
   }
 `;
+
