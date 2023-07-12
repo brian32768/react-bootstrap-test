@@ -1,8 +1,7 @@
 import { GraphQLError } from 'graphql'
-import path from "path"
-import fs from "fs"
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
+import { finished } from 'stream/promises'
 import DataSource from './datasource.js'
-import { stringify } from 'querystring';
 
 const datasource = new DataSource({});
 
@@ -12,6 +11,9 @@ const datasource = new DataSource({});
  *  your data.
  */
 export const typeDefs = `#graphql
+
+    scalar Upload
+
     enum QueryType {
         STARTSWITH
         EXACT
@@ -41,11 +43,13 @@ export const typeDefs = `#graphql
     # clients can execute, along with the return type for each. In this
     # case, the "books" query returns an array of zero or more Books (defined above).
     type Query {
-        help: String
         ping: String
         info: Info
         instruments(querytype: QueryType, lastname: String): [Instrument]
-        instrument(id: ID!): Instrument
+    }
+
+    type Mutation {
+        singleUpload(file: String!): String!
     }
 `;
 
@@ -53,6 +57,8 @@ export const typeDefs = `#graphql
  * Resolvers define how to fetch the types defined in your schema.
  */
 export const resolvers = {
+    Upload: GraphQLUpload,
+
     Query: {
         ping : () => {
             return new Date()
@@ -103,32 +109,28 @@ export const resolvers = {
             }
             return rval;
         },
-
-        instrument: async (parent,args) => {
-            console.log('args: ',args);
-            let id = args.id;
-            const results = await datasource.getInstruments(`[INSTRUMENT_ID] = ${id}`);
-            let qitem = {
-                id: 0,
-                firstname: '',
-                lastname: '',
-                recording_date: ''
-            }
-            if (results != null) {
-                let item = results[0]
-                qitem = {
-                    id: item.INSTRUMENT_ID,
-                    firstname: item.FIRST_NAME,
-                    lastname: item.LAST_OR_ENTITY_NAME,
-                    recording_date: item.RECORDING_DATE
-                }
-            }
-            return qitem;
-        }
+    },
+    Mutation: {
+        singleUpload: async (parent, { file }) => {
+            const { createReadStream, filename, mimetype, encoding } = await file;
+   
+            // Invoking the `createReadStream` will return a Readable Stream.
+            // See https://nodejs.org/api/stream.html#stream_readable_streams
+            const stream = createReadStream();
+    
+            // This will overwrite the same file on EACH upload.
+            const out = require('fs').createWriteStream('output.xlsx');
+            stream.pipe(out);
+            await finished(out);
+  
+            return filename ;
+        },
     },
 };
 
+/*
 // Test the database connection
 datasource.test(50201).then((res) => {
     console.log("Result is", res)
 })
+*/

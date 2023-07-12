@@ -1,6 +1,8 @@
 import { useCallback, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { readFile } from 'xlsx'
+import { useMutation } from '@apollo/client'
+import { UPLOAD_FILE } from './queries'
+
 
 const baseStyle = {
   display: 'flex',
@@ -29,29 +31,15 @@ const rejectStyle = {
   backgroundColor: '#ffd0d0'
 };
 
-const uploadFile = (filename) => {
-    console.log(filename)
-    readFile(filename)
-//    fetch('https://path/to/api', { // finish this yourself or refer to react-graphql
-        // content-type header should not be specified!
-  //      method: 'POST',
-    //    body: file,
-      /*()})
-        .then(response => response.json())
-        .then(success => {
-          // Do something with the successful response
-        })
-        .catch(error => console.log(error)
-      );
-      */
-}
+    
 
 const DropZone = () => {
+    const [mutate] = useMutation(UPLOAD_FILE);
 
     const onDrop = useCallback(acceptedFiles => {
         const fname = acceptedFiles[0].name;
-        console.log(fname);
-        uploadFile(fname);
+        console.log("Uploading:", fname);
+        mutate({ variables: { fname } });
     }, []);
 
     const { 

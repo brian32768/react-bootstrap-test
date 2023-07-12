@@ -6,7 +6,7 @@ but I don't know how to do that yet.
 See https://parceljs.org/languages/graphql/
 
 */
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 
 export const GET_INSTRUMENTS = gql`
     query GetInstruments($querytype:QueryType!,$lastname:String!) {
@@ -23,4 +23,12 @@ export const PING = gql`
     query Ping {
         ping
     }
+`;
+
+export const UPLOAD_FILE = gql`
+  mutation ($file: Upload!) {
+    uploadFile(file: $file) {
+      success
+    }
+  }
 `;

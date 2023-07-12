@@ -1,11 +1,11 @@
 import { ApolloServer } from '@apollo/server'
 import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import express from 'express'
 import http from 'http'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import path from 'path'
 import { typeDefs, resolvers } from './schema.js'
 
 const PORT = 4000;
@@ -17,7 +17,9 @@ const apolloserver = new ApolloServer({
     typeDefs,
     resolvers,
     plugins: [
-        //landingpage,        // FIXME where is the plugin???
+        // https://www.apollographql.com/docs/apollo-server/api/plugin/landing-pages/
+        // Set embed to false to disable Sandbox in dev 
+        ApolloServerPluginLandingPageLocalDefault({ embed: true }),
 
         // https://www.apollographql.com/docs/apollo-server/api/plugin/drain-http-server/
         ApolloServerPluginDrainHttpServer({ httpServer }), // this is supposed to provide a clean shutdown

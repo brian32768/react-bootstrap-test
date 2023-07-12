@@ -1,5 +1,5 @@
 import React from 'react'
-import { gql,useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { GET_INSTRUMENTS, PING } from './queries'
 import DropZone from './dropzone'
 

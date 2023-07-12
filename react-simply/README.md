@@ -2,6 +2,9 @@
 
 Demo different 2 forms, one controlled and one uncontrolled.
 
+I'm using Bootstrap here, so I will use the react-bootstrap "Form" and "Button" controls.
+
+I use a simple tabbed interface, but I am using routing, too.
 ## State lifting
 
 A function is passed from the app to the form,

@@ -1,13 +1,23 @@
-body {
-    font-family: arial;
-    color: #338;
+@font-face {
+    font-family:"Oswald";
+    src: url("/assets/Oswald-VariableFont_wght.ttf");
 }
 
-h1 {
-    background-color: violet;
-    font-size: 32pt;
-    font-style:normal;
-    font-family:sans-serif;
+@font-face {
+    font-family:"Barlow";
+    src: url("/assets/Barlow-Italic.ttf");
+}
+
+.TestOswald {
+    font-family: 'Oswald';
+    font-size: large;
+    color:blueviolet;
+}
+
+.TestBarlow {
+    font-family: 'Barlow';
+    font-size: large;
+    color:blueviolet;
 }
 
 .nav-section {
@@ -64,9 +74,6 @@ a {
 .print-preview {
     flex-grow: 1;
 }
-.print-form {
-}
-
 
 #home {
     font-family: arial;

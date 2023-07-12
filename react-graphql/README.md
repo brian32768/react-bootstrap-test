@@ -1,30 +1,21 @@
 # react-bootstrap-test/react-graphql
 
+2023-07-11 adding drag and drop upload for a file.
+
 2023-06-16 This phase of my project is done, so I will be moving
 the work I have done here into my real project today.
 
-My application is simple so it does not need Redux or complex routing.
-Pretty much it's a single form, maybe with an advanced form... so 2 forms...
-
-On the data side, I have to access SQL Server and ugly tables.
-
-Initially I tried making SQL relatively transparent and used REST calls.
+On the data side, I have to access SQL Server and those ugly SQL tables.
+I tried to make the SQL transparent but yick! I want the client to
+just see data and the server to hide the SQL.
 
 This example uses GraphQL (via Apollo) to encapsulate the ugly SQL tables
-in the server side, passing only elegant data back to the client.
+in the server side, passing only data I need back to the client.
 
-On the client side I will need a GraphQL client so I will try Apollo. I tried Relay and fell flat on my face. 
-
-I have little experience with ORMs. I know they are an approach to this
-problem too, but I think would also be overkill here.
-
-So... summing up,
-
-* client side: React and Apollo and Bootstrap and JavaScript (no TypeScript, no Redux)
-* server side: Node and JavaScript and Apollo GraphQL
-
-**No TypeScript** I tried to get a handle on TypeScript and finally decided last night that I actually need to get my app working within the next 3 weeks, not 3 years. Typed languages slow me down
+**No TypeScript** I tried to get a handle on TypeScript and finally decided last night that I actually need to get my 
+app working within the next 3 weeks, not 3 years. Typed languages slow me down
 and I can make just as many misteaks. C was okay and maybe C++, but C# and Java? PASS. #life2short
+Some day I will try again.
 
 ## Debug etc
 
