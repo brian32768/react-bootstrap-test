@@ -55,5 +55,5 @@ const s = process.env.NODE_ENV === 'production'
 
 app.listen({ port:PORT }, ()=>{
     // this is a server so messages go to a log
-    console.log(`Load sandbox: ${s}/api`);
+    console.log(`The sandbox is here: ${s}/api`);
 });

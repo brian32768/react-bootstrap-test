@@ -82,7 +82,7 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
-        uploadFile(file: Upload!): File!
+        uploadFile(file: String!): File!
     }
 `;
 
@@ -168,6 +168,7 @@ export const resolvers = {
         },
         incrementCounter: async (parent) => {
             counter += 1;
+            console.log("Counter is now", counter);
             return counter;          
         }
     },
