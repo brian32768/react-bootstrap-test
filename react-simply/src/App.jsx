@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import React, {useState} from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Nav, Dropdown } from "react-bootstrap"
 import NavItem from "react-bootstrap/NavItem"
@@ -6,20 +6,27 @@ import { Home, ControlledForm, UncontrolledForm, DropZone, Act, Login } from './
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css'
 
+export const MyContext = React.createContext('Sad');
+
 const App = () => {
     // Parcel will preprocess this image file and bundle only the thumbnail.
     let turtleUrl = (new URL('../assets/babyturtle.png?width=256', import.meta.url)).toString();
     let SomeContent = Home;
     const [ username, setUsername ] = useState('(not logged in)');
 
+    const [status, setStatus] = useState('Harmless');
+
     const handleLogin = (user) => {
         setUsername(user);
         alert(`Logging you in now, ${user}`);
     }
 
+
     return (
         <>
         <Router>
+            <MyContext.Provider value={status}>
+
             <img src={turtleUrl} />
 
             <Nav variant="tabs" defaultActiveKey="/">
@@ -66,6 +73,8 @@ const App = () => {
                     <Route path="/action/:act" element={<Act />} />
                 </Routes>
             <br />
+
+            </MyContext.Provider>
         </Router>
 
         <span className="TestOswald">

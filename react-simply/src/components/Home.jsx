@@ -1,10 +1,14 @@
-import { Card } from 'react-bootstrap'
-import {Tab, Tabs} from 'react-bootstrap'
+import React, { useContext } from 'react';
+import { Card } from 'react-bootstrap';
+import {Tab, Tabs} from 'react-bootstrap';
+import { MyContext } from '../App';
 
 const Home = () => {
+    const me = useContext(MyContext);
+    console.log("My context says I am " + me);
     return (
         <Card border='primary' bg='light' text='dark'>
-            <Card.Header>This is the Card.Header</Card.Header>
+            <Card.Header>This is the Card. My status is "{me}".</Card.Header>
         <Card.Body>
             <Card.Title>Hi! This is the Card.Title</Card.Title>
             <Card.Text>
