@@ -4,17 +4,24 @@ Demo different 2 forms, one controlled and one uncontrolled.
 
 ## State lifting
 
-A function is passed from the app to the form,
-so that the form can update the app with "firstName";
-so state is "lifted" from the form to the parent.
+Go to the Controlled Form tab and enter something.
 
-I am not using Redux in this example to save state, 
-so go to the Controlled Form tab and enter something.
+The value entered will be "lifted" to the parent via a reference
+to a function. React does not have pass by reference, you pass
+a function and then the child calls the function to pass up the 
+value to the parent.
 
 Go to another tab.
 
 Go back to Controlled Form.
 
-Note that it's empty.
+Note that it's now empty because the form reset.
 
-I will address this in react-redux-template
+I will address this in other examples. This one is "simple". 
+
+## Testing
+
+```bash
+npm install
+npm start
+```
