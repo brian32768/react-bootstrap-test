@@ -1,7 +1,7 @@
 // App.tsx react-redux-first
 import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import { connect } from 'react-redux'
+//import { connect } from 'react-redux'
 import * as components from './tabs'
 
 import './App.css'
@@ -14,7 +14,7 @@ const App = ({ page }) => {
   const Page = components[page];
   return (<>
     <Container>
-      <h1>react-redux-first</h1>
+      <h1>react-router</h1>
       <Navbar>
         <Navbar.Brand href="/">
           <img src={url} />
@@ -32,4 +32,5 @@ const App = ({ page }) => {
 }
 
 const mapStateToProps = ({ page }) => ({ page })
-export default connect(mapStateToProps)(App)
+//export default connect(mapStateToProps)(App)
+export default App;

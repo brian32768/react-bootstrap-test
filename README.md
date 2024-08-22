@@ -18,9 +18,15 @@ It whines about not liking versoin 18 of React but then it runs anyway? Weird.
 See Chapter 12 in "Beginning ReactJS Foundations" and also
 https://www.freecodecamp.org/news/a-complete-beginners-guide-to-react-router-include-router-hooks/
 
-## react-redux-first/
+## react-context
 
-This sample use react-first-router and react-bootstrap.
+2024-08-21
+TIL about "contexts" and so I wanted to try it out. Meh. It works.
+
+## react-router/
+
+This sample use react-router and react-bootstrap.
+
 ## pigeon-messenger-service/
 
 FIXME - this sample is broken, stuck somewhere in an upgrade nightmare.
